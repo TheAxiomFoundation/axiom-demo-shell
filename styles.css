@@ -97,7 +97,7 @@ input {
 .hero {
   width: 100%;
   max-width: 780px;
-  margin: 0 auto 32px;
+  margin: 0 auto 52px;
   text-align: center;
 }
 
@@ -147,7 +147,7 @@ h2 {
 .demo-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 22px;
 }
 
 .demo-card {
