@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="One Axiom demo link for the Axiom App, FinBot, and dashboards."
+    />
+    <title>Axiom Demo</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <a class="wordmark" href="#" aria-label="Axiom demo home">
+        <img src="logos/axiom-foundation.svg" alt="Axiom Foundation" />
+      </a>
+    </header>
+
+    <main class="page">
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title">Computable law for all</h1>
+      </section>
+
+      <section class="demo-grid" aria-label="Axiom demo links">
+        <article class="demo-card">
+          <div class="preview-frame preview-law" aria-hidden="true">
+            <iframe src="https://app.axiom-foundation.org/" title="Axiom App preview" tabindex="-1" loading="lazy"></iframe>
+          </div>
+          <div>
+            <p class="card-kicker">Axiom App</p>
+            <h2>Explore the law</h2>
+            <p>Inspect source text, citations, provenance, and RuleSpec encodings.</p>
+          </div>
+          <a class="button secondary" href="#" target="_blank" rel="noreferrer" data-demo-link="law">
+            Open Axiom App
+          </a>
+        </article>
+
+        <article class="demo-card featured">
+          <div class="preview-frame preview-finbot" aria-hidden="true">
+            <iframe src="https://finbot-snap-demo.vercel.app/" title="FinBot preview" tabindex="-1" loading="lazy"></iframe>
+          </div>
+          <div>
+            <p class="card-kicker">FinBot</p>
+            <h2>Get accurate answers</h2>
+            <p>Show a grounded assistant answer backed by encoded rules and citations.</p>
+          </div>
+          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
+            Open FinBot
+          </a>
+        </article>
+
+        <article class="demo-card">
+          <div class="preview-frame preview-builder" aria-hidden="true">
+            <iframe src="https://dashboard-builder-flax.vercel.app/" title="Dashboards preview" tabindex="-1" loading="lazy"></iframe>
+          </div>
+          <div>
+            <p class="card-kicker">Dashboards</p>
+            <h2>Build an application</h2>
+            <p>Demonstrate partner tools powered by Axiom inputs, outputs, and explanations.</p>
+          </div>
+          <a class="button secondary" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
+            Open Dashboards
+          </a>
+        </article>
+      </section>
+
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

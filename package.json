@@ -1,0 +1,10 @@
+{
+  "name": "axiom-demo-shell",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Unified static demo shell for the Axiom source-to-product story.",
+  "scripts": {
+    "start": "python3 -m http.server 4173",
+    "check": "node --check app.js"
+  }
+}

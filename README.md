@@ -3,6 +3,38 @@
 This repository is a planning and eventual implementation home for a unified
 Axiom demo experience.
 
+## Current Implementation
+
+The repository now contains a dependency-free static page for sharing one demo
+link instead of three separate links.
+
+It provides:
+
+- A simple Axiom-styled landing page.
+- Three destination cards:
+  - Axiom App
+  - FinBot
+  - Dashboards
+- Embedded previews of each destination.
+- Fixed outbound links for the deployed public page.
+
+Run it locally with:
+
+```bash
+npm start
+```
+
+Then open `http://localhost:4173`.
+
+If an external product refuses to render in an iframe because of its frame
+policy, the outbound link still works.
+
+Default destinations:
+
+- Axiom App: `https://app.axiom-foundation.org/`
+- FinBot: `https://finbot-snap-demo.vercel.app/`
+- Dashboards: `https://dashboard-builder-flax.vercel.app/`
+
 The goal is not to collapse every Axiom demo into one product too early. The
 goal is to tell one coherent story across three related surfaces:
 
