@@ -93,7 +93,7 @@ merge their codebases. Axiom should become one platform through shared APIs,
 schemas, provenance conventions, and design language.
 
 ```text
-axiom-corpus + rules-* + axiom-rules + axiom-encode
+axiom-corpus + rulespec-* + axiom-rules-engine + axiom-encode
                   |
               Axiom API / SDK
                   |
