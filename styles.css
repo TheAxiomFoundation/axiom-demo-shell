@@ -146,20 +146,8 @@ h2 {
 
 .demo-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
-}
-
-.demo-card {
-  grid-column: span 2;
-}
-
-.demo-card:nth-child(4) {
-  grid-column: 2 / span 2;
-}
-
-.demo-card:nth-child(5) {
-  grid-column: 4 / span 2;
 }
 
 .demo-card {
@@ -301,12 +289,6 @@ h2 {
 
   .demo-grid {
     grid-template-columns: 1fr;
-  }
-
-  .demo-card,
-  .demo-card:nth-child(4),
-  .demo-card:nth-child(5) {
-    grid-column: 1 / -1;
   }
 
   .demo-card {
