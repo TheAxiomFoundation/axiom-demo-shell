@@ -33,21 +33,17 @@
     microsim: "http://127.0.0.1:3003/"
   };
 
-  var localHosts = ["localhost", "127.0.0.1", "::1"];
-  var destinations =
-    localHosts.indexOf(window.location.hostname) === -1
-      ? deployedDestinations
-      : localDestinations;
+  // Default to the deployed apps everywhere so the shell works the same whether
+  // it's served publicly or reviewed locally. Opt into local dev servers with
+  // ?local in the URL (only useful when you have those dev servers running).
+  var useLocal = /(?:^|[?&])local(?:=1|=true)?(?:&|$)/.test(window.location.search);
+  var destinations = useLocal ? localDestinations : deployedDestinations;
 
-  // Outbound buttons follow the local/deployed switch so you can click through
-  // to local dev servers when developing alongside them.
   Array.prototype.slice.call(document.querySelectorAll("[data-demo-link]")).forEach(function (link) {
     link.href = destinations[link.dataset.demoLink];
   });
 
-  // Previews always point at the deployed apps — local dev ports are usually
-  // not all running, which would leave the preview frames blank.
   Array.prototype.slice.call(document.querySelectorAll("[data-demo-preview]")).forEach(function (frame) {
-    frame.src = deployedDestinations[frame.dataset.demoPreview];
+    frame.src = destinations[frame.dataset.demoPreview];
   });
 })();
