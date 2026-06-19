@@ -39,11 +39,15 @@
       ? deployedDestinations
       : localDestinations;
 
+  // Outbound buttons follow the local/deployed switch so you can click through
+  // to local dev servers when developing alongside them.
   Array.prototype.slice.call(document.querySelectorAll("[data-demo-link]")).forEach(function (link) {
     link.href = destinations[link.dataset.demoLink];
   });
 
+  // Previews always point at the deployed apps — local dev ports are usually
+  // not all running, which would leave the preview frames blank.
   Array.prototype.slice.call(document.querySelectorAll("[data-demo-preview]")).forEach(function (frame) {
-    frame.src = destinations[frame.dataset.demoPreview];
+    frame.src = deployedDestinations[frame.dataset.demoPreview];
   });
 })();
