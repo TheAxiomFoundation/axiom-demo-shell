@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="One Axiom demo link for the Axiom App, FinBot, and dashboards."
+      content="A guided path through Axiom — from the infrastructure that encodes law, to the validation that keeps it honest, to the applications built on top."
     />
     <title>Axiom Demo</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -20,95 +26,143 @@
 
     <main class="page">
       <section class="hero" aria-labelledby="hero-title">
-        <h1 id="hero-title">Computable law for all</h1>
+        <h1 id="hero-title">Computable law for&nbsp;all</h1>
+        <p class="lede">
+          One path through the stack — the infrastructure that encodes the law,
+          the validation that keeps it honest, and the applications built on top.
+        </p>
       </section>
 
-      <section class="demo-grid" aria-label="Axiom demo links">
-        <article class="demo-card featured">
-          <div class="preview-frame preview-law" aria-hidden="true">
-            <iframe src="https://app.axiom-foundation.org/" title="Axiom App preview" tabindex="-1" loading="lazy" data-demo-preview="law"></iframe>
+      <div class="layers">
+        <!-- 01 Infrastructure -->
+        <section class="layer" aria-labelledby="layer-infra">
+          <div class="layer-label">
+            <span class="layer-num" aria-hidden="true">01</span>
+            <div class="layer-text">
+              <h2 class="layer-name" id="layer-infra">Infrastructure</h2>
+              <p class="layer-note">Source law, encoded and made portable.</p>
+            </div>
           </div>
-          <div>
-            <p class="card-kicker">Axiom App</p>
-            <h2>Explore the law</h2>
-            <p>Inspect source text, citations, provenance, and RuleSpec encodings.</p>
+          <div class="layer-cards">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="architecture">
+              <span class="card-thumb preview-architecture" aria-hidden="true">
+                <iframe title="Architecture preview" tabindex="-1" loading="lazy" data-demo-preview="architecture"></iframe>
+              </span>
+              <span class="card-meta">
+                <span class="card-kicker">Architecture</span>
+                <span class="card-title">Understand the stack</span>
+              </span>
+            </a>
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="law">
+              <span class="card-thumb preview-law" aria-hidden="true">
+                <iframe title="Axiom App preview" tabindex="-1" loading="lazy" data-demo-preview="law"></iframe>
+              </span>
+              <span class="card-meta">
+                <span class="card-kicker">Axiom App</span>
+                <span class="card-title">Explore the law</span>
+              </span>
+            </a>
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="graph">
+              <span class="card-thumb preview-graph" aria-hidden="true">
+                <iframe title="RuleSpec graph viewer preview" tabindex="-1" loading="lazy" data-demo-preview="graph"></iframe>
+              </span>
+              <span class="card-meta">
+                <span class="card-kicker">Graph viewer</span>
+                <span class="card-title">Trace the logic</span>
+              </span>
+            </a>
           </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="law">
-            Open Axiom App
-          </a>
-        </article>
+        </section>
 
-        <article class="demo-card featured">
-          <div class="preview-frame preview-graph" aria-hidden="true">
-            <iframe src="https://rulespec-graph-viewer.vercel.app/" title="RuleSpec graph viewer preview" tabindex="-1" loading="lazy" data-demo-preview="graph"></iframe>
+        <!-- 02 Validation -->
+        <section class="layer" aria-labelledby="layer-validation">
+          <div class="layer-label">
+            <span class="layer-num" aria-hidden="true">02</span>
+            <div class="layer-text">
+              <h2 class="layer-name" id="layer-validation">Validation</h2>
+              <p class="layer-note">Testing encodings for accuracy, consistency and comprehensiveness.</p>
+            </div>
           </div>
-          <div>
-            <p class="card-kicker">Graph viewer</p>
-            <h2>Trace the logic</h2>
-            <p>Explore a RuleSpec program as an interactive DAG with explain-mode values and citations on every node.</p>
+          <div class="layer-cards">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="oracles">
+              <span class="card-thumb preview-oracles" aria-hidden="true">
+                <iframe title="Oracles preview" tabindex="-1" loading="lazy" data-demo-preview="oracles"></iframe>
+              </span>
+              <span class="card-meta">
+                <span class="card-kicker">Oracles</span>
+                <span class="card-title">Validate across the ecosystem</span>
+              </span>
+            </a>
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="guidance">
+              <span class="card-thumb preview-guidance" aria-hidden="true">
+                <iframe title="Guidance Impact Visualizer preview" tabindex="-1" loading="lazy" data-demo-preview="guidance"></iframe>
+              </span>
+              <span class="card-meta">
+                <span class="card-kicker">Guidance impact</span>
+                <span class="card-title">Reconcile primary sources</span>
+              </span>
+            </a>
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="bills">
+              <span class="card-thumb preview-bills" aria-hidden="true">
+                <iframe title="Bills preview" tabindex="-1" loading="lazy" data-demo-preview="bills"></iframe>
+              </span>
+              <span class="card-meta">
+                <span class="card-kicker">Bills</span>
+                <span class="card-title">Track active legislation</span>
+              </span>
+            </a>
           </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="graph">
-            Open Graph viewer
-          </a>
-        </article>
+        </section>
 
-        <article class="demo-card featured">
-          <div class="preview-frame preview-finbot" aria-hidden="true">
-            <iframe src="https://finbot-snap-demo.vercel.app/" title="FinBot preview" tabindex="-1" loading="lazy" data-demo-preview="finbot"></iframe>
+        <!-- 03 Application -->
+        <section class="layer" aria-labelledby="layer-application">
+          <div class="layer-label">
+            <span class="layer-num" aria-hidden="true">03</span>
+            <div class="layer-text">
+              <h2 class="layer-name" id="layer-application">Application</h2>
+              <p class="layer-note">What partners build on top.</p>
+            </div>
           </div>
-          <div>
-            <p class="card-kicker">FinBot</p>
-            <h2>Get accurate answers</h2>
-            <p>Show a grounded assistant answer backed by encoded rules and citations.</p>
+          <div class="layer-cards">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
+              <span class="card-thumb preview-finbot" aria-hidden="true">
+                <iframe title="FinBot preview" tabindex="-1" loading="lazy" data-demo-preview="finbot"></iframe>
+              </span>
+              <span class="card-meta">
+                <span class="card-kicker">FinBot</span>
+                <span class="card-title">Get accurate answers</span>
+              </span>
+            </a>
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
+              <span class="card-thumb preview-builder" aria-hidden="true">
+                <iframe title="Form Builder preview" tabindex="-1" loading="lazy" data-demo-preview="builder"></iframe>
+              </span>
+              <span class="card-meta">
+                <span class="card-kicker">Form Builder</span>
+                <span class="card-title">Build a form</span>
+              </span>
+            </a>
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
+              <span class="card-thumb preview-snap" aria-hidden="true">
+                <iframe title="CO SNAP cliffs preview" tabindex="-1" loading="lazy" data-demo-preview="snap"></iframe>
+              </span>
+              <span class="card-meta">
+                <span class="card-kicker">CO SNAP cliffs</span>
+                <span class="card-title">Explore the cliffs</span>
+              </span>
+            </a>
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
+              <span class="card-thumb preview-microsim" aria-hidden="true">
+                <iframe title="Microsim preview" tabindex="-1" loading="lazy" data-demo-preview="microsim"></iframe>
+              </span>
+              <span class="card-meta">
+                <span class="card-kicker">Microsim</span>
+                <span class="card-title">Score at scale</span>
+              </span>
+            </a>
           </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
-            Open FinBot
-          </a>
-        </article>
-
-        <article class="demo-card featured">
-          <div class="preview-frame preview-builder" aria-hidden="true">
-            <iframe src="https://dashboard-builder-flax.vercel.app/" title="Form Builder preview" tabindex="-1" loading="lazy" data-demo-preview="builder"></iframe>
-          </div>
-          <div>
-            <p class="card-kicker">Form Builder</p>
-            <h2>Build a form</h2>
-            <p>Demonstrate partner intake forms powered by Axiom inputs, outputs, and explanations.</p>
-          </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
-            Open Form Builder
-          </a>
-        </article>
-
-        <article class="demo-card featured">
-          <div class="preview-frame preview-snap" aria-hidden="true">
-            <iframe src="https://axiom-co-snap.vercel.app/" title="CO SNAP cliffs preview" tabindex="-1" loading="lazy" data-demo-preview="snap"></iframe>
-          </div>
-          <div>
-            <p class="card-kicker">CO SNAP cliffs</p>
-            <h2>Explore the cliffs</h2>
-            <p>Reform Colorado SNAP parameters and watch eligibility cliffs and marginal rates shift in real time.</p>
-          </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
-            Open CO SNAP
-          </a>
-        </article>
-
-        <article class="demo-card featured">
-          <div class="preview-frame preview-microsim" aria-hidden="true">
-            <iframe src="https://axiom-microsim.vercel.app/" title="Microsim preview" tabindex="-1" loading="lazy" data-demo-preview="microsim"></iframe>
-          </div>
-          <div>
-            <p class="card-kicker">Microsim</p>
-            <h2>Score at scale</h2>
-            <p>Run federal and state reforms against the Enhanced CPS and see population-level cost and caseload impacts, nationwide or by state.</p>
-          </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
-            Open Microsim
-          </a>
-        </article>
-      </section>
-
+        </section>
+      </div>
     </main>
 
     <script src="app.js"></script>
