@@ -154,8 +154,8 @@ h3 {
 
 .layer-head {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  align-items: baseline;
+  gap: 14px;
   max-width: 760px;
   margin: 0 0 18px;
   padding-bottom: 14px;
@@ -170,20 +170,12 @@ h3 {
   font-weight: 800;
   letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;
-  line-height: 1.5;
 }
 
 .layer-title {
-  margin: 0 0 4px;
+  margin: 0;
   font-size: clamp(1.3rem, 2vw, 1.7rem);
   letter-spacing: -0.03em;
-}
-
-.layer-desc {
-  margin: 0;
-  color: var(--ink-secondary);
-  font-size: 0.95rem;
-  line-height: 1.5;
 }
 
 .demo-grid {
