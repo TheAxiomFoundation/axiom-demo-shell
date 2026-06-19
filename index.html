@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="One Axiom demo link for the Axiom App, FinBot, and dashboards."
+      content="A guided tour of Axiom — from the infrastructure that encodes law, to the validation that keeps it honest, to the applications built on top."
     />
     <title>Axiom Demo</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -21,92 +21,198 @@
     <main class="page">
       <section class="hero" aria-labelledby="hero-title">
         <h1 id="hero-title">Computable law for all</h1>
+        <p class="lede">
+          A guided path through the stack — the infrastructure that encodes law,
+          the validation that keeps it honest, and the applications built on top.
+        </p>
       </section>
 
-      <section class="demo-grid" aria-label="Axiom demo links">
-        <article class="demo-card featured">
-          <div class="preview-frame preview-law" aria-hidden="true">
-            <iframe src="https://app.axiom-foundation.org/" title="Axiom App preview" tabindex="-1" loading="lazy" data-demo-preview="law"></iframe>
-          </div>
+      <!-- Layer 1: Infrastructure -->
+      <section class="layer" aria-labelledby="layer-infra">
+        <div class="layer-head">
+          <p class="layer-index">01</p>
           <div>
-            <p class="card-kicker">Axiom App</p>
-            <h2>Explore the law</h2>
-            <p>Inspect source text, citations, provenance, and RuleSpec encodings.</p>
+            <h2 class="layer-title" id="layer-infra">Infrastructure</h2>
+            <p class="layer-desc">
+              The substrate: source law structured into a shared concept registry,
+              encoded as RuleSpec, and projected into multiple engines.
+            </p>
           </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="law">
-            Open Axiom App
-          </a>
-        </article>
+        </div>
 
-        <article class="demo-card featured">
-          <div class="preview-frame preview-graph" aria-hidden="true">
-            <iframe src="https://rulespec-graph-viewer.vercel.app/" title="RuleSpec graph viewer preview" tabindex="-1" loading="lazy" data-demo-preview="graph"></iframe>
-          </div>
-          <div>
-            <p class="card-kicker">Graph viewer</p>
-            <h2>Trace the logic</h2>
-            <p>Explore a RuleSpec program as an interactive DAG with explain-mode values and citations on every node.</p>
-          </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="graph">
-            Open Graph viewer
-          </a>
-        </article>
+        <div class="demo-grid" aria-label="Infrastructure demos">
+          <article class="demo-card featured">
+            <div class="preview-frame preview-architecture" aria-hidden="true">
+              <iframe src="https://axiom-architecture-one.vercel.app/" title="Architecture preview" tabindex="-1" loading="lazy" data-demo-preview="architecture"></iframe>
+            </div>
+            <div>
+              <p class="card-kicker">Architecture</p>
+              <h3>See how it fits together</h3>
+              <p>Walk the concept registry, adapters, and engines — and a frank read on the design that keeps every program portable.</p>
+            </div>
+            <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="architecture">
+              Open Architecture
+            </a>
+          </article>
 
-        <article class="demo-card featured">
-          <div class="preview-frame preview-finbot" aria-hidden="true">
-            <iframe src="https://finbot-snap-demo.vercel.app/" title="FinBot preview" tabindex="-1" loading="lazy" data-demo-preview="finbot"></iframe>
-          </div>
-          <div>
-            <p class="card-kicker">FinBot</p>
-            <h2>Get accurate answers</h2>
-            <p>Show a grounded assistant answer backed by encoded rules and citations.</p>
-          </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
-            Open FinBot
-          </a>
-        </article>
+          <article class="demo-card featured">
+            <div class="preview-frame preview-law" aria-hidden="true">
+              <iframe src="https://app.axiom-foundation.org/" title="Axiom App preview" tabindex="-1" loading="lazy" data-demo-preview="law"></iframe>
+            </div>
+            <div>
+              <p class="card-kicker">Axiom App</p>
+              <h3>Explore the law</h3>
+              <p>Inspect source text, citations, provenance, and RuleSpec encodings.</p>
+            </div>
+            <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="law">
+              Open Axiom App
+            </a>
+          </article>
 
-        <article class="demo-card featured">
-          <div class="preview-frame preview-builder" aria-hidden="true">
-            <iframe src="https://dashboard-builder-flax.vercel.app/" title="Form Builder preview" tabindex="-1" loading="lazy" data-demo-preview="builder"></iframe>
-          </div>
-          <div>
-            <p class="card-kicker">Form Builder</p>
-            <h2>Build a form</h2>
-            <p>Demonstrate partner intake forms powered by Axiom inputs, outputs, and explanations.</p>
-          </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
-            Open Form Builder
-          </a>
-        </article>
+          <article class="demo-card featured">
+            <div class="preview-frame preview-graph" aria-hidden="true">
+              <iframe src="https://rulespec-graph-viewer.vercel.app/" title="RuleSpec graph viewer preview" tabindex="-1" loading="lazy" data-demo-preview="graph"></iframe>
+            </div>
+            <div>
+              <p class="card-kicker">Graph viewer</p>
+              <h3>Trace the logic</h3>
+              <p>Explore a RuleSpec program as an interactive DAG with explain-mode values and citations on every node.</p>
+            </div>
+            <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="graph">
+              Open Graph viewer
+            </a>
+          </article>
+        </div>
+      </section>
 
-        <article class="demo-card featured">
-          <div class="preview-frame preview-snap" aria-hidden="true">
-            <iframe src="https://axiom-co-snap.vercel.app/" title="CO SNAP cliffs preview" tabindex="-1" loading="lazy" data-demo-preview="snap"></iframe>
-          </div>
+      <!-- Layer 2: Validation -->
+      <section class="layer" aria-labelledby="layer-validation">
+        <div class="layer-head">
+          <p class="layer-index">02</p>
           <div>
-            <p class="card-kicker">CO SNAP cliffs</p>
-            <h2>Explore the cliffs</h2>
-            <p>Reform Colorado SNAP parameters and watch eligibility cliffs and marginal rates shift in real time.</p>
+            <h2 class="layer-title" id="layer-validation">Validation</h2>
+            <p class="layer-desc">
+              How we prove the encodings are right — cross-engine agreement, the
+              impact of new guidance, and the legislation moving underneath.
+            </p>
           </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
-            Open CO SNAP
-          </a>
-        </article>
+        </div>
 
-        <article class="demo-card featured">
-          <div class="preview-frame preview-microsim" aria-hidden="true">
-            <iframe src="https://axiom-microsim.vercel.app/" title="Microsim preview" tabindex="-1" loading="lazy" data-demo-preview="microsim"></iframe>
-          </div>
+        <div class="demo-grid" aria-label="Validation demos">
+          <article class="demo-card featured">
+            <div class="preview-frame preview-oracles" aria-hidden="true">
+              <iframe src="https://axiom-oracles.vercel.app/" title="Oracles preview" tabindex="-1" loading="lazy" data-demo-preview="oracles"></iframe>
+            </div>
+            <div>
+              <p class="card-kicker">Oracles</p>
+              <h3>Cross-check every engine</h3>
+              <p>Run executable rule systems side by side. Every divergence is a question about the law or its encoding.</p>
+            </div>
+            <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="oracles">
+              Open Oracles
+            </a>
+          </article>
+
+          <article class="demo-card featured">
+            <div class="preview-frame preview-guidance" aria-hidden="true">
+              <iframe src="https://guidance-impact-visualizer.vercel.app/" title="Guidance Impact Visualizer preview" tabindex="-1" loading="lazy" data-demo-preview="guidance"></iframe>
+            </div>
+            <div>
+              <p class="card-kicker">Guidance impact</p>
+              <h3>Diff the law, see the impact</h3>
+              <p>Turn a change in guidance into an agentic legal diff and watch coverage outcomes respond as you adjust the assumptions.</p>
+            </div>
+            <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="guidance">
+              Open Guidance impact
+            </a>
+          </article>
+
+          <article class="demo-card featured">
+            <div class="preview-frame preview-bills" aria-hidden="true">
+              <iframe src="https://axiom-bills.vercel.app/" title="Bills preview" tabindex="-1" loading="lazy" data-demo-preview="bills"></iframe>
+            </div>
+            <div>
+              <p class="card-kicker">Bills</p>
+              <h3>Track the law as it changes</h3>
+              <p>Follow the legislation moving underneath the encodings — by bill, status, and the programs each one touches.</p>
+            </div>
+            <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="bills">
+              Open Bills
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- Layer 3: Application -->
+      <section class="layer" aria-labelledby="layer-application">
+        <div class="layer-head">
+          <p class="layer-index">03</p>
           <div>
-            <p class="card-kicker">Microsim</p>
-            <h2>Score at scale</h2>
-            <p>Run federal and state reforms against the Enhanced CPS and see population-level cost and caseload impacts, nationwide or by state.</p>
+            <h2 class="layer-title" id="layer-application">Application</h2>
+            <p class="layer-desc">
+              What partners build on the substrate — grounded assistants, intake
+              forms, cliff explorers, and population-scale scoring.
+            </p>
           </div>
-          <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
-            Open Microsim
-          </a>
-        </article>
+        </div>
+
+        <div class="demo-grid" aria-label="Application demos">
+          <article class="demo-card featured">
+            <div class="preview-frame preview-finbot" aria-hidden="true">
+              <iframe src="https://finbot-snap-demo.vercel.app/" title="FinBot preview" tabindex="-1" loading="lazy" data-demo-preview="finbot"></iframe>
+            </div>
+            <div>
+              <p class="card-kicker">FinBot</p>
+              <h3>Get accurate answers</h3>
+              <p>Show a grounded assistant answer backed by encoded rules and citations.</p>
+            </div>
+            <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
+              Open FinBot
+            </a>
+          </article>
+
+          <article class="demo-card featured">
+            <div class="preview-frame preview-builder" aria-hidden="true">
+              <iframe src="https://dashboard-builder-flax.vercel.app/" title="Form Builder preview" tabindex="-1" loading="lazy" data-demo-preview="builder"></iframe>
+            </div>
+            <div>
+              <p class="card-kicker">Form Builder</p>
+              <h3>Build a form</h3>
+              <p>Demonstrate partner intake forms powered by Axiom inputs, outputs, and explanations.</p>
+            </div>
+            <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
+              Open Form Builder
+            </a>
+          </article>
+
+          <article class="demo-card featured">
+            <div class="preview-frame preview-snap" aria-hidden="true">
+              <iframe src="https://axiom-co-snap.vercel.app/" title="CO SNAP cliffs preview" tabindex="-1" loading="lazy" data-demo-preview="snap"></iframe>
+            </div>
+            <div>
+              <p class="card-kicker">CO SNAP cliffs</p>
+              <h3>Explore the cliffs</h3>
+              <p>Reform Colorado SNAP parameters and watch eligibility cliffs and marginal rates shift in real time.</p>
+            </div>
+            <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
+              Open CO SNAP
+            </a>
+          </article>
+
+          <article class="demo-card featured">
+            <div class="preview-frame preview-microsim" aria-hidden="true">
+              <iframe src="https://axiom-microsim.vercel.app/" title="Microsim preview" tabindex="-1" loading="lazy" data-demo-preview="microsim"></iframe>
+            </div>
+            <div>
+              <p class="card-kicker">Microsim</p>
+              <h3>Score at scale</h3>
+              <p>Run federal and state reforms against the Enhanced CPS and see population-level cost and caseload impacts, nationwide or by state.</p>
+            </div>
+            <a class="button primary" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
+              Open Microsim
+            </a>
+          </article>
+        </div>
       </section>
 
     </main>

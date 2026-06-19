@@ -10,11 +10,11 @@ link instead of three separate links.
 
 It provides:
 
-- A simple Axiom-styled landing page.
-- Three destination cards:
-  - Axiom App
-  - FinBot
-  - Dashboards
+- A simple Axiom-styled landing page with a guided, top-to-bottom flow.
+- Three layers, each with its own intro and a row of destination cards:
+  - **01 Infrastructure** — Architecture, Axiom App, Graph viewer
+  - **02 Validation** — Oracles, Guidance impact, Bills
+  - **03 Application** — FinBot, Form Builder, CO SNAP cliffs, Microsim
 - Embedded previews of each destination.
 - Fixed outbound links for the deployed public page.
 
@@ -31,18 +31,36 @@ policy, the outbound link still works.
 
 Default destinations:
 
+- Architecture: `https://axiom-architecture-one.vercel.app/`
 - Axiom App: `https://app.axiom-foundation.org/`
+- Graph viewer: `https://rulespec-graph-viewer.vercel.app/`
+- Oracles: `https://axiom-oracles.vercel.app/`
+- Guidance impact: `https://guidance-impact-visualizer.vercel.app/`
+- Bills: `https://axiom-bills.vercel.app/`
 - FinBot: `https://finbot-snap-demo.vercel.app/`
-- Dashboards: `https://dashboard-builder-flax.vercel.app/`
+- Form Builder: `https://dashboard-builder-flax.vercel.app/`
+- CO SNAP cliffs: `https://axiom-co-snap.vercel.app/`
+- Microsim: `https://axiom-microsim.vercel.app/`
 
 The goal is not to collapse every Axiom demo into one product too early. The
-goal is to tell one coherent story across three related surfaces:
+goal is to tell one coherent story across three layers, walked in order:
 
-1. **Axiom App**: the canonical source and RuleSpec inspection layer.
-2. **FinBot Demo**: a grounded assistant experience powered by cited,
-   encoded rules.
-3. **Dashboard Builder**: a composable application layer for partners who want
-   to build tools from Axiom inputs and outputs.
+1. **Infrastructure**: the substrate — source law structured into a shared
+   concept registry, encoded as RuleSpec, and projected into multiple engines.
+   - Architecture: how the registry, adapters, and engines fit together.
+   - Axiom App: the canonical source and RuleSpec inspection layer.
+   - Graph viewer: a RuleSpec program as an interactive, explainable DAG.
+2. **Validation**: how the encodings are proven correct and kept current.
+   - Oracles: cross-engine validation, where every divergence is a question
+     about the law or its encoding.
+   - Guidance impact: an agentic legal diff that shows how a change in guidance
+     ripples through coverage outcomes.
+   - Bills: tracking the legislation moving underneath the encodings.
+3. **Application**: what partners build on top of the substrate.
+   - FinBot: a grounded assistant powered by cited, encoded rules.
+   - Form Builder: composable partner intake forms.
+   - CO SNAP cliffs: an interactive reform and cliff explorer.
+   - Microsim: population-scale scoring against the Enhanced CPS.
 
 ## Story
 
