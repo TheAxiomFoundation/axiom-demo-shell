@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="A guided tour of Axiom — from the infrastructure that encodes law, to the validation that keeps it honest, to the applications built on top."
+      content="A guided path through Axiom — from the infrastructure that encodes law, to the validation that keeps it honest, to the applications built on top."
     />
     <title>Axiom Demo</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -16,44 +22,53 @@
       <a class="wordmark" href="#" aria-label="Axiom demo home">
         <img src="logos/axiom-foundation.svg" alt="Axiom Foundation" />
       </a>
+      <span class="nav-tag">Guided demo</span>
     </header>
 
     <main class="page">
       <section class="hero" aria-labelledby="hero-title">
-        <h1 id="hero-title">Computable law for all</h1>
+        <p class="eyebrow">Source&nbsp;→&nbsp;product</p>
+        <h1 id="hero-title">Computable law for&nbsp;all</h1>
+        <p class="lede">
+          One path through the stack — the infrastructure that encodes the law,
+          the validation that keeps it honest, and the applications built on top.
+        </p>
       </section>
 
       <div class="layers">
-        <!-- Layer 1: Infrastructure -->
+        <!-- 01 Infrastructure -->
         <section class="layer" aria-labelledby="layer-infra">
-          <div class="layer-head">
-            <p class="layer-index">01</p>
-            <h2 class="layer-title" id="layer-infra">Infrastructure</h2>
+          <div class="layer-label">
+            <span class="layer-num" aria-hidden="true">01</span>
+            <div class="layer-text">
+              <h2 class="layer-name" id="layer-infra">Infrastructure</h2>
+              <p class="layer-note">Source law, encoded and made portable.</p>
+            </div>
           </div>
-          <div class="demo-list">
-            <a class="demo-card" href="#" target="_blank" rel="noreferrer" data-demo-link="architecture">
-              <span class="preview-frame preview-architecture" aria-hidden="true">
+          <div class="layer-cards">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="architecture">
+              <span class="card-thumb preview-architecture" aria-hidden="true">
                 <iframe title="Architecture preview" tabindex="-1" loading="lazy" data-demo-preview="architecture"></iframe>
               </span>
-              <span class="card-body">
+              <span class="card-meta">
                 <span class="card-kicker">Architecture</span>
                 <span class="card-title">See how it fits together</span>
               </span>
             </a>
-            <a class="demo-card" href="#" target="_blank" rel="noreferrer" data-demo-link="law">
-              <span class="preview-frame preview-law" aria-hidden="true">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="law">
+              <span class="card-thumb preview-law" aria-hidden="true">
                 <iframe title="Axiom App preview" tabindex="-1" loading="lazy" data-demo-preview="law"></iframe>
               </span>
-              <span class="card-body">
+              <span class="card-meta">
                 <span class="card-kicker">Axiom App</span>
                 <span class="card-title">Explore the law</span>
               </span>
             </a>
-            <a class="demo-card" href="#" target="_blank" rel="noreferrer" data-demo-link="graph">
-              <span class="preview-frame preview-graph" aria-hidden="true">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="graph">
+              <span class="card-thumb preview-graph" aria-hidden="true">
                 <iframe title="RuleSpec graph viewer preview" tabindex="-1" loading="lazy" data-demo-preview="graph"></iframe>
               </span>
-              <span class="card-body">
+              <span class="card-meta">
                 <span class="card-kicker">Graph viewer</span>
                 <span class="card-title">Trace the logic</span>
               </span>
@@ -61,36 +76,39 @@
           </div>
         </section>
 
-        <!-- Layer 2: Validation -->
+        <!-- 02 Validation -->
         <section class="layer" aria-labelledby="layer-validation">
-          <div class="layer-head">
-            <p class="layer-index">02</p>
-            <h2 class="layer-title" id="layer-validation">Validation</h2>
+          <div class="layer-label">
+            <span class="layer-num" aria-hidden="true">02</span>
+            <div class="layer-text">
+              <h2 class="layer-name" id="layer-validation">Validation</h2>
+              <p class="layer-note">Proof the encodings match the law.</p>
+            </div>
           </div>
-          <div class="demo-list">
-            <a class="demo-card" href="#" target="_blank" rel="noreferrer" data-demo-link="oracles">
-              <span class="preview-frame preview-oracles" aria-hidden="true">
+          <div class="layer-cards">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="oracles">
+              <span class="card-thumb preview-oracles" aria-hidden="true">
                 <iframe title="Oracles preview" tabindex="-1" loading="lazy" data-demo-preview="oracles"></iframe>
               </span>
-              <span class="card-body">
+              <span class="card-meta">
                 <span class="card-kicker">Oracles</span>
                 <span class="card-title">Cross-check every engine</span>
               </span>
             </a>
-            <a class="demo-card" href="#" target="_blank" rel="noreferrer" data-demo-link="guidance">
-              <span class="preview-frame preview-guidance" aria-hidden="true">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="guidance">
+              <span class="card-thumb preview-guidance" aria-hidden="true">
                 <iframe title="Guidance Impact Visualizer preview" tabindex="-1" loading="lazy" data-demo-preview="guidance"></iframe>
               </span>
-              <span class="card-body">
+              <span class="card-meta">
                 <span class="card-kicker">Guidance impact</span>
                 <span class="card-title">Diff the law, see the impact</span>
               </span>
             </a>
-            <a class="demo-card" href="#" target="_blank" rel="noreferrer" data-demo-link="bills">
-              <span class="preview-frame preview-bills" aria-hidden="true">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="bills">
+              <span class="card-thumb preview-bills" aria-hidden="true">
                 <iframe title="Bills preview" tabindex="-1" loading="lazy" data-demo-preview="bills"></iframe>
               </span>
-              <span class="card-body">
+              <span class="card-meta">
                 <span class="card-kicker">Bills</span>
                 <span class="card-title">Track the law as it changes</span>
               </span>
@@ -98,45 +116,48 @@
           </div>
         </section>
 
-        <!-- Layer 3: Application -->
+        <!-- 03 Application -->
         <section class="layer" aria-labelledby="layer-application">
-          <div class="layer-head">
-            <p class="layer-index">03</p>
-            <h2 class="layer-title" id="layer-application">Application</h2>
+          <div class="layer-label">
+            <span class="layer-num" aria-hidden="true">03</span>
+            <div class="layer-text">
+              <h2 class="layer-name" id="layer-application">Application</h2>
+              <p class="layer-note">What partners build on top.</p>
+            </div>
           </div>
-          <div class="demo-list">
-            <a class="demo-card" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
-              <span class="preview-frame preview-finbot" aria-hidden="true">
+          <div class="layer-cards">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
+              <span class="card-thumb preview-finbot" aria-hidden="true">
                 <iframe title="FinBot preview" tabindex="-1" loading="lazy" data-demo-preview="finbot"></iframe>
               </span>
-              <span class="card-body">
+              <span class="card-meta">
                 <span class="card-kicker">FinBot</span>
                 <span class="card-title">Get accurate answers</span>
               </span>
             </a>
-            <a class="demo-card" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
-              <span class="preview-frame preview-builder" aria-hidden="true">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
+              <span class="card-thumb preview-builder" aria-hidden="true">
                 <iframe title="Form Builder preview" tabindex="-1" loading="lazy" data-demo-preview="builder"></iframe>
               </span>
-              <span class="card-body">
+              <span class="card-meta">
                 <span class="card-kicker">Form Builder</span>
                 <span class="card-title">Build a form</span>
               </span>
             </a>
-            <a class="demo-card" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
-              <span class="preview-frame preview-snap" aria-hidden="true">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
+              <span class="card-thumb preview-snap" aria-hidden="true">
                 <iframe title="CO SNAP cliffs preview" tabindex="-1" loading="lazy" data-demo-preview="snap"></iframe>
               </span>
-              <span class="card-body">
+              <span class="card-meta">
                 <span class="card-kicker">CO SNAP cliffs</span>
                 <span class="card-title">Explore the cliffs</span>
               </span>
             </a>
-            <a class="demo-card" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
-              <span class="preview-frame preview-microsim" aria-hidden="true">
+            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
+              <span class="card-thumb preview-microsim" aria-hidden="true">
                 <iframe title="Microsim preview" tabindex="-1" loading="lazy" data-demo-preview="microsim"></iframe>
               </span>
-              <span class="card-body">
+              <span class="card-meta">
                 <span class="card-kicker">Microsim</span>
                 <span class="card-title">Score at scale</span>
               </span>
@@ -144,7 +165,6 @@
           </div>
         </section>
       </div>
-
     </main>
 
     <script src="app.js"></script>
