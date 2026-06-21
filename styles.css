@@ -26,6 +26,7 @@
 html {
   background: var(--cloud);
   color: var(--ink);
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -85,10 +86,11 @@ h1 {
   margin: 0;
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(2.5rem, 5vw, 3.8rem);
-  line-height: 1.02;
+  font-size: clamp(2.1rem, 8vw, 3.8rem);
+  line-height: 1.04;
   letter-spacing: -0.02em;
   text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 .lede {
