@@ -112,18 +112,18 @@ h1 {
   padding-bottom: 8px;
 }
 
-/* the spine: threads the chapters, dissolves into the gallery */
+/* the spine: threads the chapters, dissolves alongside the gallery */
 .journey::before {
   content: "";
   position: absolute;
   top: 24px;
-  bottom: -56px;
+  bottom: 180px;
   left: 23px;
   width: 1.5px;
   background: linear-gradient(
     var(--clay) 0%,
     var(--rule) 10%,
-    var(--rule) 82%,
+    var(--rule) 78%,
     transparent 100%
   );
 }
@@ -155,8 +155,36 @@ h1 {
 }
 
 .ch-content {
-  max-width: 660px;
+  min-width: 0;
   padding-top: 4px;
+}
+
+.ch-content--wide .ch-story {
+  margin-bottom: 22px;
+}
+
+/* per-chapter plate rows (infrastructure + validation live here, not in the gallery) */
+.ch-plates {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 14px;
+  max-width: 980px;
+}
+
+.plate--compact .plate-preview {
+  height: 150px;
+}
+
+.plate--compact .plate-preview iframe {
+  --preview-scale: 0.32;
+}
+
+.plate--compact .plate-title {
+  font-size: 1.05rem;
+}
+
+.plate--compact .plate-desc {
+  font-size: 0.8rem;
 }
 
 .ch-title {
@@ -175,109 +203,19 @@ h1 {
   font-size: 0.96rem;
 }
 
-.plate--feature {
-  max-width: 560px;
-}
-
-.plate--feature .plate-preview {
-  height: 230px;
-}
-
-.ch-more {
-  display: inline-flex;
-  margin-top: 14px;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  font: inherit;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--clay-strong);
-  cursor: pointer;
-}
-
-.ch-more:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* ---------- Gallery section head ---------- */
-
-.gallery-section {
-  scroll-margin-top: 24px;
-}
-
-.gallery-head {
-  margin: 0 0 18px;
-  padding-top: 26px;
-  border-top: 1px solid var(--rule);
-}
-
-.gallery-title {
-  margin: 0 0 4px;
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(1.5rem, 2.8vw, 2rem);
-  letter-spacing: -0.015em;
-}
-
-.gallery-lede {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-}
-
-/* ---------- Filters ---------- */
-
-.filters {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin: 0 0 22px;
-}
-
-.filter {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 7px;
-  border: 1px solid var(--rule);
-  background: var(--paper);
-  color: var(--ink-soft);
-  border-radius: 999px;
-  padding: 7px 16px;
-  font: inherit;
-  font-size: 0.86rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
-}
-
-.filter:hover {
-  border-color: var(--clay);
-  color: var(--ink);
-}
-
-.filter.on {
-  background: var(--clay-strong);
-  border-color: var(--clay-strong);
-  color: #fff;
-}
-
-.filter .f-num {
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.06em;
-  opacity: 0.75;
-}
-
-/* ---------- Gallery ---------- */
+/* ---------- Gallery (application layer only) ---------- */
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
+  max-width: 980px;
+}
+
+@media (max-width: 720px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
 }
 
 .plate {
@@ -428,8 +366,7 @@ h1 {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 34px;
+  margin-top: 26px;
   color: var(--ink-faint);
   font-size: 0.78rem;
 }
