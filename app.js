@@ -46,4 +46,22 @@
   Array.prototype.slice.call(document.querySelectorAll("[data-demo-preview]")).forEach(function (frame) {
     frame.src = destinations[frame.dataset.demoPreview];
   });
+
+  // Gallery layer filters.
+  var filters = Array.prototype.slice.call(document.querySelectorAll(".filter"));
+  var plates = Array.prototype.slice.call(document.querySelectorAll(".plate"));
+  filters.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      filters.forEach(function (b) { b.classList.remove("on"); });
+      btn.classList.add("on");
+      var want = btn.dataset.filter;
+      plates.forEach(function (p) {
+        var show = want === "all" || p.dataset.layer === want;
+        p.classList.toggle("hidden", !show);
+      });
+      if (window.gtag) {
+        window.gtag("event", "gallery_filter", { filter: want, tool_name: "axiom-demo-shell" });
+      }
+    });
+  });
 })();

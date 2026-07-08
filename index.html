@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="A guided path through Axiom — from the infrastructure that encodes law, to the validation that keeps it honest, to the applications built on top."
+      content="The Axiom demo gallery — explore the infrastructure that encodes law, the validation that keeps it honest, and the applications built on top."
     />
-    <title>Axiom Demo</title>
+    <title>Axiom Demo Gallery</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,141 +31,180 @@
       <section class="hero" aria-labelledby="hero-title">
         <h1 id="hero-title">Computable law for&nbsp;all</h1>
         <p class="lede">
-          One path through the stack — the infrastructure that encodes the law,
-          the validation that keeps it honest, and the applications built on top.
+          Ten working surfaces on one substrate — the infrastructure that encodes
+          the law, the validation that keeps it honest, and the applications built on top.
         </p>
       </section>
 
-      <div class="layers">
-        <!-- 01 Infrastructure -->
-        <section class="layer" aria-labelledby="layer-infra">
-          <div class="layer-label">
-            <span class="layer-num" aria-hidden="true">01</span>
-            <div class="layer-text">
-              <h2 class="layer-name" id="layer-infra">Infrastructure</h2>
-              <p class="layer-note">Source law, encoded and made portable.</p>
-            </div>
-          </div>
-          <div class="layer-cards">
-            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="architecture">
-              <span class="card-thumb preview-architecture" aria-hidden="true">
-                <iframe title="Architecture preview" tabindex="-1" loading="lazy" data-demo-preview="architecture"></iframe>
-              </span>
-              <span class="card-meta">
-                <span class="card-kicker">Architecture</span>
-                <span class="card-title">Understand the stack</span>
-              </span>
-            </a>
-            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="law">
-              <span class="card-thumb preview-law" aria-hidden="true">
-                <iframe title="Axiom App preview" tabindex="-1" loading="lazy" data-demo-preview="law"></iframe>
-              </span>
-              <span class="card-meta">
-                <span class="card-kicker">Axiom App</span>
-                <span class="card-title">Explore the law</span>
-              </span>
-            </a>
-            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="graph">
-              <span class="card-thumb preview-graph" aria-hidden="true">
-                <iframe title="RuleSpec graph viewer preview" tabindex="-1" loading="lazy" data-demo-preview="graph"></iframe>
-              </span>
-              <span class="card-meta">
-                <span class="card-kicker">Graph viewer</span>
-                <span class="card-title">Trace the logic</span>
-              </span>
-            </a>
-          </div>
-        </section>
+      <nav class="filters" aria-label="Filter demos by layer">
+        <button class="filter on" data-filter="all">All</button>
+        <button class="filter" data-filter="infrastructure"><span class="f-num">01</span> Infrastructure</button>
+        <button class="filter" data-filter="validation"><span class="f-num">02</span> Validation</button>
+        <button class="filter" data-filter="application"><span class="f-num">03</span> Application</button>
+      </nav>
 
-        <!-- 02 Validation -->
-        <section class="layer" aria-labelledby="layer-validation">
-          <div class="layer-label">
-            <span class="layer-num" aria-hidden="true">02</span>
-            <div class="layer-text">
-              <h2 class="layer-name" id="layer-validation">Validation</h2>
-              <p class="layer-note">Testing encodings for accuracy, consistency and comprehensiveness.</p>
-            </div>
-          </div>
-          <div class="layer-cards">
-            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="oracles">
-              <span class="card-thumb preview-oracles" aria-hidden="true">
-                <iframe title="Oracles preview" tabindex="-1" loading="lazy" data-demo-preview="oracles"></iframe>
-              </span>
-              <span class="card-meta">
-                <span class="card-kicker">Oracles</span>
-                <span class="card-title">Validate across the ecosystem</span>
-              </span>
-            </a>
-            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="guidance">
-              <span class="card-thumb preview-guidance" aria-hidden="true">
-                <iframe title="Guidance Impact Visualizer preview" tabindex="-1" loading="lazy" data-demo-preview="guidance"></iframe>
-              </span>
-              <span class="card-meta">
-                <span class="card-kicker">Guidance impact</span>
-                <span class="card-title">Reconcile primary sources</span>
-              </span>
-            </a>
-            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="bills">
-              <span class="card-thumb preview-bills" aria-hidden="true">
-                <iframe title="Bills preview" tabindex="-1" loading="lazy" data-demo-preview="bills"></iframe>
-              </span>
-              <span class="card-meta">
-                <span class="card-kicker">Bills</span>
-                <span class="card-title">Track active legislation</span>
-              </span>
-            </a>
-          </div>
-        </section>
+      <section class="gallery" aria-label="Axiom demos">
 
-        <!-- 03 Application -->
-        <section class="layer" aria-labelledby="layer-application">
-          <div class="layer-label">
-            <span class="layer-num" aria-hidden="true">03</span>
-            <div class="layer-text">
-              <h2 class="layer-name" id="layer-application">Application</h2>
-              <p class="layer-note">What partners build on top.</p>
-            </div>
-          </div>
-          <div class="layer-cards">
-            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
-              <span class="card-thumb preview-finbot" aria-hidden="true">
-                <iframe title="FinBot preview" tabindex="-1" loading="lazy" data-demo-preview="finbot"></iframe>
-              </span>
-              <span class="card-meta">
-                <span class="card-kicker">FinBot</span>
-                <span class="card-title">Get accurate answers</span>
-              </span>
-            </a>
-            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
-              <span class="card-thumb preview-builder" aria-hidden="true">
-                <iframe title="Form Builder preview" tabindex="-1" loading="lazy" data-demo-preview="builder"></iframe>
-              </span>
-              <span class="card-meta">
-                <span class="card-kicker">Form Builder</span>
-                <span class="card-title">Build a form</span>
-              </span>
-            </a>
-            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
-              <span class="card-thumb preview-snap" aria-hidden="true">
-                <iframe title="CO SNAP cliffs preview" tabindex="-1" loading="lazy" data-demo-preview="snap"></iframe>
-              </span>
-              <span class="card-meta">
-                <span class="card-kicker">CO SNAP cliffs</span>
-                <span class="card-title">Explore the cliffs</span>
-              </span>
-            </a>
-            <a class="card" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
-              <span class="card-thumb preview-microsim" aria-hidden="true">
-                <iframe title="Microsim preview" tabindex="-1" loading="lazy" data-demo-preview="microsim"></iframe>
-              </span>
-              <span class="card-meta">
-                <span class="card-kicker">Microsim</span>
-                <span class="card-title">Score at scale</span>
-              </span>
-            </a>
-          </div>
-        </section>
-      </div>
+        <!-- 01 · Infrastructure -->
+        <a class="plate" data-layer="infrastructure" href="#" target="_blank" rel="noreferrer" data-demo-link="law">
+          <span class="plate-preview preview-law" aria-hidden="true">
+            <iframe title="Axiom App preview" tabindex="-1" loading="lazy" data-demo-preview="law"></iframe>
+          </span>
+          <span class="plate-body">
+            <span class="plate-top">
+              <span class="plate-kicker">Axiom App</span>
+              <span class="badge ga">GA</span>
+            </span>
+            <span class="plate-title">Explore the law</span>
+            <span class="plate-desc">Inspect source text, citations, provenance, and RuleSpec encodings.</span>
+            <span class="plate-layer">01 · Infrastructure</span>
+          </span>
+        </a>
+
+        <a class="plate" data-layer="infrastructure" href="#" target="_blank" rel="noreferrer" data-demo-link="architecture">
+          <span class="plate-preview preview-architecture" aria-hidden="true">
+            <iframe title="Architecture preview" tabindex="-1" loading="lazy" data-demo-preview="architecture"></iframe>
+          </span>
+          <span class="plate-body">
+            <span class="plate-top">
+              <span class="plate-kicker">Architecture</span>
+              <span class="badge demo">Demo</span>
+            </span>
+            <span class="plate-title">Understand the stack</span>
+            <span class="plate-desc">Walk the concept registry, adapters, and engines behind every encoding.</span>
+            <span class="plate-layer">01 · Infrastructure</span>
+          </span>
+        </a>
+
+        <a class="plate" data-layer="infrastructure" href="#" target="_blank" rel="noreferrer" data-demo-link="graph">
+          <span class="plate-preview preview-graph" aria-hidden="true">
+            <iframe title="RuleSpec graph viewer preview" tabindex="-1" loading="lazy" data-demo-preview="graph"></iframe>
+          </span>
+          <span class="plate-body">
+            <span class="plate-top">
+              <span class="plate-kicker">Graph viewer</span>
+              <span class="badge preview">Preview</span>
+            </span>
+            <span class="plate-title">Trace the logic</span>
+            <span class="plate-desc">A RuleSpec program as an interactive DAG — values and citations on every node.</span>
+            <span class="plate-layer">01 · Infrastructure</span>
+          </span>
+        </a>
+
+        <!-- 02 · Validation -->
+        <a class="plate" data-layer="validation" href="#" target="_blank" rel="noreferrer" data-demo-link="oracles">
+          <span class="plate-preview preview-oracles" aria-hidden="true">
+            <iframe title="Oracles preview" tabindex="-1" loading="lazy" data-demo-preview="oracles"></iframe>
+          </span>
+          <span class="plate-body">
+            <span class="plate-top">
+              <span class="plate-kicker">Oracles</span>
+              <span class="badge ga">GA</span>
+            </span>
+            <span class="plate-title">Validate across the ecosystem</span>
+            <span class="plate-desc">Run engines side by side — every divergence is a question about the law or its encoding.</span>
+            <span class="plate-layer">02 · Validation</span>
+          </span>
+        </a>
+
+        <a class="plate" data-layer="validation" href="#" target="_blank" rel="noreferrer" data-demo-link="guidance">
+          <span class="plate-preview preview-guidance" aria-hidden="true">
+            <iframe title="Guidance Impact Visualizer preview" tabindex="-1" loading="lazy" data-demo-preview="guidance"></iframe>
+          </span>
+          <span class="plate-body">
+            <span class="plate-top">
+              <span class="plate-kicker">Guidance impact</span>
+              <span class="badge demo">Demo</span>
+            </span>
+            <span class="plate-title">Reconcile primary sources</span>
+            <span class="plate-desc">An agentic legal diff — watch coverage outcomes respond as guidance changes.</span>
+            <span class="plate-layer">02 · Validation</span>
+          </span>
+        </a>
+
+        <a class="plate" data-layer="validation" href="#" target="_blank" rel="noreferrer" data-demo-link="bills">
+          <span class="plate-preview preview-bills" aria-hidden="true">
+            <iframe title="Bills preview" tabindex="-1" loading="lazy" data-demo-preview="bills"></iframe>
+          </span>
+          <span class="plate-body">
+            <span class="plate-top">
+              <span class="plate-kicker">Bills</span>
+              <span class="badge preview">Preview</span>
+            </span>
+            <span class="plate-title">Track active legislation</span>
+            <span class="plate-desc">Legislation moving underneath the encodings — by bill, status, and program.</span>
+            <span class="plate-layer">02 · Validation</span>
+          </span>
+        </a>
+
+        <!-- 03 · Application -->
+        <a class="plate" data-layer="application" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
+          <span class="plate-preview preview-finbot" aria-hidden="true">
+            <iframe title="FinBot preview" tabindex="-1" loading="lazy" data-demo-preview="finbot"></iframe>
+          </span>
+          <span class="plate-body">
+            <span class="plate-top">
+              <span class="plate-kicker">FinBot</span>
+              <span class="badge preview">Preview</span>
+            </span>
+            <span class="plate-title">Get accurate answers</span>
+            <span class="plate-desc">A grounded assistant backed by encoded rules and citations.</span>
+            <span class="plate-layer">03 · Application</span>
+          </span>
+        </a>
+
+        <a class="plate" data-layer="application" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
+          <span class="plate-preview preview-builder" aria-hidden="true">
+            <iframe title="Form Builder preview" tabindex="-1" loading="lazy" data-demo-preview="builder"></iframe>
+          </span>
+          <span class="plate-body">
+            <span class="plate-top">
+              <span class="plate-kicker">Form Builder</span>
+              <span class="badge preview">Preview</span>
+            </span>
+            <span class="plate-title">Build a form</span>
+            <span class="plate-desc">Partner intake forms powered by Axiom inputs, outputs, and explanations.</span>
+            <span class="plate-layer">03 · Application</span>
+          </span>
+        </a>
+
+        <a class="plate" data-layer="application" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
+          <span class="plate-preview preview-snap" aria-hidden="true">
+            <iframe title="CO SNAP cliffs preview" tabindex="-1" loading="lazy" data-demo-preview="snap"></iframe>
+          </span>
+          <span class="plate-body">
+            <span class="plate-top">
+              <span class="plate-kicker">CO SNAP cliffs</span>
+              <span class="badge demo">Demo</span>
+            </span>
+            <span class="plate-title">Explore the cliffs</span>
+            <span class="plate-desc">Reform Colorado SNAP parameters and watch cliffs and marginal rates shift live.</span>
+            <span class="plate-layer">03 · Application</span>
+          </span>
+        </a>
+
+        <a class="plate" data-layer="application" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
+          <span class="plate-preview preview-microsim" aria-hidden="true">
+            <iframe title="Microsim preview" tabindex="-1" loading="lazy" data-demo-preview="microsim"></iframe>
+          </span>
+          <span class="plate-body">
+            <span class="plate-top">
+              <span class="plate-kicker">Microsim</span>
+              <span class="badge preview">Preview</span>
+            </span>
+            <span class="plate-title">Score at scale</span>
+            <span class="plate-desc">Federal and state reforms against the Enhanced CPS — population-level impacts.</span>
+            <span class="plate-layer">03 · Application</span>
+          </span>
+        </a>
+
+      </section>
+
+      <footer class="tiers-note">
+        <span class="badge ga">GA</span> supported ·
+        <span class="badge preview">Preview</span> functional, evolving ·
+        <span class="badge demo">Demo</span> illustrative, curated scope
+      </footer>
     </main>
 
     <script src="app.js"></script>

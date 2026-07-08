@@ -2,15 +2,17 @@
   color-scheme: light;
 
   /* Claude / Anthropic palette */
-  --cloud: #f0eee6;        /* page background — warm ivory */
-  --paper: #faf9f5;        /* card surface */
-  --ink: #1a1915;          /* near-black, warm */
-  --ink-soft: #6f6d64;     /* muted warm gray */
+  --cloud: #f0eee6;
+  --paper: #faf9f5;
+  --ink: #1a1915;
+  --ink-soft: #6f6d64;
   --ink-faint: #9b9890;
-  --clay: #cc785c;         /* signature accent — book cloth */
-  --clay-strong: #b1573b;  /* accent for text / hover */
-  --rule: #e3dfd3;         /* hairline */
+  --clay: #cc785c;
+  --clay-strong: #b1573b;
+  --rule: #e3dfd3;
   --rule-soft: #ece9df;
+  --ga: #2f6b3a;
+  --preview: #2f6b6f;
 
   --serif: "Newsreader", Georgia, "Times New Roman", serif;
   --sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -51,8 +53,7 @@ img {
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: min(1160px, calc(100% - 56px));
+  width: min(1220px, calc(100% - 56px));
   margin: 0 auto;
   padding: 22px 0 0;
 }
@@ -72,21 +73,21 @@ img {
 /* ---------- Page + hero ---------- */
 
 .page {
-  width: min(1160px, calc(100% - 56px));
+  width: min(1220px, calc(100% - 56px));
   margin: 0 auto;
-  padding: clamp(28px, 5vh, 56px) 0 56px;
+  padding: clamp(26px, 5vh, 52px) 0 64px;
 }
 
 .hero {
-  max-width: 720px;
-  margin: 0 0 clamp(30px, 5vh, 52px);
+  max-width: 760px;
+  margin: 0 0 clamp(22px, 4vh, 36px);
 }
 
 h1 {
   margin: 0;
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(2.1rem, 8vw, 3.8rem);
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
   line-height: 1.04;
   letter-spacing: -0.02em;
   text-wrap: balance;
@@ -94,122 +95,108 @@ h1 {
 }
 
 .lede {
-  max-width: 540px;
-  margin: 22px 0 0;
-  font-size: clamp(1.02rem, 1.4vw, 1.18rem);
+  max-width: 560px;
+  margin: 16px 0 0;
+  font-size: clamp(0.98rem, 1.3vw, 1.12rem);
   color: var(--ink-soft);
 }
 
-/* ---------- Layer rows + spine ---------- */
+/* ---------- Filters ---------- */
 
-.layers {
-  position: relative;
+.filters {
   display: flex;
-  flex-direction: column;
-  gap: clamp(20px, 3vh, 34px);
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 22px;
 }
 
-/* the spine threading the three numbered stages, dissolving into "product" */
-.layers::before {
-  content: "";
-  position: absolute;
-  top: 26px;
-  bottom: 0;
-  left: 21px;
-  width: 1px;
-  background: linear-gradient(
-    var(--clay) 0%,
-    var(--rule) 7%,
-    var(--rule) 64%,
-    transparent 100%
-  );
+.filter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink-soft);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
 }
 
-.layer {
-  display: grid;
-  grid-template-columns: 232px 1fr;
-  gap: clamp(20px, 3vw, 44px);
-  align-items: start;
+.filter:hover {
+  border-color: var(--clay);
+  color: var(--ink);
 }
 
-.layer-label {
-  display: flex;
-  gap: 16px;
-  padding-top: 4px;
+.filter.on {
+  background: var(--clay-strong);
+  border-color: var(--clay-strong);
+  color: #fff;
 }
 
-.layer-num {
-  position: relative;
-  z-index: 1;
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--clay);
-  border-radius: 50%;
-  background: var(--cloud);
+.filter .f-num {
   font-family: var(--mono);
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--clay-strong);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
 }
 
-.layer-name {
-  margin: 6px 0 4px;
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 1.5rem;
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-}
+/* ---------- Gallery ---------- */
 
-.layer-note {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-  max-width: 22ch;
-}
-
-/* ---------- Cards ---------- */
-
-.layer-cards {
+.gallery {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 20px;
 }
 
-.card {
+.plate {
   display: flex;
   flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--rule);
-  border-radius: 12px;
+  border-radius: 14px;
   background: var(--paper);
   text-decoration: none;
   box-shadow: 0 1px 2px rgba(26, 25, 21, 0.04);
   transition:
     border-color 200ms ease,
     box-shadow 200ms ease,
-    transform 200ms ease;
+    transform 200ms ease,
+    opacity 200ms ease;
 }
 
-.card:hover {
+.plate:hover {
   border-color: var(--clay);
-  box-shadow: 0 14px 30px rgba(26, 25, 21, 0.1);
-  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(26, 25, 21, 0.12);
+  transform: translateY(-5px);
 }
 
-.card-thumb {
+.plate.hidden {
+  display: none;
+}
+
+/* preview */
+.plate-preview {
   position: relative;
-  height: 82px;
+  height: 210px;
   overflow: hidden;
   border-bottom: 1px solid var(--rule-soft);
   background: var(--rule-soft);
 }
 
-.card-thumb iframe {
-  --preview-scale: 0.24;
+.plate-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.plate-preview iframe {
+  --preview-scale: 0.42;
   position: absolute;
   inset: 0;
   width: calc(100% / var(--preview-scale));
@@ -218,50 +205,114 @@ h1 {
   pointer-events: none;
   transform: scale(var(--preview-scale));
   transform-origin: 0 0;
+  transition: transform 400ms ease;
 }
 
-/* The Form Builder is a wide app — zoom out a touch more than the default,
-   but keep the responsive width/height so the preview always fills the card
-   (a fixed pixel size left an empty strip and a blank crop on mobile). */
+.plate:hover .plate-preview iframe {
+  transform: scale(calc(var(--preview-scale) * 1.02));
+}
+
 .preview-builder iframe {
-  --preview-scale: 0.2;
+  --preview-scale: 0.28;
 }
 
-.card-meta {
+/* body */
+.plate-body {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px 14px 15px;
+  gap: 5px;
+  padding: 15px 17px 16px;
 }
 
-.card-kicker {
+.plate-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.plate-kicker {
   font-family: var(--mono);
-  font-size: 0.66rem;
-  font-weight: 500;
+  font-size: 0.64rem;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--clay-strong);
 }
 
-.card-title {
+.plate-title {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: 1.05rem;
-  line-height: 1.18;
+  font-size: 1.22rem;
+  line-height: 1.15;
   letter-spacing: -0.01em;
   color: var(--ink);
 }
 
-/* ---------- Focus + motion ---------- */
-
-a:focus-visible {
-  outline: 2px solid var(--clay-strong);
-  outline-offset: 3px;
-  border-radius: 4px;
+.plate-desc {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
 }
 
-.card:focus-visible {
-  outline-offset: 2px;
+.plate-layer {
+  margin-top: 7px;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---------- Tier badges ---------- */
+
+.badge {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2.5px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  white-space: nowrap;
+}
+
+.badge.ga {
+  color: var(--ga);
+  border-color: color-mix(in srgb, var(--ga) 45%, var(--rule));
+  background: color-mix(in srgb, var(--ga) 8%, transparent);
+}
+
+.badge.preview {
+  color: var(--preview);
+  border-color: color-mix(in srgb, var(--preview) 40%, var(--rule));
+}
+
+.badge.demo {
+  color: var(--ink-soft);
+}
+
+/* ---------- Footer note ---------- */
+
+.tiers-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 34px;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+}
+
+/* ---------- Focus + motion ---------- */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--clay-strong);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -272,28 +323,25 @@ a:focus-visible {
 
 /* ---------- Responsive ---------- */
 
-@media (max-width: 920px) {
-  .layers::before {
-    display: none;
-  }
-
-  .layer {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .layer-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 560px) {
   .nav,
   .page {
     width: calc(100% - 36px);
   }
 
-  .layer-cards {
+  .gallery {
     grid-template-columns: 1fr;
+  }
+
+  .plate-preview {
+    height: 190px;
+  }
+
+  .plate-preview iframe {
+    --preview-scale: 0.5;
+  }
+
+  .preview-builder iframe {
+    --preview-scale: 0.3;
   }
 }
