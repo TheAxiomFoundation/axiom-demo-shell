@@ -101,6 +101,134 @@ h1 {
   color: var(--ink-soft);
 }
 
+/* ---------- The guided path (journey + spine) ---------- */
+
+.journey {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 6vh, 60px);
+  margin: clamp(30px, 5vh, 50px) 0 clamp(44px, 7vh, 72px);
+  padding-bottom: 8px;
+}
+
+/* the spine: threads the chapters, dissolves into the gallery */
+.journey::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  bottom: -56px;
+  left: 23px;
+  width: 1.5px;
+  background: linear-gradient(
+    var(--clay) 0%,
+    var(--rule) 10%,
+    var(--rule) 82%,
+    transparent 100%
+  );
+}
+
+.chapter {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: clamp(16px, 3vw, 30px);
+  align-items: start;
+}
+
+.ch-marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid var(--clay);
+  border-radius: 50%;
+  background: var(--cloud);
+}
+
+.ch-marker span {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--clay-strong);
+}
+
+.ch-content {
+  max-width: 660px;
+  padding-top: 4px;
+}
+
+.ch-title {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.ch-story {
+  margin: 0 0 18px;
+  max-width: 520px;
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+}
+
+.plate--feature {
+  max-width: 560px;
+}
+
+.plate--feature .plate-preview {
+  height: 230px;
+}
+
+.ch-more {
+  display: inline-flex;
+  margin-top: 14px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clay-strong);
+  cursor: pointer;
+}
+
+.ch-more:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Gallery section head ---------- */
+
+.gallery-section {
+  scroll-margin-top: 24px;
+}
+
+.gallery-head {
+  margin: 0 0 18px;
+  padding-top: 26px;
+  border-top: 1px solid var(--rule);
+}
+
+.gallery-title {
+  margin: 0 0 4px;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  letter-spacing: -0.015em;
+}
+
+.gallery-lede {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
 /* ---------- Filters ---------- */
 
 .filters {
@@ -327,6 +455,28 @@ button:focus-visible {
   .nav,
   .page {
     width: calc(100% - 36px);
+  }
+
+  .journey::before {
+    left: 17px;
+  }
+
+  .chapter {
+    grid-template-columns: 36px 1fr;
+    gap: 14px;
+  }
+
+  .ch-marker {
+    width: 36px;
+    height: 36px;
+  }
+
+  .ch-marker span {
+    font-size: 0.7rem;
+  }
+
+  .plate--feature .plate-preview {
+    height: 190px;
   }
 
   .gallery {

@@ -47,21 +47,33 @@
     frame.src = destinations[frame.dataset.demoPreview];
   });
 
-  // Gallery layer filters.
+  // Gallery layer filters. Only gallery plates (with data-layer) participate;
+  // the featured chapter plates always stay visible.
   var filters = Array.prototype.slice.call(document.querySelectorAll(".filter"));
-  var plates = Array.prototype.slice.call(document.querySelectorAll(".plate"));
+  var plates = Array.prototype.slice.call(document.querySelectorAll(".plate[data-layer]"));
+
+  function applyFilter(want) {
+    filters.forEach(function (b) { b.classList.toggle("on", b.dataset.filter === want); });
+    plates.forEach(function (p) {
+      var show = want === "all" || p.dataset.layer === want;
+      p.classList.toggle("hidden", !show);
+    });
+    if (window.gtag) {
+      window.gtag("event", "gallery_filter", { filter: want, tool_name: "axiom-demo-shell" });
+    }
+  }
+
   filters.forEach(function (btn) {
+    btn.addEventListener("click", function () { applyFilter(btn.dataset.filter); });
+  });
+
+  // Chapter "browse all →" links: pre-apply that layer's filter, then glide
+  // down into the gallery — the guided path leads into exploration.
+  Array.prototype.slice.call(document.querySelectorAll(".ch-more")).forEach(function (btn) {
     btn.addEventListener("click", function () {
-      filters.forEach(function (b) { b.classList.remove("on"); });
-      btn.classList.add("on");
-      var want = btn.dataset.filter;
-      plates.forEach(function (p) {
-        var show = want === "all" || p.dataset.layer === want;
-        p.classList.toggle("hidden", !show);
-      });
-      if (window.gtag) {
-        window.gtag("event", "gallery_filter", { filter: want, tool_name: "axiom-demo-shell" });
-      }
+      applyFilter(btn.dataset.goto);
+      var gallery = document.getElementById("gallery");
+      if (gallery) gallery.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
 })();
