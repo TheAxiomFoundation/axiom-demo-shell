@@ -109,61 +109,103 @@
               <p class="ch-status"><span class="dot demos"></span>demos</p>
             </div>
           </div>
-          <div class="gallery">
-            <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
-              <span class="gcard-thumb preview-finbot" aria-hidden="true">
-                <iframe title="FinBot preview" tabindex="-1" loading="lazy" data-demo-preview="finbot"></iframe>
-              </span>
-              <span class="gcard-body">
-                <span class="mini-top"><span class="mini-kicker">FinBot</span></span>
-                <span class="mini-title">Get accurate answers</span>
-              </span>
-            </a>
-            <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
-              <span class="gcard-thumb preview-builder" aria-hidden="true">
-                <iframe title="Form Builder preview" tabindex="-1" loading="lazy" data-demo-preview="builder"></iframe>
-              </span>
-              <span class="gcard-body">
-                <span class="mini-top"><span class="mini-kicker">Form Builder</span></span>
-                <span class="mini-title">Build a form</span>
-              </span>
-            </a>
-            <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
-              <span class="gcard-thumb preview-snap" aria-hidden="true">
-                <iframe title="CO SNAP cliffs preview" tabindex="-1" loading="lazy" data-demo-preview="snap"></iframe>
-              </span>
-              <span class="gcard-body">
-                <span class="mini-top"><span class="mini-kicker">CO SNAP cliffs</span></span>
-                <span class="mini-title">Explore the cliffs</span>
-              </span>
-            </a>
-            <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
-              <span class="gcard-thumb preview-microsim" aria-hidden="true">
-                <iframe title="Microsim preview" tabindex="-1" loading="lazy" data-demo-preview="microsim"></iframe>
-              </span>
-              <span class="gcard-body">
-                <span class="mini-top"><span class="mini-kicker">Microsim</span></span>
-                <span class="mini-title">Score at scale</span>
-              </span>
-            </a>
-            <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="guidance">
-              <span class="gcard-thumb preview-guidance" aria-hidden="true">
-                <iframe title="Guidance impact preview" tabindex="-1" loading="lazy" data-demo-preview="guidance"></iframe>
-              </span>
-              <span class="gcard-body">
-                <span class="mini-top"><span class="mini-kicker">Guidance impact</span></span>
-                <span class="mini-title">Reconcile primary sources</span>
-              </span>
-            </a>
-            <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="architecture">
-              <span class="gcard-thumb preview-architecture" aria-hidden="true">
-                <iframe title="Architecture preview" tabindex="-1" loading="lazy" data-demo-preview="architecture"></iframe>
-              </span>
-              <span class="gcard-body">
-                <span class="mini-top"><span class="mini-kicker">Architecture</span></span>
-                <span class="mini-title">Understand the stack</span>
-              </span>
-            </a>
+          <div class="carousel">
+            <div class="car-controls" aria-hidden="false">
+              <button class="car-btn" data-dir="-1" aria-label="Previous demos">←</button>
+              <span class="car-count" aria-live="polite"><b>1</b>/8</span>
+              <button class="car-btn" data-dir="1" aria-label="Next demos">→</button>
+            </div>
+            <div class="car-track" tabindex="0" aria-label="Demo carousel">
+
+              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
+                <span class="gcard-thumb preview-finbot" aria-hidden="true">
+                  <iframe title="FinBot preview" tabindex="-1" loading="lazy" data-demo-preview="finbot"></iframe>
+                </span>
+                <span class="gcard-body">
+                  <span class="mini-top"><span class="mini-kicker">FinBot</span></span>
+                  <span class="mini-title">Get accurate answers</span>
+                  <span class="gcard-desc">A grounded assistant backed by encoded rules and citations.</span>
+                </span>
+              </a>
+
+              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="regdemo">
+                <span class="gcard-thumb preview-regdemo" aria-hidden="true">
+                  <iframe title="Small company checker preview" tabindex="-1" loading="lazy" data-demo-preview="regdemo"></iframe>
+                </span>
+                <span class="gcard-body">
+                  <span class="mini-top"><span class="mini-kicker">Small company checker</span></span>
+                  <span class="mini-title">Run law in the browser</span>
+                  <span class="gcard-desc">Companies Act 2006 s.382, computed on-device via WASM — nothing leaves the page.</span>
+                </span>
+              </a>
+
+              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
+                <span class="gcard-thumb preview-builder" aria-hidden="true">
+                  <iframe title="Form Builder preview" tabindex="-1" loading="lazy" data-demo-preview="builder"></iframe>
+                </span>
+                <span class="gcard-body">
+                  <span class="mini-top"><span class="mini-kicker">Form Builder</span></span>
+                  <span class="mini-title">Build a form</span>
+                  <span class="gcard-desc">Partner intake forms powered by Axiom inputs, outputs, and explanations.</span>
+                </span>
+              </a>
+
+              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="workflow">
+                <span class="gcard-thumb preview-workflow" aria-hidden="true">
+                  <iframe title="CO SNAP workflow checker preview" tabindex="-1" loading="lazy" data-demo-preview="workflow"></iframe>
+                </span>
+                <span class="gcard-body">
+                  <span class="mini-top"><span class="mini-kicker">Workflow checker</span></span>
+                  <span class="mini-title">Check the caseworker path</span>
+                  <span class="gcard-desc">Colorado SNAP processing rules (10 CCR 2506-1) mapped to RuleSpec.</span>
+                </span>
+              </a>
+
+              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
+                <span class="gcard-thumb preview-snap" aria-hidden="true">
+                  <iframe title="CO SNAP cliffs preview" tabindex="-1" loading="lazy" data-demo-preview="snap"></iframe>
+                </span>
+                <span class="gcard-body">
+                  <span class="mini-top"><span class="mini-kicker">CO SNAP cliffs</span></span>
+                  <span class="mini-title">Explore the cliffs</span>
+                  <span class="gcard-desc">Reform Colorado SNAP parameters and watch cliffs and marginal rates shift live.</span>
+                </span>
+              </a>
+
+              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
+                <span class="gcard-thumb preview-microsim" aria-hidden="true">
+                  <iframe title="Microsim preview" tabindex="-1" loading="lazy" data-demo-preview="microsim"></iframe>
+                </span>
+                <span class="gcard-body">
+                  <span class="mini-top"><span class="mini-kicker">Microsim</span></span>
+                  <span class="mini-title">Score at scale</span>
+                  <span class="gcard-desc">Federal and state reforms against the Enhanced CPS — population impacts.</span>
+                </span>
+              </a>
+
+              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="guidance">
+                <span class="gcard-thumb preview-guidance" aria-hidden="true">
+                  <iframe title="Guidance impact preview" tabindex="-1" loading="lazy" data-demo-preview="guidance"></iframe>
+                </span>
+                <span class="gcard-body">
+                  <span class="mini-top"><span class="mini-kicker">Guidance impact</span></span>
+                  <span class="mini-title">Reconcile primary sources</span>
+                  <span class="gcard-desc">An agentic legal diff — coverage outcomes as guidance changes.</span>
+                </span>
+              </a>
+
+              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="architecture">
+                <span class="gcard-thumb preview-architecture" aria-hidden="true">
+                  <iframe title="Architecture preview" tabindex="-1" loading="lazy" data-demo-preview="architecture"></iframe>
+                </span>
+                <span class="gcard-body">
+                  <span class="mini-top"><span class="mini-kicker">Architecture</span></span>
+                  <span class="mini-title">Understand the stack</span>
+                  <span class="gcard-desc">The concept registry, adapters, and engines behind every encoding.</span>
+                </span>
+              </a>
+
+            </div>
           </div>
         </section>
 

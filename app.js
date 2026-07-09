@@ -14,7 +14,9 @@
     finbot: "https://finbot-snap-demo.vercel.app/",
     builder: "https://dashboard-builder-flax.vercel.app/",
     snap: "https://axiom-co-snap.vercel.app/",
-    microsim: "https://axiom-microsim.vercel.app/"
+    microsim: "https://axiom-microsim.vercel.app/",
+    regdemo: "https://axiom-reg-demo.vercel.app/",
+    workflow: "https://co-snap-workflow-checker.vercel.app/"
   };
 
   var localDestinations = {
@@ -30,7 +32,9 @@
     finbot: "http://127.0.0.1:3001/",
     builder: "http://127.0.0.1:5173/",
     snap: "http://127.0.0.1:3002/",
-    microsim: "http://127.0.0.1:3003/"
+    microsim: "http://127.0.0.1:3003/",
+    regdemo: "https://axiom-reg-demo.vercel.app/",
+    workflow: "https://co-snap-workflow-checker.vercel.app/"
   };
 
   // Default to the deployed apps everywhere so the shell works the same whether
@@ -47,4 +51,30 @@
     frame.src = destinations[frame.dataset.demoPreview];
   });
 
+  // Demo carousel: arrows scroll one card; the counter tracks position.
+  var track = document.querySelector(".car-track");
+  if (track) {
+    var cards = Array.prototype.slice.call(track.querySelectorAll(".gcard"));
+    var countEl = document.querySelector(".car-count b");
+
+    function cardStep() {
+      if (cards.length < 2) return track.clientWidth;
+      return cards[1].offsetLeft - cards[0].offsetLeft;
+    }
+
+    Array.prototype.slice.call(document.querySelectorAll(".car-btn")).forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        track.scrollBy({ left: cardStep() * Number(btn.dataset.dir), behavior: "smooth" });
+        if (window.gtag) {
+          window.gtag("event", "carousel_nav", { tool_name: "axiom-demo-shell" });
+        }
+      });
+    });
+
+    track.addEventListener("scroll", function () {
+      if (!countEl) return;
+      var i = Math.round(track.scrollLeft / cardStep());
+      countEl.textContent = String(Math.min(cards.length, Math.max(1, i + 1)));
+    }, { passive: true });
+  }
 })();

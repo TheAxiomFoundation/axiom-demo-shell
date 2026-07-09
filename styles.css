@@ -244,12 +244,70 @@ h1 {
   color: var(--ink);
 }
 
-/* ---------- Gallery (3 × 2, compact vertical cards) ---------- */
+/* ---------- Demo carousel ---------- */
 
-.gallery {
+.carousel {
+  position: relative;
+  min-width: 0;
+}
+
+.car-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 0 0 10px;
+}
+
+.car-btn {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.car-btn:hover {
+  border-color: var(--clay);
+  color: var(--clay-strong);
+}
+
+.car-count {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+.car-count b {
+  color: var(--clay-strong);
+  font-weight: 600;
+}
+
+.car-track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 2px 2px 8px;
+  /* soft edge fade hinting there's more */
+  -webkit-mask-image: linear-gradient(to right, black 94%, transparent);
+  mask-image: linear-gradient(to right, black 94%, transparent);
+}
+
+.car-track::-webkit-scrollbar { display: none; }
+
+.car-track .gcard {
+  flex: 0 0 340px;
+  scroll-snap-align: start;
 }
 
 .gcard {
@@ -272,14 +330,20 @@ h1 {
 
 .gcard-thumb {
   position: relative;
-  height: clamp(72px, 10.5vh, 104px);
+  height: clamp(130px, 19vh, 180px);
   overflow: hidden;
   border-bottom: 1px solid var(--rule-soft);
   background: var(--rule-soft);
 }
 
 .gcard-thumb iframe {
-  --preview-scale: 0.26;
+  --preview-scale: 0.3;
+}
+
+.gcard-desc {
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
 }
 
 .preview-builder iframe {
@@ -358,13 +422,12 @@ button:focus-visible {
 
 @media (max-width: 860px) {
   .ch-cards { grid-template-columns: 1fr; }
-  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 560px) {
   .nav, .page { width: calc(100% - 36px); }
   .hero { flex-direction: column; gap: 6px; }
-  .gallery { grid-template-columns: 1fr; }
+  .car-track .gcard { flex-basis: 300px; }
   .gcard-thumb { height: 130px; }
   .gcard-thumb iframe { --preview-scale: 0.4; }
   .mini-thumb iframe { --preview-scale: 0.3; }
