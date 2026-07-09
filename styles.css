@@ -163,7 +163,7 @@ h1 {
 
 .ch-cards {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 12px;
 }
 
@@ -206,32 +206,6 @@ h1 {
   transform: scale(var(--preview-scale));
   transform-origin: 0 0;
 }
-
-/* Static thumbs for surfaces that refuse framing (frame-ancestors 'none') */
-.thumb-static {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3px;
-  padding: 8px 10px;
-  background: var(--paper);
-}
-
-.ts-line {
-  font-family: var(--mono);
-  font-size: 0.56rem;
-  color: var(--ink-soft);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.ts-line b {
-  color: var(--clay-strong);
-  font-weight: 600;
-}
-
-.ts-dim { color: var(--ink-faint); }
 
 .mini-body {
   display: flex;
@@ -346,12 +320,6 @@ h1 {
 }
 
 .badge.demo { color: var(--ink-soft); }
-
-.badge.coming {
-  color: var(--clay-strong);
-  border-color: color-mix(in srgb, var(--clay-strong) 40%, var(--rule));
-  background: color-mix(in srgb, var(--clay-strong) 7%, transparent);
-}
 
 /* ---------- Footer legend ---------- */
 
