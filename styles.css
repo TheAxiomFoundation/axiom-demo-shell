@@ -219,8 +219,8 @@ h1 {
 .mini-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: flex-start;
+  gap: 7px;
 }
 
 .mini-kicker {
@@ -293,33 +293,21 @@ h1 {
   padding: 9px 12px 11px;
 }
 
-/* ---------- Tier badges ---------- */
+/* ---------- Tier dots (quiet status signal; legend + tooltip carry meaning) ---------- */
 
-.badge {
-  font-family: var(--mono);
-  font-size: 0.52rem;
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  padding: 2px 7px;
-  border-radius: 999px;
-  border: 1px solid var(--rule);
-  white-space: nowrap;
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
   flex: none;
 }
 
-.badge.ga {
-  color: var(--ga);
-  border-color: color-mix(in srgb, var(--ga) 45%, var(--rule));
-  background: color-mix(in srgb, var(--ga) 8%, transparent);
+.dot.ga { background: var(--ga); }
+.dot.preview { background: var(--preview); }
+.dot.demo {
+  background: transparent;
+  border: 1.5px solid var(--ink-faint);
 }
-
-.badge.preview {
-  color: var(--preview);
-  border-color: color-mix(in srgb, var(--preview) 40%, var(--rule));
-}
-
-.badge.demo { color: var(--ink-soft); }
 
 /* ---------- Footer legend ---------- */
 
