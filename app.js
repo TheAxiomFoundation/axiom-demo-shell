@@ -14,7 +14,10 @@
     finbot: "https://finbot-snap-demo.vercel.app/",
     builder: "https://dashboard-builder-flax.vercel.app/",
     snap: "https://axiom-co-snap.vercel.app/",
-    microsim: "https://axiom-microsim.vercel.app/"
+    microsim: "https://axiom-microsim.vercel.app/",
+    // Developer / proof surfaces (hosted API docs — same URL locally)
+    apidocs: "https://axiom-api-eta.vercel.app/docs",
+    validation: "https://axiom-api-eta.vercel.app/docs/validation"
   };
 
   var localDestinations = {
@@ -30,7 +33,10 @@
     finbot: "http://127.0.0.1:3001/",
     builder: "http://127.0.0.1:5173/",
     snap: "http://127.0.0.1:3002/",
-    microsim: "http://127.0.0.1:3003/"
+    microsim: "http://127.0.0.1:3003/",
+    // Developer / proof surfaces (no local server — use hosted)
+    apidocs: "https://axiom-api-eta.vercel.app/docs",
+    validation: "https://axiom-api-eta.vercel.app/docs/validation"
   };
 
   // Default to the deployed apps everywhere so the shell works the same whether
