@@ -33,6 +33,8 @@
     builder: "http://127.0.0.1:5173/",
     snap: "http://127.0.0.1:3002/",
     microsim: "http://127.0.0.1:3003/",
+    // These two have no local dev server yet, so even in local mode they fall
+    // back to the deployed app rather than a dead 127.0.0.1 port.
     regdemo: "https://axiom-reg-demo.vercel.app/",
     workflow: "https://co-snap-workflow-checker.vercel.app/"
   };
