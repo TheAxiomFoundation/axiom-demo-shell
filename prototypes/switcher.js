@@ -8,7 +8,8 @@
     { href: "gallery-hybrid.html", label: "Wheel + deck" },
     { href: "gallery-flywheel.html", label: "Flywheel" },
     { href: "gallery-stack.html", label: "Card stack" },
-    { href: "gallery-reel.html", label: "3D reel" }
+    { href: "gallery-reel.html", label: "3D reel" },
+    { href: "gallery-ribbon.html", label: "Ribbon" }
   ];
   var here = window.location.pathname.split("/").pop();
 
