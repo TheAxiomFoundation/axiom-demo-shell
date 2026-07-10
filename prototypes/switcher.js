@@ -9,7 +9,8 @@
     { href: "gallery-flywheel.html", label: "Flywheel" },
     { href: "gallery-stack.html", label: "Card stack" },
     { href: "gallery-reel.html", label: "3D reel" },
-    { href: "gallery-ribbon.html", label: "Ribbon" }
+    { href: "gallery-ribbon.html", label: "Ribbon" },
+    { href: "demo-frame.html", label: "Demo frame" }
   ];
   var here = window.location.pathname.split("/").pop();
 

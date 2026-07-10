@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo frame — Axiom</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cloud: #f0eee6; --paper: #faf9f5; --ink: #1a1915; --ink-soft: #6f6d64;
+        --ink-faint: #9b9890; --clay: #cc785c; --clay-strong: #b1573b;
+        --rule: #e3dfd3; --rule-soft: #ece9df;
+        --serif: "Newsreader", Georgia, serif;
+        --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, monospace;
+        --bar-h: 52px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; }
+      body { background: var(--cloud); color: var(--ink); font-family: var(--sans);
+        -webkit-font-smoothing: antialiased; overflow: hidden; }
+
+      /* ── the shell bar: wordmark · names ribbon · actions ── */
+      .bar {
+        display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px;
+        height: var(--bar-h); padding: 0 14px 0 16px;
+        border-bottom: 1px solid var(--rule);
+        background: color-mix(in srgb, var(--cloud) 92%, transparent);
+        backdrop-filter: saturate(140%) blur(10px);
+        position: relative; z-index: 5;
+      }
+      .mark { display: inline-flex; align-items: baseline; gap: 8px; text-decoration: none; color: var(--ink); }
+      .mark .glyph { font-family: var(--serif); font-size: 1.25rem; color: var(--clay-strong); line-height: 1; }
+      .mark .lbl { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.18em;
+        text-transform: uppercase; color: var(--ink-faint); }
+
+      .ribbon {
+        min-width: 0; display: flex; align-items: center; overflow-x: auto; scrollbar-width: none;
+        -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+        mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+      }
+      .ribbon::-webkit-scrollbar { display: none; }
+      .rib {
+        flex: none; position: relative; display: inline-flex; align-items: baseline; gap: 7px;
+        padding: 15px 16px; border: 0; background: transparent; cursor: pointer;
+        font-family: var(--sans); color: var(--ink-soft); white-space: nowrap;
+      }
+      .rib + .rib::before {
+        content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+        width: 1px; height: 14px; background: var(--rule);
+      }
+      .rib-num { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.08em; color: var(--ink-faint); }
+      .rib-name { font-family: var(--serif); font-size: 0.95rem; letter-spacing: -0.01em; }
+      .rib:hover { color: var(--ink); }
+      .rib::after {
+        content: ""; position: absolute; left: 14px; right: 14px; bottom: 0; height: 2px;
+        background: transparent; transition: background 150ms ease;
+      }
+      .rib[aria-current="true"] { color: var(--ink); }
+      .rib[aria-current="true"] .rib-num { color: var(--clay-strong); }
+      .rib[aria-current="true"]::after { background: var(--clay-strong); }
+
+      .acts { display: flex; align-items: center; gap: 10px; }
+      .count { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; color: var(--ink-faint); }
+      .count b { color: var(--clay-strong); font-weight: 600; }
+      .standalone {
+        display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+        font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--clay-strong); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 12px;
+        transition: border-color 140ms ease;
+      }
+      .standalone:hover { border-color: var(--clay); }
+
+      /* ── the demo itself: full bleed below the bar, fully interactive ── */
+      .frame { position: fixed; inset: var(--bar-h) 0 0 0; background: var(--paper); }
+      .frame iframe { width: 100%; height: 100%; border: 0; }
+      .loading {
+        position: absolute; inset: 0; display: grid; place-items: center;
+        font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em;
+        text-transform: uppercase; color: var(--ink-faint); pointer-events: none;
+        transition: opacity 240ms ease;
+      }
+      .loading.off { opacity: 0; }
+
+      @media (max-width: 700px) {
+        .mark .lbl { display: none; }
+        .standalone span { display: none; }
+        .rib { padding: 15px 12px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bar">
+      <a class="mark" href="../index.html" title="Back to all demos">
+        <span class="glyph">∀</span>
+        <span class="lbl">Axiom demos</span>
+      </a>
+      <nav class="ribbon" id="ribbon" aria-label="All demos"></nav>
+      <div class="acts">
+        <span class="count"><b id="ci">1</b>/<span id="cn">8</span></span>
+        <a class="standalone" id="standalone" href="#" target="_blank" rel="noreferrer">↗ <span>standalone</span></a>
+      </div>
+    </header>
+
+    <div class="frame">
+      <div class="loading" id="loading">loading demo…</div>
+      <iframe id="demo" title="Axiom demo"></iframe>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+      (function () {
+        "use strict";
+        var demos = PROTO.DEMOS;
+        var ribbon = document.getElementById("ribbon");
+        var frame = document.getElementById("demo");
+        var loading = document.getElementById("loading");
+        var ci = document.getElementById("ci"), cn = document.getElementById("cn");
+        var standalone = document.getElementById("standalone");
+        cn.textContent = String(demos.length);
+
+        demos.forEach(function (d, i) {
+          var b = document.createElement("button");
+          b.className = "rib";
+          b.innerHTML = '<span class="rib-num">' + String(i + 1).padStart(2, "0") +
+            '</span><span class="rib-name">' + d.kicker + "</span>";
+          b.addEventListener("click", function () { go(i); });
+          ribbon.appendChild(b);
+        });
+
+        var cur = -1;
+        function go(i) {
+          i = (i + demos.length) % demos.length;
+          if (i === cur) return;
+          cur = i;
+          var d = demos[i];
+          loading.classList.remove("off");
+          frame.src = PROTO.DEST[d.id];
+          var tabs = ribbon.children;
+          for (var j = 0; j < tabs.length; j++) tabs[j].setAttribute("aria-current", String(j === i));
+          tabs[i].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+          ci.textContent = String(i + 1);
+          standalone.href = PROTO.DEST[d.id];
+          document.title = d.kicker + " — Axiom demos";
+          var url = new URL(window.location.href);
+          url.searchParams.set("d", d.id);
+          history.replaceState(null, "", url.toString());
+          if (window.gtag) window.gtag("event", "frame_nav", { demo: d.id, tool_name: "axiom-demo-shell" });
+        }
+
+        frame.addEventListener("load", function () { loading.classList.add("off"); });
+
+        // keyboard nav only when focus isn't inside the demo iframe
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowRight") go(cur + 1);
+          if (e.key === "ArrowLeft") go(cur - 1);
+        });
+
+        var want = new URL(window.location.href).searchParams.get("d");
+        var start = Math.max(0, demos.findIndex(function (d) { return d.id === want; }));
+        go(start);
+      })();
+    </script>
+  </body>
+</html>
