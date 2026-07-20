@@ -7,10 +7,11 @@
   var PAGES = [
     { href: "gallery-hybrid.html", label: "Wheel + deck" },
     { href: "gallery-flywheel.html", label: "Flywheel" },
-    { href: "gallery-stack.html", label: "Card stack" },
-    { href: "gallery-reel.html", label: "3D reel" },
     { href: "gallery-ribbon.html", label: "Ribbon" },
-    { href: "demo-frame.html", label: "Demo frame" }
+    { href: "demo-frame.html", label: "Demo frame" },
+    { href: "gallery-grid.html", label: "Grid" },
+    { href: "gallery-onescreen.html", label: "One screen" },
+    { href: "corpus.html", label: "Corpus" }
   ];
   var here = window.location.pathname.split("/").pop();
 
@@ -26,6 +27,7 @@
     ".gswitch a.on{background:var(--ink,#1a1915);color:var(--cloud,#f0eee6)}" +
     ".gswitch a.cmp{font-family:var(--mono,monospace);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;" +
     "color:var(--clay-strong,#b1573b)}" +
+    ".gswitch.bottom{top:auto;bottom:12px;right:50%;transform:translateX(50%)}" +
     "@media (max-width:700px){.gswitch{top:auto;bottom:12px;right:50%;transform:translateX(50%)}}";
   var style = document.createElement("style");
   style.textContent = css;
@@ -33,12 +35,13 @@
 
   var nav = document.createElement("nav");
   nav.className = "gswitch";
+  // pages with their own sticky top bar opt out of the top-right slot
+  if (document.body.getAttribute("data-switcher") === "bottom") nav.className += " bottom";
   nav.setAttribute("aria-label", "Gallery options");
-  nav.innerHTML = '<a class="cmp" href="index.html" title="All studies">∀</a>' +
-    PAGES.map(function (p) {
+  nav.innerHTML = PAGES.map(function (p) {
       return '<a href="' + p.href + '"' + (p.href === here ? ' class="on" aria-current="page"' : "") + ">" +
         p.label + "</a>";
     }).join("") +
-    '<a class="cmp" href="gallery-lab.html" title="Side-by-side compare view">Compare</a>';
+    '<a class="cmp" href="index.html" title="Side-by-side compare view">Compare</a>';
   document.body.appendChild(nav);
 })();
