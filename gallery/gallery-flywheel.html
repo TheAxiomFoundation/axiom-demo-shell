@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flywheel — the demo gallery</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cloud: #f0eee6; --paper: #faf9f5; --ink: #1a1915; --ink-soft: #6f6d64;
+        --ink-faint: #9b9890; --clay: #cc785c; --clay-strong: #b1573b;
+        --rule: #e3dfd3; --rule-soft: #ece9df; --ga: #2f6b3a;
+        --serif: "Newsreader", Georgia, serif;
+        --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, monospace;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; }
+      body { background: var(--cloud); color: var(--ink); font-family: var(--sans);
+        min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+      .lab { width: min(1180px, calc(100% - 56px)); margin: 0 auto; padding: clamp(24px, 5vh, 56px) 0 48px; }
+      .eyebrow { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.22em;
+        text-transform: uppercase; color: var(--clay-strong); margin: 0 0 10px; }
+      h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(2rem, 4.4vw, 3.1rem);
+        line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 8px; }
+      h1 em { font-style: italic; color: var(--clay-strong); }
+      .sub { margin: 0 0 18px; color: var(--ink-soft); font-size: 1rem; max-width: 46ch; }
+
+      /* audience filter legend */
+      .legend { display: flex; flex-wrap: wrap; gap: 8px; }
+      .chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px;
+        border: 1px solid var(--rule); border-radius: 999px; background: var(--paper);
+        color: var(--ink-soft); cursor: pointer; font-family: var(--sans); font-size: 0.82rem;
+        transition: border-color .14s ease, color .14s ease, background .14s ease; }
+      .chip .sw { width: 9px; height: 9px; border-radius: 50%; background: var(--sw, var(--ink-faint)); }
+      .chip:hover { border-color: var(--ink-soft); color: var(--ink); }
+      .chip[aria-pressed="true"] { color: var(--ink); border-color: var(--sw, var(--ink));
+        background: color-mix(in srgb, var(--sw, var(--ink)) 9%, var(--paper)); }
+      .chip .ct { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.06em;
+        text-transform: uppercase; color: var(--ink-faint); }
+
+      /* ---- the flywheel ---- */
+      .fw { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;
+        margin-top: clamp(20px, 4vh, 44px); }
+
+      .wheel-wrap { position: relative; aspect-ratio: 1; touch-action: none; cursor: grab;
+        justify-self: center; width: min(100%, 500px); }
+      .wheel-wrap:active { cursor: grabbing; }
+
+      /* rotating mechanical parts (spokes + rim), behind the upright cards */
+      .spokes { position: absolute; inset: 4%; border-radius: 50%;
+        border: 1.5px solid var(--rule);
+        background:
+          repeating-conic-gradient(from 0deg,
+            transparent 0 43deg, color-mix(in srgb, var(--clay) 22%, transparent) 43deg 45deg);
+        will-change: transform; }
+      .spokes::after { content: ""; position: absolute; inset: 14%; border-radius: 50%;
+        border: 1px dashed var(--rule); }
+
+      /* the segmented audience dial (SVG ring) */
+      .dial { position: absolute; top: 50%; left: 50%; width: 33%; aspect-ratio: 1;
+        transform: translate(-50%, -50%); z-index: 2; overflow: visible; }
+      .wedge { cursor: pointer; opacity: 0.62; transform-origin: 50% 50%;
+        transition: opacity .18s ease, transform .18s ease; }
+      .wedge:hover { opacity: 0.9; transform: scale(1.04); }
+      .dial.filtered .wedge { opacity: 0.15; }
+      .dial.filtered .wedge.on { opacity: 1; transform: scale(1.05); }
+
+      .hub { position: absolute; top: 50%; left: 50%; width: 18.5%; aspect-ratio: 1; padding: 0;
+        transform: translate(-50%, -50%); border-radius: 50%;
+        background: radial-gradient(circle at 38% 32%, var(--paper), #efe7db);
+        border: 1.5px solid var(--rule); cursor: pointer; display: grid; place-content: center;
+        box-shadow: inset 0 2px 8px rgba(26,25,21,.06), 0 6px 16px rgba(26,25,21,.08); z-index: 4;
+        transition: border-color .16s ease; }
+      .hub:hover { border-color: var(--clay); }
+      .hub .mark { font-family: var(--serif); font-weight: 500; font-size: 1.6rem; line-height: 1;
+        color: var(--clay-strong); }
+
+      .dial-labels { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+      .dlabel { position: absolute; transform: translate(-50%, -50%); pointer-events: auto; cursor: pointer;
+        display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px;
+        background: var(--cloud); border: 1px solid transparent; white-space: nowrap;
+        font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase;
+        color: var(--ink-soft); transition: color .16s ease, border-color .16s ease, background .16s ease; }
+      .dlabel .dl-sw { width: 8px; height: 8px; border-radius: 50%; background: var(--dc); flex: none; }
+      .dlabel b { color: var(--dc); font-weight: 600; }
+      .dlabel:hover { color: var(--ink); }
+      .dlabel.on { color: var(--ink); background: color-mix(in srgb, var(--dc) 9%, var(--cloud));
+        border-color: color-mix(in srgb, var(--dc) 45%, var(--rule)); }
+
+      /* upright paddles positioned by JS */
+      .paddle { position: absolute; top: 0; left: 0; width: 132px;
+        transform: translate(-50%, -50%); z-index: 2;
+        display: flex; flex-direction: column; gap: 2px; padding: 9px 12px;
+        border: 1px solid var(--rule); border-radius: 10px; background: var(--paper);
+        box-shadow: 0 2px 6px rgba(26,25,21,.06); cursor: pointer; text-align: left;
+        transition: transform .05s linear, border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+      .paddle { border-left: 3px solid var(--cat, var(--rule)); }
+      .paddle .pk { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 0.5rem;
+        letter-spacing: 0.09em; text-transform: uppercase; color: var(--clay-strong);
+        white-space: nowrap; overflow: hidden; }
+      .paddle .pk .pcat { width: 6px; height: 6px; border-radius: 50%; background: var(--cat, var(--ink-faint)); flex: none; }
+      .paddle .pk .pkt { overflow: hidden; text-overflow: ellipsis; }
+      .paddle .pt { font-family: var(--serif); font-size: 0.82rem; font-weight: 500; line-height: 1.08; }
+      .paddle .pdot { position: absolute; top: -4px; right: -4px; width: 9px; height: 9px; border-radius: 50%;
+        background: var(--ga); box-shadow: 0 0 0 2.5px var(--cloud); display: none; }
+      .paddle.has-proof .pdot { display: block; }
+      .paddle.active { border-color: var(--cat, var(--clay)); border-left-width: 3px; background: #fff;
+        box-shadow: 0 10px 26px color-mix(in srgb, var(--cat, var(--clay)) 30%, transparent); z-index: 4; }
+      .paddle.dim { opacity: 0.26; filter: saturate(0.5); }
+
+      /* the reader — where the focused paddle "locks in" and runs live */
+      .reader { border: 1px solid var(--rule); border-radius: 16px; background: var(--paper);
+        overflow: hidden; box-shadow: 0 1px 2px rgba(26,25,21,.04); }
+      .reader-thumb { display: block; position: relative; height: clamp(190px, 30vh, 280px); overflow: hidden;
+        background: var(--rule-soft); border-bottom: 1px solid var(--rule-soft); }
+      .reader-thumb iframe { --preview-scale: 0.44; }
+      .reader-body { padding: 16px 18px 18px; }
+      .reader-top { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+      .reader-k { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--clay-strong); }
+      .reader-cat { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px;
+        border: 1px solid color-mix(in srgb, var(--cat) 40%, var(--rule));
+        background: color-mix(in srgb, var(--cat) 8%, transparent);
+        font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.08em; text-transform: uppercase;
+        color: color-mix(in srgb, var(--cat) 70%, var(--ink)); }
+      .reader-cat .sw { width: 7px; height: 7px; border-radius: 50%; background: var(--cat); }
+      .reader-badge { margin-left: auto; font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.08em;
+        text-transform: uppercase; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 5px; }
+      .reader-badge .b { width: 6px; height: 6px; border-radius: 50%; background: var(--ga); }
+      .reader-badge.browser .b { background: #2f6b6f; }
+      .reader-h { font-family: var(--serif); font-weight: 500; font-size: 1.4rem; letter-spacing: -0.01em; margin: 0 0 6px; }
+      .reader-d { margin: 0 0 16px; color: var(--ink-soft); font-size: 0.9rem; line-height: 1.45; }
+      .reader-open { display: inline-flex; align-items: center; gap: 7px; text-decoration: none;
+        font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--paper); background: var(--ink); padding: 9px 15px; border-radius: 999px;
+        transition: background .18s ease; }
+      .reader-open:hover { background: var(--clay-strong); }
+
+      .fw-controls { display: flex; align-items: center; justify-content: center; gap: 14px;
+        margin-top: 22px; }
+      .fbtn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--rule);
+        background: var(--paper); color: var(--ink); font-size: 1rem; cursor: pointer; line-height: 1;
+        transition: border-color .16s ease, color .16s ease; }
+      .fbtn:hover { border-color: var(--clay); color: var(--clay-strong); }
+      .pos { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--ink-faint); }
+      .pos b { color: var(--clay-strong); }
+
+      a:focus-visible, button:focus-visible { outline: 2px solid var(--clay-strong); outline-offset: 3px; border-radius: 8px; }
+
+      @media (max-width: 860px) {
+        .fw { grid-template-columns: 1fr; gap: 26px; }
+        .wheel-wrap { width: min(86vw, 420px); order: 2; }
+        .reader { order: 1; }
+      }
+      @media (prefers-reduced-motion: reduce) { .spokes { transition: none !important; } }
+    </style>
+  </head>
+  <body>
+    <main class="lab">
+      <p class="eyebrow">The demo gallery</p>
+      <h1>One engine. <em>Many products.</em></h1>
+      <p class="sub">One engine at the core, split by who it's for. Tap a segment to filter, then spin the flywheel — each product locks into the reader and runs live.</p>
+
+      <div class="fw">
+        <div class="wheel-wrap" id="wheelWrap" role="group" aria-label="Demo flywheel, drag to spin">
+          <div class="spokes" id="spokes"></div>
+          <svg class="dial" id="dial" viewBox="0 0 100 100" aria-hidden="true"></svg>
+          <button class="hub" id="hub" aria-label="Show all audiences"><span class="mark">∀</span></button>
+          <div class="dial-labels" id="dialLabels"></div>
+          <!-- paddles injected -->
+        </div>
+        <aside class="reader" id="reader" aria-live="polite"></aside>
+      </div>
+
+      <div class="fw-controls">
+        <button class="fbtn" id="prev" aria-label="Previous demo">◄</button>
+        <span class="pos"><b id="posNow">1</b> / <span id="posAll">8</span></span>
+        <button class="fbtn" id="next" aria-label="Next demo">►</button>
+      </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="switcher.js"></script>
+    <script>
+      (function () {
+        var demos = PROTO.DEMOS;
+        var N = demos.length;
+        var STEP = 360 / N;
+        var FOCUS = 0; // 3 o'clock — points at the reader
+        var wrap = document.getElementById("wheelWrap");
+        var spokes = document.getElementById("spokes");
+        var reader = document.getElementById("reader");
+        document.getElementById("posAll").textContent = String(N);
+
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        // audience category lookups
+        var AUD = PROTO.AUDIENCES;
+        var catColor = {}, catLabel = {};
+        AUD.forEach(function (a) { catColor[a.key] = a.color; catLabel[a.key] = a.label; });
+        function proof(d) { return /validated/.test(d.badge || "") || d.inBrowser; }
+
+        // build paddles
+        var paddles = demos.map(function (d, i) {
+          var el = document.createElement("button");
+          el.className = "paddle" + (proof(d) ? " has-proof" : "");
+          el.style.setProperty("--cat", catColor[d.audience] || "var(--rule)");
+          el.innerHTML = '<span class="pdot"></span><span class="pk"><span class="pcat"></span>' +
+            '<span class="pkt">' + d.kicker + '</span></span><span class="pt">' + d.title + '</span>';
+          el.addEventListener("click", function (e) {
+            if (dragMoved) { e.preventDefault(); return; }
+            selectIndex(i);
+          });
+          wrap.appendChild(el);
+          return el;
+        });
+
+        // Audience selector = the flywheel's core. The hub is a segmented dial:
+        // one engine, split by who it's for. Tap a wedge (or its label) to filter;
+        // the ∀ centre resets to all.
+        var SVGNS = "http://www.w3.org/2000/svg";
+        var filter = null;
+        var dial = document.getElementById("dial");
+        var hubBtn = document.getElementById("hub");
+        var labelBox = document.getElementById("dialLabels");
+        var wedges = {}, labels = {}, labelMid = {};
+        function countFor(key) { return demos.filter(function (d) { return d.audience === key; }).length; }
+
+        function donut(a0, a1, rO, rI) {
+          function pt(a, r) { var t = a * Math.PI / 180; return [50 + r * Math.cos(t), 50 + r * Math.sin(t)]; }
+          var large = (a1 - a0) > 180 ? 1 : 0;
+          var o0 = pt(a0, rO), o1 = pt(a1, rO), i1 = pt(a1, rI), i0 = pt(a0, rI);
+          return "M" + o0[0] + "," + o0[1] + "A" + rO + "," + rO + " 0 " + large + " 1 " + o1[0] + "," + o1[1] +
+                 "L" + i1[0] + "," + i1[1] + "A" + rI + "," + rI + " 0 " + large + " 0 " + i0[0] + "," + i0[1] + "Z";
+        }
+
+        var SEG = 360 / AUD.length, GAP = 5;
+        AUD.forEach(function (a, k) {
+          var a0 = -90 + k * SEG, a1 = -90 + (k + 1) * SEG;
+          var path = document.createElementNS(SVGNS, "path");
+          path.setAttribute("d", donut(a0 + GAP / 2, a1 - GAP / 2, 47, 31));
+          path.setAttribute("fill", a.color);
+          path.setAttribute("class", "wedge");
+          path.addEventListener("click", function () { setFilter(filter === a.key ? null : a.key); });
+          dial.appendChild(path);
+          wedges[a.key] = path;
+
+          var lab = document.createElement("button");
+          lab.className = "dlabel"; lab.style.setProperty("--dc", a.color);
+          lab.innerHTML = '<span class="dl-sw"></span>' + a.label + ' <b>' + countFor(a.key) + '</b>';
+          lab.addEventListener("click", function () { setFilter(filter === a.key ? null : a.key); });
+          labelBox.appendChild(lab);
+          labels[a.key] = lab;
+          labelMid[a.key] = -90 + (k + 0.5) * SEG;
+        });
+
+        function layoutDial() {
+          var W = wrap.clientWidth, c = W / 2, r = W * 0.214;
+          AUD.forEach(function (a) {
+            var t = labelMid[a.key] * Math.PI / 180;
+            labels[a.key].style.left = (c + r * Math.cos(t)) + "px";
+            labels[a.key].style.top = (c + r * Math.sin(t)) + "px";
+          });
+        }
+
+        hubBtn.addEventListener("click", function () { setFilter(null); });
+
+        function rotateToNearestMatch(key) {
+          var best = -1, bestCost = 1e9;
+          for (var i = 0; i < N; i++) {
+            if (demos[i].audience !== key) continue;
+            var w = FOCUS - i * STEP;
+            while (w - angle > 180) w -= 360;
+            while (w - angle < -180) w += 360;
+            var cost = Math.abs(w - angle);
+            if (cost < bestCost) { bestCost = cost; best = i; }
+          }
+          if (best >= 0) selectIndex(best);
+        }
+        function setFilter(key) {
+          filter = key;
+          dial.classList.toggle("filtered", !!key);
+          AUD.forEach(function (a) {
+            wedges[a.key].classList.toggle("on", a.key === key);
+            labels[a.key].classList.toggle("on", a.key === key);
+          });
+          for (var i = 0; i < N; i++) {
+            paddles[i].classList.toggle("dim", !!key && demos[i].audience !== key);
+          }
+          if (key) rotateToNearestMatch(key);
+        }
+
+        var angle = 0, vel = 0, target = null, active = -1;
+        var dragging = false, dragMoved = false, lastPointerAngle = 0, idle = 0;
+        var pointerDown = false, startX = 0, startY = 0, lockActive = false;
+
+        function radius() { return wrap.clientWidth * 0.365; }
+        function pointerAngle(e) {
+          var r = wrap.getBoundingClientRect();
+          return Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2)) * 180 / Math.PI;
+        }
+
+        function activeIndex() {
+          // paddle i sits at viewport angle (i*STEP + angle); active = closest to FOCUS
+          var best = 0, bestD = 999;
+          for (var i = 0; i < N; i++) {
+            var va = ((i * STEP + angle - FOCUS) % 360 + 360) % 360;
+            var d = Math.min(va, 360 - va);
+            if (d < bestD) { bestD = d; best = i; }
+          }
+          return best;
+        }
+
+        function renderReader(i) {
+          var d = demos[i];
+          reader.style.setProperty("--cat", catColor[d.audience] || "var(--clay)");
+          var validated = /validated/.test(d.badge || "");
+          var badge = validated
+            ? '<span class="reader-badge"><span class="b"></span>validated · 0 mismatches</span>'
+            : d.inBrowser
+              ? '<span class="reader-badge browser"><span class="b"></span>runs in-browser</span>'
+              : '<span class="reader-badge"><span class="b"></span>live</span>';
+          var catTag = '<span class="reader-cat"><span class="sw"></span>' + catLabel[d.audience] + '</span>';
+          reader.innerHTML =
+            PROTO.preview(d.id, "reader-thumb") +
+            '<div class="reader-body"><div class="reader-top">' +
+            '<span class="reader-k">' + d.kicker + '</span>' + catTag + badge + '</div>' +
+            '<h2 class="reader-h">' + d.title + '</h2>' +
+            '<p class="reader-d">' + d.desc + '</p>' +
+            '<a class="reader-open" href="' + PROTO.DEST[d.id] + '" target="_blank" rel="noreferrer">Open demo ↗</a></div>';
+          document.getElementById("posNow").textContent = String(i + 1);
+        }
+
+        function render() {
+          var R = radius();
+          var cx = wrap.clientWidth / 2, cy = wrap.clientHeight / 2;
+          for (var i = 0; i < N; i++) {
+            var va = (i * STEP + angle) * Math.PI / 180;
+            var x = cx + R * Math.cos(va), y = cy + R * Math.sin(va);
+            var isActive = i === active;
+            paddles[i].style.left = x + "px";
+            paddles[i].style.top = y + "px";
+            paddles[i].style.transform = "translate(-50%,-50%) scale(" + (isActive ? 1.12 : 0.94) + ")";
+            paddles[i].classList.toggle("active", isActive);
+          }
+          spokes.style.transform = "rotate(" + angle + "deg)";
+        }
+
+        function tick() {
+          if (!dragging) {
+            if (target !== null) {
+              var diff = target - angle;
+              if (Math.abs(diff) < 0.1) { angle = target; target = null; }
+              else angle += diff * (reduce ? 1 : 0.16);
+            } else {
+              angle += vel;
+              vel *= 0.92;
+              idle++;
+              if (Math.abs(vel) < 0.02) {
+                vel = 0;
+                // snap so a paddle aligns to focus (angle → nearest multiple of STEP),
+                // then rest there — the wheel only moves on user input
+                target = Math.round(angle / STEP) * STEP;
+              }
+            }
+          }
+          // while free-spinning (dragging/inertia) the reader tracks whatever's
+          // at focus; a targeted selection locks it to the chosen demo
+          if (!lockActive) {
+            var a = activeIndex();
+            if (a !== active) { active = a; renderReader(a); }
+          }
+          render();
+          requestAnimationFrame(tick);
+        }
+
+        function rotateToIndex(i) {
+          // bring paddle i to FOCUS: need i*STEP + angle ≡ FOCUS  → angle = FOCUS - i*STEP (nearest wrap)
+          var want = FOCUS - i * STEP;
+          while (want - angle > 180) want -= 360;
+          while (want - angle < -180) want += 360;
+          target = want; vel = 0; idle = 0;
+        }
+
+        // pick a demo: show it in the reader immediately, then spin it into focus
+        function selectIndex(i) {
+          i = ((i % N) + N) % N;
+          active = i; lockActive = true;
+          renderReader(i); render();
+          rotateToIndex(i);
+        }
+
+        document.getElementById("next").addEventListener("click", function () { selectIndex(active + 1); });
+        document.getElementById("prev").addEventListener("click", function () { selectIndex(active - 1); });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowRight") selectIndex(active + 1);
+          else if (e.key === "ArrowLeft") selectIndex(active - 1);
+        });
+
+        // Capture only after a real drag begins, so a tap falls through to the
+        // paddle's click handler (which opens it in the reader).
+        wrap.addEventListener("pointerdown", function (e) {
+          pointerDown = true; dragging = false; dragMoved = false; lockActive = false;
+          idle = 0; target = null; vel = 0;
+          startX = e.clientX; startY = e.clientY;
+          lastPointerAngle = pointerAngle(e);
+        });
+        wrap.addEventListener("pointermove", function (e) {
+          if (!pointerDown) return;
+          if (!dragging) {
+            if (Math.hypot(e.clientX - startX, e.clientY - startY) < 5) return;
+            dragging = true; dragMoved = true;
+            try { wrap.setPointerCapture(e.pointerId); } catch (err) {}
+            lastPointerAngle = pointerAngle(e);
+          }
+          var pa = pointerAngle(e);
+          var delta = pa - lastPointerAngle;
+          if (delta > 180) delta -= 360; if (delta < -180) delta += 360;
+          angle += delta; vel = delta; lastPointerAngle = pa;
+        });
+        function endDrag() {
+          if (!pointerDown) return;
+          pointerDown = false;
+          if (dragging) { dragging = false; if (Math.abs(vel) < 0.4) { target = Math.round(angle / STEP) * STEP; vel = 0; } }
+        }
+        wrap.addEventListener("pointerup", endDrag);
+        wrap.addEventListener("pointercancel", endDrag);
+
+        window.addEventListener("resize", function () { render(); layoutDial(); });
+        active = activeIndex(); renderReader(active); render(); layoutDial();
+        requestAnimationFrame(tick);
+      })();
+    </script>
+  </body>
+</html>

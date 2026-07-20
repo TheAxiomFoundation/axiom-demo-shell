@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ribbon — the demo gallery</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cloud: #f0eee6; --paper: #faf9f5; --ink: #1a1915; --ink-soft: #6f6d64;
+        --ink-faint: #9b9890; --clay: #cc785c; --clay-strong: #b1573b;
+        --rule: #e3dfd3; --rule-soft: #ece9df; --ga: #2f6b3a;
+        --serif: "Newsreader", Georgia, serif;
+        --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, monospace;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; }
+      body { background: var(--cloud); color: var(--ink); font-family: var(--sans);
+        min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+      .lab { width: min(1180px, calc(100% - 56px)); margin: 0 auto; padding: clamp(24px, 4.5vh, 48px) 0 12px; }
+      .head { text-align: center; }
+      .eyebrow { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.22em;
+        text-transform: uppercase; color: var(--clay-strong); margin: 0 0 10px; }
+      h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(2rem, 4.4vw, 3.1rem);
+        line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 8px; }
+      h1 em { font-style: italic; color: var(--clay-strong); }
+      .sub { margin: 0 auto; color: var(--ink-soft); font-size: 1rem; max-width: 52ch; }
+
+      /* ── the ribbon: a full-bleed subheader that holds the whole range ── */
+      .ribbon {
+        width: 100vw; margin: clamp(18px, 3.5vh, 34px) 0 0 calc(50% - 50vw);
+        border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+        background: color-mix(in srgb, var(--paper) 72%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+        mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+      }
+      .rib-track {
+        display: flex; align-items: stretch; gap: 0; overflow-x: auto;
+        scrollbar-width: none; padding: 0 8vw;
+      }
+      .rib-track::-webkit-scrollbar { display: none; }
+      .rib {
+        flex: none; display: inline-flex; align-items: baseline; gap: 8px;
+        padding: 13px 20px; border: 0; background: transparent; cursor: pointer;
+        font-family: var(--sans); color: var(--ink-soft); position: relative; white-space: nowrap;
+      }
+      .rib + .rib::before {
+        content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+        width: 1px; height: 16px; background: var(--rule);
+      }
+      .rib-num { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; color: var(--ink-faint); }
+      .rib-name { font-family: var(--serif); font-size: 1.02rem; letter-spacing: -0.01em; }
+      .rib:hover { color: var(--ink); }
+      .rib::after {
+        content: ""; position: absolute; left: 20px; right: 20px; bottom: -1px; height: 2px;
+        background: transparent; transition: background 160ms ease;
+      }
+      .rib[aria-selected="true"] { color: var(--ink); }
+      .rib[aria-selected="true"] .rib-num { color: var(--clay-strong); }
+      .rib[aria-selected="true"]::after { background: var(--clay-strong); }
+
+      /* ── the stage: one demo, full width, no sidecards ── */
+      .stagewrap { width: 100vw; margin-left: calc(50% - 50vw); position: relative; }
+      .stage {
+        position: relative; width: min(1380px, calc(100% - 32px)); margin: clamp(16px, 3vh, 28px) auto 0;
+        height: clamp(380px, 54vh, 560px); border: 1px solid var(--rule); border-radius: 16px;
+        overflow: hidden; background: var(--rule-soft);
+        box-shadow: 0 24px 60px rgba(26, 25, 21, 0.14);
+      }
+      .pane {
+        position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 320ms ease;
+        background: var(--rule-soft);
+      }
+      .pane.on { opacity: 1; }
+      .pane iframe {
+        --s: 0.62;
+        position: absolute; inset: 0; border: 0; pointer-events: none;
+        width: calc(100% / var(--s)); height: calc(100% / var(--s));
+        transform: scale(var(--s)); transform-origin: 0 0;
+      }
+      .stage-open {
+        position: absolute; inset: 0; z-index: 3; text-decoration: none;
+      }
+      .stage-open:hover ~ .arrows { opacity: 1; }
+
+      .arrow {
+        position: absolute; top: 50%; transform: translateY(-50%); z-index: 4;
+        display: grid; place-items: center; width: 42px; height: 42px;
+        border: 1px solid var(--rule); border-radius: 50%;
+        background: color-mix(in srgb, var(--paper) 92%, transparent);
+        color: var(--ink); font-size: 1.05rem; cursor: pointer;
+        box-shadow: 0 4px 16px rgba(26, 25, 21, 0.12);
+        transition: border-color 140ms ease, color 140ms ease;
+      }
+      .arrow:hover { border-color: var(--clay); color: var(--clay-strong); }
+      .arrow.prev { left: max(16px, calc(50% - 690px + 18px)); }
+      .arrow.next { right: max(16px, calc(50% - 690px + 18px)); }
+
+      /* meta bar under the stage */
+      .meta {
+        width: min(1380px, calc(100% - 32px)); margin: 14px auto 0;
+        display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
+      }
+      .meta-k { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em;
+        text-transform: uppercase; color: var(--clay-strong); }
+      .meta-t { font-family: var(--serif); font-weight: 500; font-size: 1.35rem; letter-spacing: -0.01em; }
+      .meta-d { color: var(--ink-soft); font-size: 0.9rem; max-width: 52ch; }
+      .meta-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+      .count { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; color: var(--ink-faint); }
+      .count b { color: var(--clay-strong); font-weight: 600; }
+      .open-btn {
+        display: inline-flex; align-items: center; gap: 7px; text-decoration: none;
+        border: 1px solid var(--clay-strong); border-radius: 999px; padding: 8px 18px;
+        background: var(--clay-strong); color: #fff; font-size: 0.86rem; font-weight: 500;
+        transition: background 140ms ease;
+      }
+      .open-btn:hover { background: #9a4527; }
+
+      .hint { text-align: center; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--ink-faint); margin: 18px 0 26px; }
+
+      @media (max-width: 700px) {
+        .rib { padding: 11px 14px; }
+        .rib-name { font-size: 0.92rem; }
+        .stage { height: 52vh; }
+        .arrow.prev { left: 10px; } .arrow.next { right: 10px; }
+        .meta { flex-direction: column; gap: 6px; }
+        .meta-right { margin-left: 0; }
+      }
+      @media (prefers-reduced-motion: reduce) { .pane { transition: none; } }
+    </style>
+  </head>
+  <body>
+    <div class="lab">
+      <header class="head">
+        <p class="eyebrow">The demo gallery</p>
+        <h1>Full width. <em>The ribbon holds the range.</em></h1>
+        <p class="sub">
+          One demo on stage at a time — no sidecards. The subheader ribbon keeps
+          all eight names in sight, so even at full bleed each one reads as part
+          of a gallery.
+        </p>
+      </header>
+    </div>
+
+    <nav class="ribbon" aria-label="All demos">
+      <div class="rib-track" role="tablist" id="ribbon"></div>
+    </nav>
+
+    <div class="stagewrap">
+      <div class="stage" id="stage"></div>
+      <button class="arrow prev" data-dir="-1" aria-label="Previous demo">←</button>
+      <button class="arrow next" data-dir="1" aria-label="Next demo">→</button>
+    </div>
+
+    <div class="meta">
+      <span class="meta-k" id="mk"></span>
+      <span class="meta-t" id="mt"></span>
+      <span class="meta-d" id="md"></span>
+      <span class="meta-right">
+        <span class="count"><b id="ci">1</b>/<span id="cn">8</span></span>
+        <a class="open-btn" id="open" href="#" target="_blank" rel="noreferrer">Open demo ↗</a>
+      </span>
+    </div>
+
+    <p class="hint">← → to move · click a name in the ribbon · the stage is the live app</p>
+
+    <script src="data.js"></script>
+    <script src="switcher.js"></script>
+    <script>
+      (function () {
+        "use strict";
+        var demos = PROTO.DEMOS;
+        var ribbon = document.getElementById("ribbon");
+        var stage = document.getElementById("stage");
+        var mk = document.getElementById("mk"), mt = document.getElementById("mt"),
+            md = document.getElementById("md"), ci = document.getElementById("ci"),
+            cn = document.getElementById("cn"), open = document.getElementById("open");
+        cn.textContent = String(demos.length);
+
+        // ribbon tabs
+        demos.forEach(function (d, i) {
+          var b = document.createElement("button");
+          b.className = "rib";
+          b.setAttribute("role", "tab");
+          b.setAttribute("aria-selected", "false");
+          b.innerHTML = '<span class="rib-num">' + String(i + 1).padStart(2, "0") +
+            '</span><span class="rib-name">' + d.kicker + "</span>";
+          b.addEventListener("click", function () { go(i); });
+          ribbon.appendChild(b);
+        });
+
+        // stage panes (iframes load lazily: active + neighbours only)
+        var panes = demos.map(function (d) {
+          var p = document.createElement("div");
+          p.className = "pane";
+          p.dataset.src = PROTO.DEST[d.id];
+          stage.appendChild(p);
+          return p;
+        });
+
+        function load(i) {
+          var p = panes[i];
+          if (p && !p.dataset.loaded) {
+            p.innerHTML = '<iframe title="demo preview" tabindex="-1" loading="lazy" src="' + p.dataset.src + '"></iframe>';
+            p.dataset.loaded = "1";
+          }
+        }
+
+        var cur = -1;
+        function go(i) {
+          i = (i + demos.length) % demos.length;
+          if (i === cur) return;
+          cur = i;
+          var d = demos[i];
+          load(i); load(i + 1 === demos.length ? 0 : i + 1); load(i === 0 ? demos.length - 1 : i - 1);
+          panes.forEach(function (p, j) { p.classList.toggle("on", j === i); });
+          var tabs = ribbon.children;
+          for (var j = 0; j < tabs.length; j++) tabs[j].setAttribute("aria-selected", String(j === i));
+          tabs[i].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+          mk.textContent = d.kicker;
+          mt.textContent = d.title;
+          md.textContent = d.desc;
+          ci.textContent = String(i + 1);
+          open.href = PROTO.DEST[d.id];
+          if (window.gtag) window.gtag("event", "ribbon_nav", { demo: d.id, tool_name: "axiom-demo-shell" });
+        }
+
+        document.querySelectorAll(".arrow").forEach(function (a) {
+          a.addEventListener("click", function () { go(cur + Number(a.dataset.dir)); });
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowRight") go(cur + 1);
+          if (e.key === "ArrowLeft") go(cur - 1);
+        });
+
+        go(0);
+      })();
+    </script>
+  </body>
+</html>

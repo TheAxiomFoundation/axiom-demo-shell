@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Option A · Bento mosaic — Axiom Demos</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+      /* ---- Option A: bento mosaic — hero tile + satellites ---- */
+      .proto-tag {
+        position: fixed; top: 10px; right: 12px; z-index: 20;
+        font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em;
+        text-transform: uppercase; color: var(--ink-faint);
+        background: var(--paper); border: 1px solid var(--rule);
+        border-radius: 999px; padding: 4px 10px;
+      }
+      .bento {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-auto-rows: 118px;
+        grid-auto-flow: dense;
+        gap: 12px;
+      }
+      .bcard {
+        position: relative;
+        display: flex; flex-direction: column;
+        overflow: hidden;
+        border: 1px solid var(--rule); border-radius: 12px;
+        background: var(--paper); text-decoration: none;
+        box-shadow: 0 1px 2px rgba(26, 25, 21, 0.04);
+        transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+      }
+      .bcard:hover {
+        border-color: var(--clay);
+        box-shadow: 0 12px 28px rgba(26, 25, 21, 0.11);
+        transform: translateY(-3px);
+      }
+      /* the featured hero tile: 2×2 with a big live preview */
+      .bcard--hero { grid-column: span 2; grid-row: span 2; }
+      .bcard--hero .bcard-thumb { flex: 1 1 auto; }
+      .bcard--wide { grid-column: span 2; }
+
+      .bcard-thumb {
+        position: relative; overflow: hidden;
+        min-height: 62px;
+        border-bottom: 1px solid var(--rule-soft);
+        background: var(--rule-soft);
+      }
+      .bcard-thumb iframe { --preview-scale: 0.24; }
+      .bcard--hero .bcard-thumb iframe { --preview-scale: 0.42; }
+      .preview-builder iframe { --preview-scale: 0.18; }
+
+      .bcard-body { padding: 9px 12px 11px; display: flex; flex-direction: column; gap: 3px; }
+      .bcard--hero .bcard-body { padding: 14px 16px 16px; }
+      .bcard-kicker {
+        font-family: var(--mono); font-size: 0.56rem; font-weight: 600;
+        letter-spacing: 0.1em; text-transform: uppercase; color: var(--clay-strong);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+      .bcard--hero .bcard-kicker { font-size: 0.64rem; }
+      .bcard-title {
+        font-family: var(--serif); font-weight: 500; font-size: 0.95rem;
+        line-height: 1.15; letter-spacing: -0.01em; color: var(--ink);
+      }
+      .bcard--hero .bcard-title { font-size: 1.5rem; }
+      .bcard-desc { font-size: 0.76rem; line-height: 1.4; color: var(--ink-soft); }
+      .bcard:not(.bcard--hero) .bcard-desc { display: none; }
+      .bcard--wide .bcard-desc { display: block; }
+
+      /* proof badge — the metadata each card already carries */
+      .badge {
+        position: absolute; top: 9px; left: 9px; z-index: 2;
+        display: inline-flex; align-items: center; gap: 5px;
+        padding: 3px 8px; border-radius: 999px;
+        background: color-mix(in srgb, var(--paper) 86%, transparent);
+        backdrop-filter: blur(3px);
+        border: 1px solid var(--rule);
+        font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.08em;
+        text-transform: uppercase; color: var(--ink-soft);
+      }
+      .badge b { color: var(--ga); font-weight: 700; }
+      .badge .dotmini { width: 5px; height: 5px; border-radius: 50%; background: var(--ga); }
+      .badge--browser .dotmini { background: var(--preview); }
+
+      @media (max-width: 900px) {
+        .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 128px; }
+        .bcard--hero { grid-column: span 2; grid-row: span 2; }
+        .bcard--wide { grid-column: span 2; }
+      }
+      @media (max-width: 560px) {
+        .bento { grid-template-columns: 1fr; }
+        .bcard, .bcard--hero, .bcard--wide { grid-column: auto; grid-row: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <span class="proto-tag">Option A · Bento mosaic</span>
+    <header class="nav">
+      <a class="wordmark" href="#" aria-label="Axiom demo home">
+        <img src="../logos/axiom-foundation.svg" alt="Axiom Foundation" />
+      </a>
+    </header>
+
+    <main class="page">
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title">Computable law for&nbsp;all</h1>
+        <p class="lede">From source law, through validation, into the demo gallery.</p>
+      </section>
+
+      <div class="journey">
+        <div id="chapters"></div>
+
+        <section class="chapter chapter--gallery" aria-labelledby="ch-3">
+          <div class="ch-rail">
+            <div class="ch-marker" aria-hidden="true"><span>03</span></div>
+            <div>
+              <h2 class="ch-title" id="ch-3">Then the law becomes usable</h2>
+              <p class="ch-story">The demo gallery — one verified substrate, many products.</p>
+              <p class="ch-status"><span class="dot demos"></span>demos</p>
+            </div>
+          </div>
+          <div class="bento" id="bento"></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script>
+      (function () {
+        PROTO.renderChapters(document.getElementById("chapters"));
+
+        var badgeHtml = function (d) {
+          if (!d.badge) return "";
+          var browser = d.inBrowser;
+          var validated = /validated/.test(d.badge);
+          var cls = "badge" + (browser ? " badge--browser" : "");
+          var mark = (validated || browser) ? '<span class="dotmini"></span>' : "";
+          var txt = validated ? d.badge.replace("validated · ", "<b>0×</b> ") : d.badge;
+          return '<span class="' + cls + '">' + mark + txt + '</span>';
+        };
+
+        document.getElementById("bento").innerHTML = PROTO.DEMOS.map(function (d, i) {
+          var hero = d.featured;
+          // give the 2nd and 3rd non-hero cards a wider footprint for rhythm
+          var wide = !hero && (i === 3);
+          var cls = "bcard" + (hero ? " bcard--hero" : "") + (wide ? " bcard--wide" : "");
+          return '<a class="' + cls + '" href="' + PROTO.DEST[d.id] +
+            '" target="_blank" rel="noreferrer">' +
+            badgeHtml(d) +
+            PROTO.preview(d.id, "bcard-thumb") +
+            '<span class="bcard-body">' +
+            '<span class="bcard-kicker">' + d.kicker + '</span>' +
+            '<span class="bcard-title">' + d.title + '</span>' +
+            '<span class="bcard-desc">' + d.desc + '</span>' +
+            '</span></a>';
+        }).join("");
+      })();
+    </script>
+  </body>
+</html>
