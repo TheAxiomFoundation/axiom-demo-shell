@@ -75,6 +75,49 @@
       .hint { text-align: center; font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.14em;
         text-transform: uppercase; color: var(--ink-faint); margin: clamp(7px, 1.4vh, 12px) 0 0; }
 
+      /* ── expand in place: a tile opens as a big live pop-up ── */
+      .overlay { position: fixed; inset: 0; z-index: 30; display: flex; padding: clamp(14px, 3vh, 28px);
+        background: rgba(26, 25, 21, 0.46); backdrop-filter: blur(7px) saturate(120%);
+        opacity: 0; pointer-events: none; transition: opacity 200ms ease; }
+      .overlay.on { opacity: 1; pointer-events: auto; }
+      .modal { margin: auto; width: min(1320px, 100%); height: 100%;
+        display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 16px;
+        background: var(--paper); overflow: hidden;
+        box-shadow: 0 30px 90px rgba(26, 25, 21, 0.4);
+        transform: translateY(12px) scale(0.985); transition: transform 220ms ease; }
+      .overlay.on .modal { transform: none; }
+      .modal-bar { display: flex; align-items: center; gap: 11px; padding: 9px 10px 9px 18px;
+        border-bottom: 1px solid var(--rule-soft); }
+      .modal-kicker { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.13em;
+        text-transform: uppercase; color: var(--clay-strong); white-space: nowrap; }
+      .modal-title { font-family: var(--serif); font-weight: 500; font-size: 1.08rem;
+        letter-spacing: -0.01em; margin: 0; white-space: nowrap; overflow: hidden;
+        text-overflow: ellipsis; }
+      .modal-count { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+        color: var(--ink-faint); margin-left: auto; }
+      .modal-count b { color: var(--clay-strong); font-weight: 600; }
+      .mbtn { display: grid; place-items: center; width: 30px; height: 30px;
+        border: 1px solid var(--rule); border-radius: 50%; background: var(--paper);
+        color: var(--ink); font-size: 0.85rem; cursor: pointer;
+        transition: border-color 130ms ease, color 130ms ease; }
+      .mbtn:hover { border-color: var(--clay); color: var(--clay-strong); }
+      .mopen { display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+        font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--clay-strong); border: 1px solid var(--rule); border-radius: 999px;
+        padding: 7px 13px; transition: border-color 130ms ease; }
+      .mopen:hover { border-color: var(--clay); }
+      .modal-view { position: relative; flex: 1; min-height: 0; background: var(--rule-soft); }
+      .modal-pane { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        transition: opacity 200ms ease; }
+      .modal-pane.on { opacity: 1; pointer-events: auto; }
+      .modal-pane iframe { width: 100%; height: 100%; border: 0; }
+
+      @media (max-width: 700px) {
+        .overlay { padding: 8px; }
+        .modal-title { font-size: 0.95rem; }
+        .modal-count, .mopen span { display: none; }
+      }
+
       /* below the one-screen breakpoint everything degrades to a scrolling page */
       @media (max-width: 1020px) {
         .screen { height: auto; min-height: 100vh; }
@@ -86,7 +129,7 @@
       }
       @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
       @media (prefers-reduced-motion: reduce) {
-        .tile, .tile-open { transition: none; }
+        .tile, .tile-open, .overlay, .modal, .modal-pane { transition: none; }
       }
     </style>
   </head>
@@ -99,7 +142,22 @@
 
       <div class="canvas" id="canvas"></div>
 
-      <p class="hint">grouped by job · every tile is the live app · click to open</p>
+      <p class="hint">grouped by job · click a tile to run it here · ⌘-click opens standalone</p>
+    </div>
+
+    <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Demo">
+      <div class="modal">
+        <div class="modal-bar">
+          <span class="modal-kicker" id="mk"></span>
+          <h2 class="modal-title" id="mt"></h2>
+          <span class="modal-count"><b id="mi">1</b>/<span id="mn">9</span></span>
+          <button class="mbtn" id="mprev" aria-label="Previous demo">←</button>
+          <button class="mbtn" id="mnext" aria-label="Next demo">→</button>
+          <a class="mopen" id="mopen" href="#" target="_blank" rel="noreferrer">↗ <span>standalone</span></a>
+          <button class="mbtn" id="mclose" aria-label="Close">✕</button>
+        </div>
+        <div class="modal-view" id="mview"></div>
+      </div>
     </div>
 
     <script src="data.js"></script>
@@ -141,7 +199,8 @@
         }
 
         /* rows: one row per job, label on the left */
-        document.getElementById("canvas").innerHTML =
+        var canvas = document.getElementById("canvas");
+        canvas.innerHTML =
           '<div class="rows">' + USECASES.map(function (u) {
             return '<section class="row" style="--n:' + u.ids.length + '">' +
               '<div class="row-label"><h2 class="row-title">' + u.title + '</h2>' +
@@ -149,6 +208,98 @@
               u.ids.map(function (id) { return tile(demo(id)); }).join("") +
               '</section>';
           }).join("") + '</div>';
+
+        /* ── expand in place ───────────────────────────────────────────── */
+        var ALL = USECASES.reduce(function (a, u) { return a.concat(u.ids); }, []);
+        var overlay = document.getElementById("overlay");
+        var mview = document.getElementById("mview");
+        var mk = document.getElementById("mk"), mt = document.getElementById("mt"),
+            mi = document.getElementById("mi"), mn = document.getElementById("mn"),
+            mopen = document.getElementById("mopen");
+        mn.textContent = String(ALL.length);
+
+        // Panes are created once and kept, so a demo keeps its state across
+        // close/reopen and switching back and forth is instant.
+        var panes = {};
+        var cur = null;
+        var lastFocus = null;
+
+        function track(name, id) {
+          if (window.gtag) window.gtag("event", name, { demo: id, tool_name: "axiom-demo-shell" });
+        }
+
+        function openDemo(id, mode) {
+          var d = demo(id);
+          if (!d) return;
+          if (!panes[id]) {
+            var p = document.createElement("div");
+            p.className = "modal-pane";
+            p.innerHTML = '<iframe title="' + d.kicker + ' demo" loading="lazy" src="' + PROTO.DEST[id] + '"></iframe>';
+            mview.appendChild(p);
+            panes[id] = p;
+          }
+          Object.keys(panes).forEach(function (k) { panes[k].classList.toggle("on", k === id); });
+          mk.textContent = d.kicker;
+          mt.textContent = d.title;
+          mi.textContent = String(ALL.indexOf(id) + 1);
+          mopen.href = PROTO.DEST[id];
+          if (!overlay.classList.contains("on")) {
+            lastFocus = document.activeElement;
+            overlay.classList.add("on");
+            document.body.style.overflow = "hidden";
+            document.getElementById("mclose").focus();
+          }
+          cur = id;
+          document.title = d.kicker + " — the demo gallery";
+          var url = location.pathname + "?d=" + id;
+          if (mode === "replace") history.replaceState({ d: id }, "", url);
+          else if (mode !== "pop") history.pushState({ d: id }, "", url);
+          track("demo_expand", id);
+        }
+
+        function closeDemo(mode) {
+          if (!cur) return;
+          track("demo_close", cur);
+          overlay.classList.remove("on");
+          document.body.style.overflow = "";
+          document.title = "One screen — the demo gallery";
+          cur = null;
+          if (mode !== "pop") history.pushState({}, "", location.pathname);
+          if (lastFocus && lastFocus.focus) lastFocus.focus();
+        }
+
+        function step(dir) { if (cur) openDemo(ALL[(ALL.indexOf(cur) + dir + ALL.length) % ALL.length]); }
+
+        // Plain click expands in place; modifier clicks keep native
+        // open-in-new-tab behaviour (the tiles are real links).
+        canvas.addEventListener("click", function (e) {
+          var a = e.target.closest ? e.target.closest(".tile") : null;
+          if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          e.preventDefault();
+          openDemo(a.dataset.demo);
+        });
+
+        document.getElementById("mclose").addEventListener("click", function () { closeDemo(); });
+        document.getElementById("mprev").addEventListener("click", function () { step(-1); });
+        document.getElementById("mnext").addEventListener("click", function () { step(1); });
+        overlay.addEventListener("click", function (e) { if (e.target === overlay) closeDemo(); });
+        mopen.addEventListener("click", function () { track("outbound_click", cur); });
+
+        document.addEventListener("keydown", function (e) {
+          if (!cur) return;
+          if (e.key === "Escape") closeDemo();
+          if (e.key === "ArrowRight") step(1);
+          if (e.key === "ArrowLeft") step(-1);
+        });
+
+        // Deep links + back button: ?d=<id> opens that demo; back closes it.
+        window.addEventListener("popstate", function (e) {
+          var id = new URL(location.href).searchParams.get("d");
+          if (id && demo(id)) openDemo(id, "pop");
+          else closeDemo("pop");
+        });
+        var want = new URL(location.href).searchParams.get("d");
+        if (want && demo(want)) openDemo(want, "replace");
       })();
     </script>
   </body>
