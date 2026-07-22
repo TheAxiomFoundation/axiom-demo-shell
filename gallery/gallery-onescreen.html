@@ -48,15 +48,6 @@
         min-height: 0; background: var(--rule-soft); overflow: hidden; }
       .tile-thumb::after { content: ""; position: absolute; inset: 0;
         background: linear-gradient(to bottom, transparent 55%, rgba(26, 25, 21, 0.05)); }
-      .tile-label { display: flex; align-items: baseline; gap: 9px; padding: 8px 12px 9px;
-        border-top: 1px solid var(--rule-soft); }
-      .tile-title { font-family: var(--serif); font-weight: 500; font-size: 0.96rem;
-        letter-spacing: -0.01em; margin: 0; white-space: nowrap; overflow: hidden;
-        text-overflow: ellipsis; transition: color 140ms ease; }
-      .tile:hover .tile-title { color: var(--clay-strong); }
-      .tile-open { margin-left: auto; font-size: 0.78rem; font-weight: 500; color: var(--clay-strong);
-        opacity: 0; transform: translateX(-4px); transition: opacity 150ms ease, transform 150ms ease; }
-      .tile:hover .tile-open, .tile:focus-visible .tile-open { opacity: 1; transform: none; }
 
       /* ── rows: one row per job, label on the left ── */
       .rows { flex: 1; min-height: 0; display: flex; flex-direction: column;
@@ -87,12 +78,8 @@
         border-bottom: 1px solid var(--rule-soft); }
       .modal-glyph { font-family: var(--serif); font-size: 1.45rem; line-height: 1;
         color: var(--clay-strong); }
-      .modal-id { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-      .modal-eyebrow { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.18em;
+      .modal-eyebrow { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.18em;
         text-transform: uppercase; color: var(--clay-strong); white-space: nowrap; }
-      .modal-title { font-family: var(--serif); font-weight: 500; font-size: 1.05rem;
-        line-height: 1.1; letter-spacing: -0.01em; margin: 0; white-space: nowrap;
-        overflow: hidden; text-overflow: ellipsis; }
       .modal-count { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
         color: var(--ink-faint); margin-left: auto; }
       .modal-count b { color: var(--clay-strong); font-weight: 600; }
@@ -115,8 +102,7 @@
 
       @media (max-width: 700px) {
         .overlay { padding: 8px; }
-        .modal-title { font-size: 0.92rem; }
-        .modal-count, .mopen span, .modal-glyph { display: none; }
+        .modal-count, .mopen span { display: none; }
       }
 
       /* below the one-screen breakpoint everything degrades to a scrolling page */
@@ -149,10 +135,7 @@
       <div class="modal">
         <div class="modal-bar">
           <span class="modal-glyph" aria-hidden="true">∀</span>
-          <div class="modal-id">
-            <span class="modal-eyebrow">Axiom · interactive demo</span>
-            <h2 class="modal-title" id="mt"></h2>
-          </div>
+          <span class="modal-eyebrow">Axiom · interactive demo</span>
           <span class="modal-count"><b id="mi">1</b>/<span id="mn">9</span></span>
           <button class="mbtn" id="mprev" aria-label="Previous demo">←</button>
           <button class="mbtn" id="mnext" aria-label="Next demo">→</button>
@@ -192,12 +175,9 @@
             ids: ["snap", "microsim"] }
         ];
         function tile(d) {
-          return '<a class="tile" href="' + PROTO.DEST[d.id] + '" target="_blank" rel="noreferrer" data-demo="' + d.id + '">' +
+          return '<a class="tile" href="' + PROTO.DEST[d.id] + '" target="_blank" rel="noreferrer" data-demo="' + d.id + '" aria-label="' + d.title + '">' +
             PROTO.preview(d.id, "tile-thumb") +
-            '<span class="tile-label">' +
-              '<h3 class="tile-title">' + d.title + '</h3>' +
-              '<span class="tile-open">↗</span>' +
-            '</span></a>';
+            '</a>';
         }
 
         /* rows: one row per job, label on the left */
@@ -215,8 +195,7 @@
         var ALL = USECASES.reduce(function (a, u) { return a.concat(u.ids); }, []);
         var overlay = document.getElementById("overlay");
         var mview = document.getElementById("mview");
-        var mt = document.getElementById("mt"),
-            mi = document.getElementById("mi"), mn = document.getElementById("mn"),
+        var mi = document.getElementById("mi"), mn = document.getElementById("mn"),
             mopen = document.getElementById("mopen");
         mn.textContent = String(ALL.length);
 
@@ -248,7 +227,6 @@
             panes[id] = p;
           }
           Object.keys(panes).forEach(function (k) { panes[k].classList.toggle("on", k === id); });
-          mt.textContent = d.title;
           mi.textContent = String(ALL.indexOf(id) + 1);
           mopen.href = PROTO.DEST[id];
           if (!overlay.classList.contains("on")) {
