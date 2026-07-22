@@ -50,8 +50,6 @@
         background: linear-gradient(to bottom, transparent 55%, rgba(26, 25, 21, 0.05)); }
       .tile-label { display: flex; align-items: baseline; gap: 9px; padding: 8px 12px 9px;
         border-top: 1px solid var(--rule-soft); }
-      .tile-kicker { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.13em;
-        text-transform: uppercase; color: var(--clay-strong); white-space: nowrap; }
       .tile-title { font-family: var(--serif); font-weight: 500; font-size: 0.96rem;
         letter-spacing: -0.01em; margin: 0; white-space: nowrap; overflow: hidden;
         text-overflow: ellipsis; transition: color 140ms ease; }
@@ -194,7 +192,6 @@
           return '<a class="tile" href="' + PROTO.DEST[d.id] + '" target="_blank" rel="noreferrer" data-demo="' + d.id + '">' +
             PROTO.preview(d.id, "tile-thumb") +
             '<span class="tile-label">' +
-              '<span class="tile-kicker">' + d.kicker + '</span>' +
               '<h3 class="tile-title">' + d.title + '</h3>' +
               '<span class="tile-open">↗</span>' +
             '</span></a>';
