@@ -88,8 +88,6 @@
       .overlay.on .modal { transform: none; }
       .modal-bar { display: flex; align-items: center; gap: 11px; padding: 9px 10px 9px 18px;
         border-bottom: 1px solid var(--rule-soft); }
-      .modal-kicker { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.13em;
-        text-transform: uppercase; color: var(--clay-strong); white-space: nowrap; }
       .modal-title { font-family: var(--serif); font-weight: 500; font-size: 1.08rem;
         letter-spacing: -0.01em; margin: 0; white-space: nowrap; overflow: hidden;
         text-overflow: ellipsis; }
@@ -148,7 +146,6 @@
     <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Demo">
       <div class="modal">
         <div class="modal-bar">
-          <span class="modal-kicker" id="mk"></span>
           <h2 class="modal-title" id="mt"></h2>
           <span class="modal-count"><b id="mi">1</b>/<span id="mn">9</span></span>
           <button class="mbtn" id="mprev" aria-label="Previous demo">←</button>
@@ -212,7 +209,7 @@
         var ALL = USECASES.reduce(function (a, u) { return a.concat(u.ids); }, []);
         var overlay = document.getElementById("overlay");
         var mview = document.getElementById("mview");
-        var mk = document.getElementById("mk"), mt = document.getElementById("mt"),
+        var mt = document.getElementById("mt"),
             mi = document.getElementById("mi"), mn = document.getElementById("mn"),
             mopen = document.getElementById("mopen");
         mn.textContent = String(ALL.length);
@@ -245,7 +242,6 @@
             panes[id] = p;
           }
           Object.keys(panes).forEach(function (k) { panes[k].classList.toggle("on", k === id); });
-          mk.textContent = d.kicker;
           mt.textContent = d.title;
           mi.textContent = String(ALL.indexOf(id) + 1);
           mopen.href = PROTO.DEST[id];
