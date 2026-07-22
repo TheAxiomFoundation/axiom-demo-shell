@@ -78,8 +78,10 @@
       /* ── expand in place: a tile opens as a big live pop-up ── */
       .overlay { position: fixed; inset: 0; z-index: 30; display: flex; padding: clamp(14px, 3vh, 28px);
         background: rgba(26, 25, 21, 0.46); backdrop-filter: blur(7px) saturate(120%);
-        opacity: 0; pointer-events: none; transition: opacity 200ms ease; }
-      .overlay.on { opacity: 1; pointer-events: auto; }
+        opacity: 0; pointer-events: none; visibility: hidden;
+        transition: opacity 200ms ease, visibility 0s linear 200ms; }
+      .overlay.on { opacity: 1; pointer-events: auto; visibility: visible;
+        transition: opacity 200ms ease; }
       .modal { margin: auto; width: min(1320px, 100%); height: 100%;
         display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 16px;
         background: var(--paper); overflow: hidden;
