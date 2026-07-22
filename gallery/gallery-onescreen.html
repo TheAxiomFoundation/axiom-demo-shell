@@ -101,7 +101,8 @@
         color: var(--clay-strong); border: 1px solid var(--rule); border-radius: 999px;
         padding: 7px 13px; transition: border-color 130ms ease; }
       .mopen:hover { border-color: var(--clay); }
-      .modal-view { position: relative; flex: 1; min-height: 0; background: var(--rule-soft); }
+      .modal-view { position: relative; flex: 1; min-height: 0; background: var(--rule-soft);
+        overflow: hidden; }
       .modal-pane { position: absolute; inset: 0; opacity: 0; pointer-events: none;
         transition: opacity 200ms ease; }
       .modal-pane.on { opacity: 1; pointer-events: auto; }
