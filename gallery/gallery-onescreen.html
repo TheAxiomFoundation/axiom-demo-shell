@@ -83,11 +83,16 @@
         box-shadow: 0 30px 90px rgba(26, 25, 21, 0.4);
         transform: translateY(12px) scale(0.985); transition: transform 220ms ease; }
       .overlay.on .modal { transform: none; }
-      .modal-bar { display: flex; align-items: center; gap: 11px; padding: 9px 10px 9px 18px;
+      .modal-bar { display: flex; align-items: center; gap: 12px; padding: 8px 10px 8px 16px;
         border-bottom: 1px solid var(--rule-soft); }
-      .modal-title { font-family: var(--serif); font-weight: 500; font-size: 1.08rem;
-        letter-spacing: -0.01em; margin: 0; white-space: nowrap; overflow: hidden;
-        text-overflow: ellipsis; }
+      .modal-glyph { font-family: var(--serif); font-size: 1.45rem; line-height: 1;
+        color: var(--clay-strong); }
+      .modal-id { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+      .modal-eyebrow { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.18em;
+        text-transform: uppercase; color: var(--clay-strong); white-space: nowrap; }
+      .modal-title { font-family: var(--serif); font-weight: 500; font-size: 1.05rem;
+        line-height: 1.1; letter-spacing: -0.01em; margin: 0; white-space: nowrap;
+        overflow: hidden; text-overflow: ellipsis; }
       .modal-count { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
         color: var(--ink-faint); margin-left: auto; }
       .modal-count b { color: var(--clay-strong); font-weight: 600; }
@@ -110,8 +115,8 @@
 
       @media (max-width: 700px) {
         .overlay { padding: 8px; }
-        .modal-title { font-size: 0.95rem; }
-        .modal-count, .mopen span { display: none; }
+        .modal-title { font-size: 0.92rem; }
+        .modal-count, .mopen span, .modal-glyph { display: none; }
       }
 
       /* below the one-screen breakpoint everything degrades to a scrolling page */
@@ -143,7 +148,11 @@
     <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Demo">
       <div class="modal">
         <div class="modal-bar">
-          <h2 class="modal-title" id="mt"></h2>
+          <span class="modal-glyph" aria-hidden="true">∀</span>
+          <div class="modal-id">
+            <span class="modal-eyebrow">Axiom · interactive demo</span>
+            <h2 class="modal-title" id="mt"></h2>
+          </div>
           <span class="modal-count"><b id="mi">1</b>/<span id="mn">9</span></span>
           <button class="mbtn" id="mprev" aria-label="Previous demo">←</button>
           <button class="mbtn" id="mnext" aria-label="Next demo">→</button>
