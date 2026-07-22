@@ -34,15 +34,6 @@
         line-height: 1.04; letter-spacing: -0.02em; margin: 0; }
       h1 em { font-style: italic; color: var(--clay-strong); }
 
-      .variants { display: flex; justify-content: center; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
-      .vbtn { border: 1px solid var(--rule); border-radius: 999px; background: var(--paper);
-        padding: 5px 13px; font-family: var(--sans); font-size: 0.76rem; color: var(--ink-soft);
-        cursor: pointer; transition: color 130ms ease, border-color 130ms ease, background 130ms ease; }
-      .vbtn:hover { color: var(--ink); border-color: var(--clay); }
-      .vbtn.on { background: var(--ink); border-color: var(--ink); color: var(--cloud); }
-      .vbtn .vk { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em;
-        color: var(--clay); margin-right: 6px; }
-
       .canvas { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 
       /* ── shared tile ── */
@@ -69,7 +60,7 @@
         opacity: 0; transform: translateX(-4px); transition: opacity 150ms ease, transform 150ms ease; }
       .tile:hover .tile-open, .tile:focus-visible .tile-open { opacity: 1; transform: none; }
 
-      /* ── A · rows (grouped) ── */
+      /* ── rows: one row per job, label on the left ── */
       .rows { flex: 1; min-height: 0; display: flex; flex-direction: column;
         gap: clamp(10px, 1.6vh, 16px); }
       .row { flex: 1; min-height: 0; display: grid;
@@ -81,74 +72,21 @@
         line-height: 1.16; letter-spacing: -0.012em; margin: 0; text-wrap: balance; }
       .row-note { margin: 0; color: var(--ink-soft); font-size: 0.76rem; line-height: 1.45; }
 
-      /* ── B · quadrants (grouped) ── */
-      .quads { flex: 1; min-height: 0; display: grid; gap: clamp(12px, 1.6vh, 18px);
-        grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-      .quad { display: flex; flex-direction: column; min-height: 0; }
-      .quad-title { font-family: var(--serif); font-weight: 500; font-size: clamp(0.98rem, 1.2vw, 1.14rem);
-        letter-spacing: -0.012em; margin: 0 0 7px; padding-bottom: 6px;
-        border-bottom: 1px solid var(--rule); }
-      .quad-tiles { flex: 1; min-height: 0; display: grid; gap: 10px; }
-      .quad-tiles.n2 { grid-template-rows: 1fr 1fr; }
-      .quad-tiles.n3 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-      .quad-tiles.n3 .tile:first-child { grid-column: 1 / -1; }
-
-      /* ── C · nine up (no grouping) ── */
-      .nine { flex: 1; min-height: 0; display: grid; gap: clamp(10px, 1.4vh, 14px);
-        grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
-
-      /* ── D · theater (no grouping) ── */
-      .theater { flex: 1; min-height: 0; display: grid; gap: clamp(12px, 1.4vw, 18px);
-        grid-template-columns: minmax(270px, 330px) 1fr; }
-      .strip { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 8px;
-        min-height: 0; }
-      .chip { position: relative; border: 1px solid var(--rule); border-radius: 10px;
-        background: var(--paper); overflow: hidden; cursor: pointer; padding: 0;
-        display: flex; flex-direction: column; min-height: 0; text-align: left;
-        transition: border-color 140ms ease; font-family: var(--sans); }
-      .chip:hover { border-color: var(--clay); }
-      .chip.on { border-color: var(--clay-strong); box-shadow: 0 0 0 1px var(--clay-strong); }
-      .chip-thumb { --preview-scale: 0.11; position: relative; flex: 1; min-height: 0;
-        background: var(--rule-soft); overflow: hidden; pointer-events: none; }
-      .chip-name { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.1em;
-        text-transform: uppercase; color: var(--ink-soft); padding: 5px 8px;
-        border-top: 1px solid var(--rule-soft); white-space: nowrap; overflow: hidden;
-        text-overflow: ellipsis; }
-      .chip.on .chip-name { color: var(--clay-strong); }
-      .stage { position: relative; min-height: 0; border: 1px solid var(--rule); border-radius: 14px;
-        background: var(--rule-soft); overflow: hidden; display: flex; flex-direction: column;
-        box-shadow: 0 18px 44px rgba(26, 25, 21, 0.1); }
-      .stage-view { position: relative; flex: 1; min-height: 0; overflow: hidden; }
-      .stage-pane { position: absolute; inset: 0; opacity: 0; transition: opacity 260ms ease; }
-      .stage-pane.on { opacity: 1; }
-      .stage-pane iframe { --s: 0.62; position: absolute; inset: 0; border: 0; pointer-events: none;
-        width: calc(100% / var(--s)); height: calc(100% / var(--s));
-        transform: scale(var(--s)); transform-origin: 0 0; }
-      .stage-bar { display: flex; align-items: baseline; gap: 10px; padding: 10px 16px;
-        background: var(--paper); border-top: 1px solid var(--rule-soft); }
-      .stage-kicker { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.13em;
-        text-transform: uppercase; color: var(--clay-strong); }
-      .stage-title { font-family: var(--serif); font-weight: 500; font-size: 1.1rem; margin: 0; }
-      .stage-open { margin-left: auto; text-decoration: none; font-size: 0.84rem; font-weight: 500;
-        color: #fff; background: var(--clay-strong); border-radius: 999px; padding: 6px 15px;
-        transition: background 140ms ease; }
-      .stage-open:hover { background: #9a4527; }
-
       .hint { text-align: center; font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.14em;
         text-transform: uppercase; color: var(--ink-faint); margin: clamp(7px, 1.4vh, 12px) 0 0; }
 
       /* below the one-screen breakpoint everything degrades to a scrolling page */
       @media (max-width: 1020px) {
         .screen { height: auto; min-height: 100vh; }
-        .row, .quads, .nine, .theater { grid-template-columns: 1fr 1fr; }
+        .row { grid-template-columns: 1fr 1fr; }
         .row-label { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--rule);
           padding: 0 0 8px; }
         .row-note { display: none; }
         .tile-thumb { aspect-ratio: 16 / 10; flex: none; }
       }
-      @media (max-width: 560px) { .row, .quads, .nine, .theater { grid-template-columns: 1fr; } }
+      @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
       @media (prefers-reduced-motion: reduce) {
-        .tile, .tile-open, .stage-pane { transition: none; }
+        .tile, .tile-open { transition: none; }
       }
     </style>
   </head>
@@ -157,12 +95,11 @@
       <header class="head">
         <p class="eyebrow">The demo gallery</p>
         <h1>Every demo. <em>One screen.</em></h1>
-        <div class="variants" id="variants" role="tablist" aria-label="Layout variants"></div>
       </header>
 
       <div class="canvas" id="canvas"></div>
 
-      <p class="hint" id="hint">Every tile is the live app · click to open</p>
+      <p class="hint">grouped by job · every tile is the live app · click to open</p>
     </div>
 
     <script src="data.js"></script>
@@ -193,11 +130,9 @@
             note: "Change a parameter or a bill and score the impact — single household to full population.",
             ids: ["snap", "microsim"] }
         ];
-        var ALL = USECASES.reduce(function (a, u) { return a.concat(u.ids); }, []);
-
-        function tile(d, thumbCls) {
+        function tile(d) {
           return '<a class="tile" href="' + PROTO.DEST[d.id] + '" target="_blank" rel="noreferrer" data-demo="' + d.id + '">' +
-            PROTO.preview(d.id, thumbCls || "tile-thumb") +
+            PROTO.preview(d.id, "tile-thumb") +
             '<span class="tile-label">' +
               '<span class="tile-kicker">' + d.kicker + '</span>' +
               '<h3 class="tile-title">' + d.title + '</h3>' +
@@ -205,113 +140,15 @@
             '</span></a>';
         }
 
-        /* A — rows: one row per job, label on the left */
-        function renderRows(mount) {
-          mount.innerHTML = '<div class="rows">' + USECASES.map(function (u) {
+        /* rows: one row per job, label on the left */
+        document.getElementById("canvas").innerHTML =
+          '<div class="rows">' + USECASES.map(function (u) {
             return '<section class="row" style="--n:' + u.ids.length + '">' +
               '<div class="row-label"><h2 class="row-title">' + u.title + '</h2>' +
               '<p class="row-note">' + u.note + '</p></div>' +
               u.ids.map(function (id) { return tile(demo(id)); }).join("") +
               '</section>';
           }).join("") + '</div>';
-        }
-
-        /* B — quadrants: the four jobs as a 2×2 board */
-        function renderQuads(mount) {
-          mount.innerHTML = '<div class="quads">' + USECASES.map(function (u) {
-            return '<section class="quad">' +
-              '<h2 class="quad-title">' + u.title + '</h2>' +
-              '<div class="quad-tiles n' + u.ids.length + '">' +
-              u.ids.map(function (id) { return tile(demo(id)); }).join("") +
-              '</div></section>';
-          }).join("") + '</div>';
-        }
-
-        /* C — nine up: no grouping, a flat 3×3 */
-        function renderNine(mount) {
-          mount.innerHTML = '<div class="nine">' +
-            ALL.map(function (id) { return tile(demo(id)); }).join("") + '</div>';
-        }
-
-        /* D — theater: no grouping; thumb strip + one big live stage */
-        function renderTheater(mount) {
-          mount.innerHTML = '<div class="theater">' +
-            '<div class="strip" id="strip">' + ALL.map(function (id) {
-              var d = demo(id);
-              return '<button class="chip" data-demo="' + d.id + '" role="tab">' +
-                PROTO.preview(d.id, "chip-thumb") +
-                '<span class="chip-name">' + d.kicker + '</span></button>';
-            }).join("") + '</div>' +
-            '<div class="stage"><div class="stage-view" id="stageView"></div>' +
-              '<div class="stage-bar"><span class="stage-kicker" id="sk"></span>' +
-              '<h2 class="stage-title" id="st"></h2>' +
-              '<a class="stage-open" id="so" href="#" target="_blank" rel="noreferrer">Open demo ↗</a>' +
-            '</div></div></div>';
-
-          var view = document.getElementById("stageView");
-          var panes = {};
-          function pick(id) {
-            var d = demo(id);
-            if (!panes[id]) {
-              var p = document.createElement("div");
-              p.className = "stage-pane";
-              p.innerHTML = '<iframe title="' + id + ' stage" tabindex="-1" loading="lazy" src="' + PROTO.DEST[id] + '"></iframe>';
-              view.appendChild(p);
-              panes[id] = p;
-            }
-            Object.keys(panes).forEach(function (k) { panes[k].classList.toggle("on", k === id); });
-            document.querySelectorAll(".chip").forEach(function (c) {
-              c.classList.toggle("on", c.dataset.demo === id);
-            });
-            document.getElementById("sk").textContent = d.kicker;
-            document.getElementById("st").textContent = d.title;
-            document.getElementById("so").href = PROTO.DEST[id];
-          }
-          document.getElementById("strip").addEventListener("click", function (e) {
-            var c = e.target.closest ? e.target.closest(".chip") : null;
-            if (c) pick(c.dataset.demo);
-          });
-          pick(ALL[0]);
-        }
-
-        var VARIANTS = [
-          { key: "rows", label: "Rows", grouped: true, render: renderRows,
-            hint: "grouped by job · every tile is the live app · click to open" },
-          { key: "quads", label: "Quadrants", grouped: true, render: renderQuads,
-            hint: "four jobs, four quadrants · click any tile to open the demo" },
-          { key: "nine", label: "Nine up", grouped: false, render: renderNine,
-            hint: "no grouping — the full range, flat · click to open" },
-          { key: "theater", label: "Theater", grouped: false, render: renderTheater,
-            hint: "no grouping — pick a thumb, the stage runs it live" }
-        ];
-
-        var canvas = document.getElementById("canvas");
-        var vwrap = document.getElementById("variants");
-        var hint = document.getElementById("hint");
-
-        vwrap.innerHTML = VARIANTS.map(function (v, i) {
-          return '<button class="vbtn" role="tab" data-key="' + v.key + '">' +
-            '<span class="vk">' + String.fromCharCode(65 + i) + '</span>' + v.label +
-            (v.grouped ? "" : " · flat") + '</button>';
-        }).join("");
-
-        function show(key) {
-          var v = VARIANTS.filter(function (x) { return x.key === key; })[0] || VARIANTS[0];
-          vwrap.querySelectorAll(".vbtn").forEach(function (b) {
-            b.classList.toggle("on", b.dataset.key === v.key);
-          });
-          v.render(canvas);
-          hint.textContent = v.hint;
-          try { history.replaceState(null, "", "#" + v.key); } catch (e) {}
-          if (window.gtag) window.gtag("event", "onescreen_variant", { variant: v.key, tool_name: "axiom-demo-shell" });
-        }
-
-        vwrap.addEventListener("click", function (e) {
-          var b = e.target.closest ? e.target.closest(".vbtn") : null;
-          if (b) show(b.dataset.key);
-        });
-
-        show((location.hash || "").replace("#", "") || "rows");
       })();
     </script>
   </body>
