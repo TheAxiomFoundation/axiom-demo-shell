@@ -57,9 +57,6 @@
         box-shadow: 0 2px 8px rgba(26, 25, 21, 0.1);
         transition: border-color 140ms ease, transform 140ms ease; }
       .tile:hover .tile-go { border-color: var(--clay); transform: scale(1.08); }
-      .tile.sel { border-color: var(--clay-strong);
-        box-shadow: 0 0 0 1px var(--clay-strong), 0 10px 24px rgba(26, 25, 21, 0.12); }
-      .tile.sel .tile-go { border-color: var(--clay-strong); }
 
       /* ── rows: one row per job, label on the left ── */
       .rows { flex: 1; min-height: 0; display: flex; flex-direction: column;
@@ -239,9 +236,6 @@
             panes[id] = p;
           }
           Object.keys(panes).forEach(function (k) { panes[k].classList.toggle("on", k === id); });
-          canvas.querySelectorAll(".tile").forEach(function (t) {
-            t.classList.toggle("sel", t.dataset.demo === id);
-          });
           mi.textContent = String(ALL.indexOf(id) + 1);
           mopen.href = PROTO.DEST[id];
           if (!overlay.classList.contains("on")) {
