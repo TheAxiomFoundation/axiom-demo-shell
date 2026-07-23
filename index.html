@@ -3,216 +3,291 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Axiom demos — the path from source law through validation into the demo gallery, on one page."
-    />
-    <title>Axiom Demos</title>
+    <title>Axiom — the demo gallery</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <!-- Product analytics → Axiom CRM (GA4 G-2YHG89FY0N) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2YHG89FY0N"></script>
     <script src="analytics.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cloud: #f0eee6; --paper: #faf9f5; --ink: #1a1915; --ink-soft: #6f6d64;
+        --ink-faint: #9b9890; --clay: #cc785c; --clay-strong: #b1573b;
+        --rule: #e3dfd3; --rule-soft: #ece9df;
+        --serif: "Newsreader", Georgia, serif;
+        --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, monospace;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; }
+      body { background: var(--cloud); color: var(--ink); font-family: var(--sans);
+        -webkit-font-smoothing: antialiased; }
+
+      .screen { height: 100vh; display: flex; flex-direction: column;
+        width: min(1420px, calc(100% - 44px)); margin: 0 auto;
+        padding: clamp(12px, 2.2vh, 24px) 0 clamp(12px, 2vh, 20px); }
+
+      .head { text-align: center; margin-bottom: clamp(10px, 1.8vh, 18px); }
+      .eyebrow { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em;
+        text-transform: uppercase; color: var(--clay-strong); margin: 0 0 5px; }
+      h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(1.4rem, 2.6vw, 2rem);
+        line-height: 1.04; letter-spacing: -0.02em; margin: 0; }
+      h1 em { font-style: italic; color: var(--clay-strong); }
+
+      .canvas { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+      /* ── shared tile ── */
+      .tile { position: relative; min-height: 0; min-width: 0; display: flex; flex-direction: column;
+        border: 1px solid var(--rule); border-radius: 12px; background: var(--paper);
+        overflow: hidden; text-decoration: none; color: var(--ink);
+        transition: border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease; }
+      .tile:hover, .tile:focus-visible { border-color: var(--clay); transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(26, 25, 21, 0.13); z-index: 2; }
+      .tile:focus-visible { outline: 2px solid var(--clay-strong); outline-offset: 2px; }
+      .tile-thumb { --preview-scale: 0.2; position: relative; display: block; flex: 1;
+        min-height: 0; background: var(--rule-soft); overflow: hidden; }
+      .tile-thumb::after { content: ""; position: absolute; inset: 0;
+        background: linear-gradient(to bottom, transparent 55%, rgba(26, 25, 21, 0.05)); }
+
+      /* ── rows: one row per job, label on the left ── */
+      .rows { flex: 1; min-height: 0; display: flex; flex-direction: column;
+        gap: clamp(10px, 1.6vh, 16px); }
+      .row { flex: 1; min-height: 0; display: grid;
+        grid-template-columns: clamp(180px, 17vw, 240px) repeat(var(--n), 1fr);
+        gap: clamp(12px, 1.3vw, 18px); }
+      .row-label { display: flex; flex-direction: column; justify-content: center; gap: 7px;
+        padding-right: clamp(10px, 1.2vw, 18px); border-right: 1px solid var(--rule); min-width: 0; }
+      .row-title { font-family: var(--serif); font-weight: 500; font-size: clamp(1rem, 1.3vw, 1.22rem);
+        line-height: 1.16; letter-spacing: -0.012em; margin: 0; text-wrap: balance; }
+      .row-note { margin: 0; color: var(--ink-soft); font-size: 0.76rem; line-height: 1.45; }
+
+      /* ── expand in place: a tile opens as a big live pop-up ── */
+      .overlay { position: fixed; inset: 0; z-index: 30; display: flex; padding: clamp(14px, 3vh, 28px);
+        background: rgba(26, 25, 21, 0.46); backdrop-filter: blur(7px) saturate(120%);
+        opacity: 0; pointer-events: none; visibility: hidden;
+        transition: opacity 200ms ease, visibility 0s linear 200ms; }
+      .overlay.on { opacity: 1; pointer-events: auto; visibility: visible;
+        transition: opacity 200ms ease; }
+      .modal { margin: auto; width: min(1320px, 100%); height: 100%;
+        display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 16px;
+        background: var(--paper); overflow: hidden;
+        box-shadow: 0 30px 90px rgba(26, 25, 21, 0.4);
+        transform: translateY(12px) scale(0.985); transition: transform 220ms ease; }
+      .overlay.on .modal { transform: none; }
+      .modal-bar { display: flex; align-items: center; gap: 12px; padding: 8px 10px 8px 16px;
+        border-bottom: 1px solid var(--rule-soft); }
+      .modal-glyph { font-family: var(--serif); font-size: 1.45rem; line-height: 1;
+        color: var(--clay-strong); }
+      .modal-eyebrow { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.18em;
+        text-transform: uppercase; color: var(--clay-strong); white-space: nowrap; }
+      .modal-count { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+        color: var(--ink-faint); margin-left: auto; }
+      .modal-count b { color: var(--clay-strong); font-weight: 600; }
+      .mbtn { display: grid; place-items: center; width: 30px; height: 30px;
+        border: 1px solid var(--rule); border-radius: 50%; background: var(--paper);
+        color: var(--ink); font-size: 0.85rem; cursor: pointer;
+        transition: border-color 130ms ease, color 130ms ease; }
+      .mbtn:hover { border-color: var(--clay); color: var(--clay-strong); }
+      .mopen { display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+        font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--clay-strong); border: 1px solid var(--rule); border-radius: 999px;
+        padding: 7px 13px; transition: border-color 130ms ease; }
+      .mopen:hover { border-color: var(--clay); }
+      .modal-view { position: relative; flex: 1; min-height: 0; background: var(--rule-soft);
+        overflow: hidden; }
+      .modal-pane { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        transition: opacity 200ms ease; }
+      .modal-pane.on { opacity: 1; pointer-events: auto; }
+      .modal-pane iframe { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0; }
+
+      @media (max-width: 700px) {
+        .overlay { padding: 8px; }
+        .modal-count, .mopen span { display: none; }
+      }
+
+      /* below the one-screen breakpoint everything degrades to a scrolling page */
+      @media (max-width: 1020px) {
+        .screen { height: auto; min-height: 100vh; }
+        .row { grid-template-columns: 1fr 1fr; }
+        .row-label { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--rule);
+          padding: 0 0 8px; }
+        .row-note { display: none; }
+        .tile-thumb { aspect-ratio: 16 / 10; flex: none; }
+      }
+      @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+      @media (prefers-reduced-motion: reduce) {
+        .tile, .tile-open, .overlay, .modal, .modal-pane { transition: none; }
+      }
+    </style>
   </head>
   <body>
-    <header class="nav">
-      <a class="wordmark" href="#" aria-label="Axiom demo home">
-        <img src="logos/axiom-foundation.svg" alt="Axiom Foundation" />
-      </a>
-    </header>
+    <div class="screen">
+      <header class="head">
+        <p class="eyebrow">The demo gallery</p>
+        <h1>Every demo. <em>One screen.</em></h1>
+      </header>
 
-    <main class="page">
-      <section class="hero" aria-labelledby="hero-title">
-        <h1 id="hero-title">Computable law for&nbsp;all</h1>
-        <p class="lede">From source law, through validation, into the demo gallery.</p>
-      </section>
+      <div class="canvas" id="canvas"></div>
 
-      <div class="journey">
+    </div>
 
-        <!-- 01 · Infrastructure -->
-        <section class="chapter" aria-labelledby="ch-1">
-          <div class="ch-rail">
-            <div class="ch-marker" aria-hidden="true"><span>01</span></div>
-            <div>
-              <h2 class="ch-title" id="ch-1">It starts with the source</h2>
-              <p class="ch-story">Law, ingested and encoded — every value tied to its text.</p>
-              <p class="ch-status"><span class="dot live"></span>live</p>
-            </div>
-          </div>
-          <div class="ch-cards">
-            <a class="mini" href="#" target="_blank" rel="noreferrer" data-demo-link="law">
-              <span class="mini-thumb preview-law" aria-hidden="true">
-                <iframe title="Axiom App preview" tabindex="-1" loading="lazy" data-demo-preview="law"></iframe>
-              </span>
-              <span class="mini-body">
-                <span class="mini-top"><span class="mini-kicker">Axiom App</span></span>
-                <span class="mini-title">Explore the law</span>
-              </span>
-            </a>
-            <a class="mini" href="#" target="_blank" rel="noreferrer" data-demo-link="graph">
-              <span class="mini-thumb preview-graph" aria-hidden="true">
-                <iframe title="Graph viewer preview" tabindex="-1" loading="lazy" data-demo-preview="graph"></iframe>
-              </span>
-              <span class="mini-body">
-                <span class="mini-top"><span class="mini-kicker">Graph viewer</span></span>
-                <span class="mini-title">Trace the logic</span>
-              </span>
-            </a>
-          </div>
-        </section>
-
-        <!-- 02 · Validation -->
-        <section class="chapter" aria-labelledby="ch-2">
-          <div class="ch-rail">
-            <div class="ch-marker" aria-hidden="true"><span>02</span></div>
-            <div>
-              <h2 class="ch-title" id="ch-2">Nothing ships on trust</h2>
-              <p class="ch-story">Independent engines, household by household — divergences in the open.</p>
-              <p class="ch-status"><span class="dot live"></span>live</p>
-            </div>
-          </div>
-          <div class="ch-cards">
-            <a class="mini" href="#" target="_blank" rel="noreferrer" data-demo-link="oracles">
-              <span class="mini-thumb preview-oracles" aria-hidden="true">
-                <iframe title="Oracles preview" tabindex="-1" loading="lazy" data-demo-preview="oracles"></iframe>
-              </span>
-              <span class="mini-body">
-                <span class="mini-top"><span class="mini-kicker">Oracles</span></span>
-                <span class="mini-title">Validate across the ecosystem</span>
-              </span>
-            </a>
-            <a class="mini" href="#" target="_blank" rel="noreferrer" data-demo-link="bills">
-              <span class="mini-thumb preview-bills" aria-hidden="true">
-                <iframe title="Bills preview" tabindex="-1" loading="lazy" data-demo-preview="bills"></iframe>
-              </span>
-              <span class="mini-body">
-                <span class="mini-top"><span class="mini-kicker">Bills</span></span>
-                <span class="mini-title">Track active legislation</span>
-              </span>
-            </a>
-          </div>
-        </section>
-
-        <!-- 03 · The demo gallery -->
-        <section class="chapter chapter--gallery" aria-labelledby="ch-3">
-          <div class="ch-rail">
-            <div class="ch-marker" aria-hidden="true"><span>03</span></div>
-            <div>
-              <h2 class="ch-title" id="ch-3">Then the law becomes usable</h2>
-              <p class="ch-story">The demo gallery — one verified substrate, many products.</p>
-              <p class="ch-status"><span class="dot demos"></span>demos</p>
-            </div>
-          </div>
-          <div class="carousel">
-            <div class="car-controls" aria-hidden="false">
-              <button class="car-btn" data-dir="-1" aria-label="Previous demos">←</button>
-              <span class="car-count" aria-live="polite"><b>1</b>/8</span>
-              <button class="car-btn" data-dir="1" aria-label="Next demos">→</button>
-            </div>
-            <div class="car-track" tabindex="0" aria-label="Demo carousel">
-
-              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="finbot">
-                <span class="gcard-thumb preview-finbot" aria-hidden="true">
-                  <iframe title="FinBot preview" tabindex="-1" loading="lazy" data-demo-preview="finbot"></iframe>
-                </span>
-                <span class="gcard-body">
-                  <span class="mini-top"><span class="mini-kicker">FinBot</span></span>
-                  <span class="mini-title">Get accurate answers</span>
-                  <span class="gcard-desc">A grounded assistant backed by encoded rules and citations.</span>
-                </span>
-              </a>
-
-              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="regdemo">
-                <span class="gcard-thumb preview-regdemo" aria-hidden="true">
-                  <iframe title="Small company checker preview" tabindex="-1" loading="lazy" data-demo-preview="regdemo"></iframe>
-                </span>
-                <span class="gcard-body">
-                  <span class="mini-top"><span class="mini-kicker">Small company checker</span></span>
-                  <span class="mini-title">Run law in the browser</span>
-                  <span class="gcard-desc">Companies Act 2006 s.382, computed on-device via WASM — nothing leaves the page.</span>
-                </span>
-              </a>
-
-              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="builder">
-                <span class="gcard-thumb preview-builder" aria-hidden="true">
-                  <iframe title="Form Builder preview" tabindex="-1" loading="lazy" data-demo-preview="builder"></iframe>
-                </span>
-                <span class="gcard-body">
-                  <span class="mini-top"><span class="mini-kicker">Form Builder</span></span>
-                  <span class="mini-title">Build a form</span>
-                  <span class="gcard-desc">Partner intake forms powered by Axiom inputs, outputs, and explanations.</span>
-                </span>
-              </a>
-
-              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="workflow">
-                <span class="gcard-thumb preview-workflow" aria-hidden="true">
-                  <iframe title="CO SNAP workflow checker preview" tabindex="-1" loading="lazy" data-demo-preview="workflow"></iframe>
-                </span>
-                <span class="gcard-body">
-                  <span class="mini-top"><span class="mini-kicker">Workflow checker</span></span>
-                  <span class="mini-title">Check the caseworker path</span>
-                  <span class="gcard-desc">Colorado SNAP processing rules (10 CCR 2506-1) mapped to RuleSpec.</span>
-                </span>
-              </a>
-
-              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="snap">
-                <span class="gcard-thumb preview-snap" aria-hidden="true">
-                  <iframe title="CO SNAP cliffs preview" tabindex="-1" loading="lazy" data-demo-preview="snap"></iframe>
-                </span>
-                <span class="gcard-body">
-                  <span class="mini-top"><span class="mini-kicker">CO SNAP cliffs</span></span>
-                  <span class="mini-title">Explore the cliffs</span>
-                  <span class="gcard-desc">Reform Colorado SNAP parameters and watch cliffs and marginal rates shift live.</span>
-                </span>
-              </a>
-
-              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="microsim">
-                <span class="gcard-thumb preview-microsim" aria-hidden="true">
-                  <iframe title="Microsim preview" tabindex="-1" loading="lazy" data-demo-preview="microsim"></iframe>
-                </span>
-                <span class="gcard-body">
-                  <span class="mini-top"><span class="mini-kicker">Microsim</span></span>
-                  <span class="mini-title">Score at scale</span>
-                  <span class="gcard-desc">Federal and state reforms against the Enhanced CPS — population impacts.</span>
-                </span>
-              </a>
-
-              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="guidance">
-                <span class="gcard-thumb preview-guidance" aria-hidden="true">
-                  <iframe title="Guidance impact preview" tabindex="-1" loading="lazy" data-demo-preview="guidance"></iframe>
-                </span>
-                <span class="gcard-body">
-                  <span class="mini-top"><span class="mini-kicker">Guidance impact</span></span>
-                  <span class="mini-title">Reconcile primary sources</span>
-                  <span class="gcard-desc">An agentic legal diff — coverage outcomes as guidance changes.</span>
-                </span>
-              </a>
-
-              <a class="gcard" href="#" target="_blank" rel="noreferrer" data-demo-link="architecture">
-                <span class="gcard-thumb preview-architecture" aria-hidden="true">
-                  <iframe title="Architecture preview" tabindex="-1" loading="lazy" data-demo-preview="architecture"></iframe>
-                </span>
-                <span class="gcard-body">
-                  <span class="mini-top"><span class="mini-kicker">Architecture</span></span>
-                  <span class="mini-title">Understand the stack</span>
-                  <span class="gcard-desc">The concept registry, adapters, and engines behind every encoding.</span>
-                </span>
-              </a>
-
-            </div>
-          </div>
-        </section>
-
+    <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Demo">
+      <div class="modal">
+        <div class="modal-bar">
+          <span class="modal-glyph" aria-hidden="true">∀</span>
+          <span class="modal-eyebrow">Axiom · interactive demo</span>
+          <span class="modal-count"><b id="mi">1</b>/<span id="mn">9</span></span>
+          <button class="mbtn" id="mprev" aria-label="Previous demo">←</button>
+          <button class="mbtn" id="mnext" aria-label="Next demo">→</button>
+          <a class="mopen" id="mopen" href="#" target="_blank" rel="noreferrer">↗ <span>standalone</span></a>
+          <button class="mbtn" id="mclose" aria-label="Close">✕</button>
+        </div>
+        <div class="modal-view" id="mview"></div>
       </div>
+    </div>
 
-    </main>
+    <script src="data.js"></script>
+    <script>
+      (function () {
+        "use strict";
 
-    <script src="app.js"></script>
+        var byId = {};
+        PROTO.DEMOS.forEach(function (d) { byId[d.id] = d; });
+        var EXTRA = {
+          oracles: { id: "oracles", kicker: "Oracles", title: "Validate across the ecosystem" },
+          bills: { id: "bills", kicker: "Bills", title: "Track active legislation" }
+        };
+        function demo(id) { return byId[id] || EXTRA[id]; }
+
+        var USECASES = [
+          { key: "gov", title: "Build government systems on the law",
+            note: "Eligibility, casework, and intake running directly on encoded statute and regulation.",
+            ids: ["workflow", "builder", "bills"] },
+          { key: "ai", title: "Ground AI models in citable law",
+            note: "Assistants and agents that answer from encoded rules — every answer cites back to the text.",
+            ids: ["finbot", "guidance"] },
+          { key: "products", title: "Power products on rules you don't rebuild",
+            note: "Embed validated, shared engines instead of re-encoding the law inside your own product.",
+            ids: ["regdemo", "oracles"] },
+          { key: "policy", title: "Simulate policy on real rules",
+            note: "Change a parameter or a bill and score the impact — single household to full population.",
+            ids: ["snap", "microsim"] }
+        ];
+        function tile(d) {
+          return '<a class="tile" href="' + PROTO.DEST[d.id] + '" target="_blank" rel="noreferrer" data-demo="' + d.id + '" aria-label="' + d.title + '">' +
+            PROTO.preview(d.id, "tile-thumb") +
+            '</a>';
+        }
+
+        /* rows: one row per job, label on the left */
+        var canvas = document.getElementById("canvas");
+        canvas.innerHTML =
+          '<div class="rows">' + USECASES.map(function (u) {
+            return '<section class="row" style="--n:' + u.ids.length + '">' +
+              '<div class="row-label"><h2 class="row-title">' + u.title + '</h2>' +
+              '<p class="row-note">' + u.note + '</p></div>' +
+              u.ids.map(function (id) { return tile(demo(id)); }).join("") +
+              '</section>';
+          }).join("") + '</div>';
+
+        /* ── expand in place ───────────────────────────────────────────── */
+        var ALL = USECASES.reduce(function (a, u) { return a.concat(u.ids); }, []);
+        var overlay = document.getElementById("overlay");
+        var mview = document.getElementById("mview");
+        var mi = document.getElementById("mi"), mn = document.getElementById("mn"),
+            mopen = document.getElementById("mopen");
+        mn.textContent = String(ALL.length);
+
+        // Some demos render their own site chrome (the Axiom website nav) that
+        // is redundant inside the shell. For fixed/sticky headers, shifting the
+        // iframe up by the header height hides them without clipping content.
+        var CROP = { workflow: 62 };
+
+        // Panes are created once and kept, so a demo keeps its state across
+        // close/reopen and switching back and forth is instant.
+        var panes = {};
+        var cur = null;
+        var lastFocus = null;
+
+        function track(name, id) {
+          if (window.gtag) window.gtag("event", name, { demo: id, tool_name: "axiom-demo-shell" });
+        }
+
+        function openDemo(id, mode) {
+          var d = demo(id);
+          if (!d) return;
+          if (!panes[id]) {
+            var p = document.createElement("div");
+            p.className = "modal-pane";
+            var crop = CROP[id] || 0;
+            p.innerHTML = '<iframe title="' + d.kicker + ' demo" loading="lazy" src="' + PROTO.DEST[id] + '"' +
+              (crop ? ' style="top:-' + crop + 'px;height:calc(100% + ' + crop + 'px)"' : '') + '></iframe>';
+            mview.appendChild(p);
+            panes[id] = p;
+          }
+          Object.keys(panes).forEach(function (k) { panes[k].classList.toggle("on", k === id); });
+          mi.textContent = String(ALL.indexOf(id) + 1);
+          mopen.href = PROTO.DEST[id];
+          if (!overlay.classList.contains("on")) {
+            lastFocus = document.activeElement;
+            overlay.classList.add("on");
+            document.body.style.overflow = "hidden";
+            document.getElementById("mclose").focus();
+          }
+          cur = id;
+          document.title = d.kicker + " — Axiom demos";
+          var url = location.pathname + "?d=" + id;
+          if (mode === "replace") history.replaceState({ d: id }, "", url);
+          else if (mode !== "pop") history.pushState({ d: id }, "", url);
+          track("demo_expand", id);
+        }
+
+        function closeDemo(mode) {
+          if (!cur) return;
+          track("demo_close", cur);
+          overlay.classList.remove("on");
+          document.body.style.overflow = "";
+          document.title = "Axiom — the demo gallery";
+          cur = null;
+          if (mode !== "pop") history.pushState({}, "", location.pathname);
+          if (lastFocus && lastFocus.focus) lastFocus.focus();
+        }
+
+        function step(dir) { if (cur) openDemo(ALL[(ALL.indexOf(cur) + dir + ALL.length) % ALL.length]); }
+
+        // Plain click expands in place; modifier clicks keep native
+        // open-in-new-tab behaviour (the tiles are real links).
+        canvas.addEventListener("click", function (e) {
+          var a = e.target.closest ? e.target.closest(".tile") : null;
+          if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          e.preventDefault();
+          openDemo(a.dataset.demo);
+        });
+
+        document.getElementById("mclose").addEventListener("click", function () { closeDemo(); });
+        document.getElementById("mprev").addEventListener("click", function () { step(-1); });
+        document.getElementById("mnext").addEventListener("click", function () { step(1); });
+        overlay.addEventListener("click", function (e) { if (e.target === overlay) closeDemo(); });
+        mopen.addEventListener("click", function () { track("outbound_click", cur); });
+
+        document.addEventListener("keydown", function (e) {
+          if (!cur) return;
+          if (e.key === "Escape") closeDemo();
+          if (e.key === "ArrowRight") step(1);
+          if (e.key === "ArrowLeft") step(-1);
+        });
+
+        // Deep links + back button: ?d=<id> opens that demo; back closes it.
+        window.addEventListener("popstate", function (e) {
+          var id = new URL(location.href).searchParams.get("d");
+          if (id && demo(id)) openDemo(id, "pop");
+          else closeDemo("pop");
+        });
+        var want = new URL(location.href).searchParams.get("d");
+        if (want && demo(want)) openDemo(want, "replace");
+      })();
+    </script>
   </body>
 </html>
