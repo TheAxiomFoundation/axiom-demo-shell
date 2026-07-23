@@ -50,6 +50,16 @@
         min-height: 0; background: var(--rule-soft); overflow: hidden; }
       .tile-thumb::after { content: ""; position: absolute; inset: 0;
         background: linear-gradient(to bottom, transparent 55%, rgba(26, 25, 21, 0.05)); }
+      .tile-go { position: absolute; right: 9px; bottom: 9px; display: grid; place-items: center;
+        width: 27px; height: 27px; border: 1px solid var(--rule); border-radius: 50%;
+        background: color-mix(in srgb, var(--paper) 94%, transparent);
+        color: var(--clay-strong); font-size: 0.82rem; font-weight: 500;
+        box-shadow: 0 2px 8px rgba(26, 25, 21, 0.1);
+        transition: border-color 140ms ease, transform 140ms ease; }
+      .tile:hover .tile-go { border-color: var(--clay); transform: scale(1.08); }
+      .tile.sel { border-color: var(--clay-strong);
+        box-shadow: 0 0 0 1px var(--clay-strong), 0 10px 24px rgba(26, 25, 21, 0.12); }
+      .tile.sel .tile-go { border-color: var(--clay-strong); }
 
       /* ── rows: one row per job, label on the left ── */
       .rows { flex: 1; min-height: 0; display: flex; flex-direction: column;
@@ -80,7 +90,7 @@
         border-bottom: 1px solid var(--rule-soft); }
       .modal-glyph { font-family: var(--serif); font-size: 1.45rem; line-height: 1;
         color: var(--clay-strong); }
-      .modal-eyebrow { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.18em;
+      .modal-eyebrow { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.18em;
         text-transform: uppercase; color: var(--clay-strong); white-space: nowrap; }
       .modal-count { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
         color: var(--ink-faint); margin-left: auto; }
@@ -137,7 +147,7 @@
       <div class="modal">
         <div class="modal-bar">
           <span class="modal-glyph" aria-hidden="true">∀</span>
-          <span class="modal-eyebrow">Axiom · interactive demo</span>
+          <span class="modal-eyebrow">Interactive demo</span>
           <span class="modal-count"><b id="mi">1</b>/<span id="mn">9</span></span>
           <button class="mbtn" id="mprev" aria-label="Previous demo">←</button>
           <button class="mbtn" id="mnext" aria-label="Next demo">→</button>
@@ -178,6 +188,7 @@
         function tile(d) {
           return '<a class="tile" href="' + PROTO.DEST[d.id] + '" target="_blank" rel="noreferrer" data-demo="' + d.id + '" aria-label="' + d.title + '">' +
             PROTO.preview(d.id, "tile-thumb") +
+            '<span class="tile-go" aria-hidden="true">↗</span>' +
             '</a>';
         }
 
@@ -228,6 +239,9 @@
             panes[id] = p;
           }
           Object.keys(panes).forEach(function (k) { panes[k].classList.toggle("on", k === id); });
+          canvas.querySelectorAll(".tile").forEach(function (t) {
+            t.classList.toggle("sel", t.dataset.demo === id);
+          });
           mi.textContent = String(ALL.indexOf(id) + 1);
           mopen.href = PROTO.DEST[id];
           if (!overlay.classList.contains("on")) {
