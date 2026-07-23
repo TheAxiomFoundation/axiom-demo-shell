@@ -5,7 +5,13 @@ Axiom demo experience.
 
 ## Current Implementation
 
-One page, one screen: a live demo gallery. Every Axiom demo renders as a
+Two surfaces, linked by fixed tabs in the top-right corner:
+
+- **Gallery** (`index.html`, the default) — every demo live on one screen.
+- **Journey** (`journey.html`) — the guided story page: hero, chapters 01/02
+  (Infrastructure, Validation), and the demo carousel.
+
+The gallery: a live demo gallery on one screen. Every Axiom demo renders as a
 scaled live preview, grouped into four rows by the job it proves:
 
 - **Build government systems on the law** — Workflow checker, Form Builder, Bills
