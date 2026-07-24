@@ -83,8 +83,8 @@
       .overlay.on .modal { transform: none; }
       .modal-bar { display: flex; align-items: center; gap: 12px; padding: 8px 10px 8px 16px;
         border-bottom: 1px solid var(--rule-soft); }
-      .modal-glyph { font-family: var(--serif); font-size: 1.45rem; line-height: 1;
-        color: var(--clay-strong); }
+      .modal-glyph { font-size: 1.45rem; line-height: 1; display: inline-flex; }
+      .modal-glyph svg { height: 1em; width: auto; display: block; }
       .modal-eyebrow { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.18em;
         text-transform: uppercase; color: var(--clay-strong); white-space: nowrap; }
       .modal-count { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
@@ -137,7 +137,7 @@
     <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Demo">
       <div class="modal">
         <div class="modal-bar">
-          <span class="modal-glyph" aria-hidden="true">∀</span>
+          <span class="modal-glyph" aria-hidden="true"><svg viewBox="21 0 617 710" role="img" focusable="false"><path fill="#b45309" d="M21 0L278 710L381 710L638 0L554 0L481 207L178 207L105 0ZM204 283L455 283L329 642Z"/></svg></span>
           <span class="modal-eyebrow">Interactive demo</span>
           <span class="modal-count"><b id="mi">1</b>/<span id="mn">9</span></span>
           <button class="mbtn" id="mprev" aria-label="Previous demo">←</button>
