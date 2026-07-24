@@ -60,9 +60,6 @@
   // attributes; `audience` maps to AUDIENCES; `featured` marks the hero tile.
   var DEMOS = [
     // — Builders —
-    { id: "regdemo", kicker: "Small company checker", title: "Run law in the browser",
-      desc: "Companies Act 2006 s.382, computed on-device via WASM — nothing leaves the page.",
-      mode: "WASM", geo: "UK", badge: "in-browser", inBrowser: true, audience: "builders" },
     { id: "builder", kicker: "Form Builder", title: "Build a form",
       desc: "Partner intake forms powered by Axiom inputs, outputs, and explanations.",
       mode: "App", geo: "—", badge: "compose", audience: "builders" },
