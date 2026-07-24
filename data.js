@@ -5,18 +5,18 @@
   "use strict";
 
   var DEST = {
-    finbot: "https://finbot-snap-demo.vercel.app/",
-    regdemo: "https://axiom-reg-demo.vercel.app/",
-    builder: "https://dashboard-builder-flax.vercel.app/",
-    workflow: "https://co-snap-workflow-checker.vercel.app/",
-    snap: "https://axiom-co-snap.vercel.app/",
-    microsim: "https://axiom-microsim.vercel.app/",
-    guidance: "https://guidance-impact-visualizer.vercel.app/",
-    architecture: "https://axiom-architecture-one.vercel.app/",
+    finbot: "https://axiom.org/chatbot",
+    regdemo: "https://axiom.org/reg-demo",
+    builder: "https://axiom.org/builder",
+    workflow: "https://axiom.org/workflow",
+    snap: "https://axiom.org/snap",
+    microsim: "https://axiom.org/microsim",
+    guidance: "https://axiom.org/guidance",
+    architecture: "https://axiom.org/architecture",
     law: "https://app.axiom-foundation.org/",
-    graph: "https://rulespec-graph-viewer.vercel.app/",
-    oracles: "https://axiom-oracles.vercel.app/",
-    bills: "https://axiom-bills.vercel.app/"
+    graph: "https://axiom.org/graph-viewer",
+    oracles: "https://axiom.org/oracles",
+    bills: "https://axiom.org/bills"
   };
 
   // Chapters 01 / 02 — unchanged from production, included so each option
@@ -70,7 +70,7 @@
       desc: "The concept registry, adapters, and engines behind every encoding.",
       mode: "Map", geo: "—", badge: "ecosystem", audience: "builders" },
     // — AI labs —
-    { id: "finbot", kicker: "FinBot", title: "Get accurate answers",
+    { id: "finbot", kicker: "Chatbot", title: "Get accurate answers",
       desc: "A grounded assistant backed by encoded rules and citations.",
       mode: "App", geo: "US·UK", badge: "grounded", featured: true, audience: "ai" },
     { id: "guidance", kicker: "Guidance impact", title: "Reconcile primary sources",
