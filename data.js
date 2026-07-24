@@ -5,13 +5,13 @@
   "use strict";
 
   var DEST = {
-    finbot: "https://axiom.org/chatbot",
-    regdemo: "https://axiom.org/reg-demo",
-    builder: "https://axiom.org/builder",
-    workflow: "https://axiom.org/workflow",
-    snap: "https://axiom.org/snap",
-    microsim: "https://axiom.org/microsim",
-    guidance: "https://axiom.org/guidance",
+    finbot: "https://axiom.org/gallery/chatbot",
+    regdemo: "https://axiom.org/gallery/reg-demo",
+    builder: "https://axiom.org/gallery/builder",
+    workflow: "https://axiom.org/gallery/workflow",
+    snap: "https://axiom.org/gallery/snap",
+    microsim: "https://axiom.org/gallery/microsim",
+    guidance: "https://axiom.org/gallery/guidance",
     architecture: "https://axiom.org/architecture",
     law: "https://app.axiom-foundation.org/",
     graph: "https://axiom.org/graph-viewer",
