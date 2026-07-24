@@ -75,7 +75,7 @@
       mode: "App", geo: "US·UK", badge: "grounded", featured: true, audience: "ai" },
     { id: "guidance", kicker: "Guidance impact", title: "Reconcile primary sources",
       desc: "An agentic legal diff — coverage outcomes as guidance changes.",
-      mode: "App", geo: "US", badge: "agentic", audience: "ai" },
+      mode: "App", geo: "US", badge: "agentic", audience: "gov" },
     // — Government —
     { id: "workflow", kicker: "Workflow checker", title: "Check the caseworker path",
       desc: "Colorado SNAP processing rules (10 CCR 2506-1) mapped to RuleSpec.",

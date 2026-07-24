@@ -156,22 +156,18 @@
 
         var byId = {};
         PROTO.DEMOS.forEach(function (d) { byId[d.id] = d; });
-        var EXTRA = {
-          oracles: { id: "oracles", kicker: "Oracles", title: "Validate across the ecosystem" },
-          bills: { id: "bills", kicker: "Bills", title: "Track active legislation" }
-        };
-        function demo(id) { return byId[id] || EXTRA[id]; }
+        function demo(id) { return byId[id]; }
 
         var USECASES = [
           { key: "gov", title: "Build government systems on the law",
             note: "Eligibility, casework, and intake running directly on encoded statute and regulation.",
-            ids: ["workflow", "builder", "bills"] },
+            ids: ["builder", "workflow", "guidance"] },
           { key: "ai", title: "Ground AI models in citable law",
             note: "Assistants and agents that answer from encoded rules — every answer cites back to the text.",
-            ids: ["finbot", "guidance"] },
+            ids: ["finbot"] },
           { key: "products", title: "Power products on rules you don't rebuild",
             note: "Embed validated, shared engines instead of re-encoding the law inside your own product.",
-            ids: ["regdemo", "oracles"] },
+            ids: ["regdemo"] },
           { key: "policy", title: "Simulate policy on real rules",
             note: "Change a parameter or a bill and score the impact — single household to full population.",
             ids: ["snap", "microsim"] }
