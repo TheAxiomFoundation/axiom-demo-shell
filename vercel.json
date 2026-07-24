@@ -1,3 +1,11 @@
 {
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/", "destination": "https://axiom.org/demos", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/demos", "destination": "/index.html" },
+    { "source": "/demos/", "destination": "/index.html" },
+    { "source": "/demos/:path*", "destination": "/:path*" }
+  ]
 }

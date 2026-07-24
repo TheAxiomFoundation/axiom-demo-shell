@@ -37,6 +37,29 @@ policy, the standalone link still works.
 Destinations live in `data.js`; analytics (GA4 → Axiom CRM, `tool_name`
 attribution) in `analytics.js`.
 
+## Demo URL registry (canonical)
+
+All Axiom demos are served under `https://axiom.org/<slug>` via reverse-proxy
+rewrites on the main site. This table is the canonical registry; `data.js`
+mirrors it. The old `*.vercel.app` URLs remain live and redirect to the
+`axiom.org` paths.
+
+| id           | Demo                  | Canonical URL                       |
+| ------------ | --------------------- | ----------------------------------- |
+| (shell)      | Demo gallery          | https://axiom.org/demos             |
+| finbot       | Chatbot               | https://axiom.org/chatbot           |
+| regdemo      | Small company checker | https://axiom.org/reg-demo          |
+| builder      | Form Builder          | https://axiom.org/builder           |
+| workflow     | Workflow checker      | https://axiom.org/workflow          |
+| snap         | CO SNAP cliffs        | https://axiom.org/snap              |
+| microsim     | Microsim              | https://axiom.org/microsim          |
+| guidance     | Guidance impact       | https://axiom.org/guidance          |
+| architecture | Architecture          | https://axiom.org/architecture      |
+| law          | Axiom App             | https://app.axiom-foundation.org/   |
+| graph        | Graph viewer          | https://axiom.org/graph-viewer      |
+| oracles      | Oracles               | https://axiom.org/oracles           |
+| bills        | Bills                 | https://axiom.org/bills             |
+
 ## Story
 
 Axiom turns law into trusted computational infrastructure.
