@@ -47,13 +47,13 @@ mirrors it. The old `*.vercel.app` URLs remain live and redirect to the
 | id           | Demo                  | Canonical URL                       |
 | ------------ | --------------------- | ----------------------------------- |
 | (shell)      | Demo gallery          | https://axiom.org/demos             |
-| finbot       | Chatbot               | https://axiom.org/chatbot           |
-| regdemo      | Small company checker | https://axiom.org/reg-demo          |
-| builder      | Form Builder          | https://axiom.org/builder           |
-| workflow     | Workflow checker      | https://axiom.org/workflow          |
-| snap         | CO SNAP cliffs        | https://axiom.org/snap              |
-| microsim     | Microsim              | https://axiom.org/microsim          |
-| guidance     | Guidance impact       | https://axiom.org/guidance          |
+| finbot       | Chatbot               | https://axiom.org/gallery/chatbot           |
+| regdemo      | Small company checker | https://axiom.org/gallery/reg-demo          |
+| builder      | Form Builder          | https://axiom.org/gallery/builder           |
+| workflow     | Workflow checker      | https://axiom.org/gallery/workflow          |
+| snap         | CO SNAP cliffs        | https://axiom.org/gallery/snap              |
+| microsim     | Microsim              | https://axiom.org/gallery/microsim          |
+| guidance     | Guidance impact       | https://axiom.org/gallery/guidance          |
 | architecture | Architecture          | https://axiom.org/architecture      |
 | law          | Axiom App             | https://app.axiom-foundation.org/   |
 | graph        | Graph viewer          | https://axiom.org/graph-viewer      |
