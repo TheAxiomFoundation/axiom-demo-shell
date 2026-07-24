@@ -48,6 +48,13 @@
         min-height: 0; background: var(--rule-soft); overflow: hidden; }
       .tile-thumb::after { content: ""; position: absolute; inset: 0;
         background: linear-gradient(to bottom, transparent 55%, rgba(26, 25, 21, 0.05)); }
+      /* ── tile caption: kicker + title under the live thumb ── */
+      .tile-cap { display: flex; flex-direction: column; gap: 2px;
+        padding: 8px 44px 10px 12px; border-top: 1px solid var(--rule-soft); }
+      .tile-kicker { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--clay-strong); }
+      .tile-title { font-family: var(--serif); font-size: 0.98rem; font-weight: 500;
+        color: var(--ink); line-height: 1.18; }
       .tile-go { position: absolute; right: 9px; bottom: 9px; display: grid; place-items: center;
         width: 27px; height: 27px; border: 1px solid var(--rule); border-radius: 50%;
         background: color-mix(in srgb, var(--paper) 94%, transparent);
@@ -175,6 +182,8 @@
         function tile(d) {
           return '<a class="tile" href="' + PROTO.DEST[d.id] + '" target="_blank" rel="noreferrer" data-demo="' + d.id + '" aria-label="' + d.title + '">' +
             PROTO.preview(d.id, "tile-thumb") +
+            '<span class="tile-cap"><span class="tile-kicker">' + d.kicker + '</span>' +
+            '<span class="tile-title">' + d.title + '</span></span>' +
             '<span class="tile-go" aria-hidden="true">↗</span>' +
             '</a>';
         }
