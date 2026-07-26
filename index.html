@@ -210,7 +210,9 @@
         // Some demos render their own site chrome (the Axiom website nav) that
         // is redundant inside the shell. For fixed/sticky headers, shifting the
         // iframe up by the header height hides them without clipping content.
-        var CROP = { workflow: 62 };
+        // (workflow used to carry the full marketing nav and was
+        // cropped 62px; it now has a slim demo topbar — no crops.)
+        var CROP = {};
 
         // Panes are created once and kept, so a demo keeps its state across
         // close/reopen and switching back and forth is instant.
