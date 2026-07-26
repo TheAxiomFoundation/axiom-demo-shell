@@ -5,7 +5,7 @@
   "use strict";
 
   var DEST = {
-    finbot: "https://axiom.org/chatbot",
+    chatbot: "https://axiom.org/chatbot",
     regdemo: "https://axiom.org/reg-demo",
     builder: "https://axiom.org/builder",
     workflow: "https://axiom.org/workflow",
@@ -67,7 +67,7 @@
       desc: "The concept registry, adapters, and engines behind every encoding.",
       mode: "Map", geo: "—", badge: "ecosystem", audience: "builders" },
     // — AI labs —
-    { id: "finbot", kicker: "Chatbot", title: "Get accurate answers",
+    { id: "chatbot", kicker: "Chatbot", title: "Get accurate answers",
       desc: "A grounded assistant backed by encoded rules and citations.",
       mode: "App", geo: "US·UK", badge: "grounded", featured: true, audience: "ai" },
     { id: "guidance", kicker: "Guidance impact", title: "Reconcile primary sources",

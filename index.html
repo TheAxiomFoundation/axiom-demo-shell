@@ -164,6 +164,10 @@
         var byId = {};
         PROTO.DEMOS.forEach(function (d) { byId[d.id] = d; });
         function demo(id) { return byId[id]; }
+        // Renamed ids: old deep links resolve to the new id before
+        // any pane/history/DEST lookup sees them.
+        var LEGACY_IDS = { finbot: "chatbot" };
+        function canonical(id) { return LEGACY_IDS[id] || id; }
 
         var USECASES = [
           { key: "gov", title: "Build government systems on the law",
@@ -171,7 +175,7 @@
             ids: ["workflow", "guidance"] },
           { key: "ai", title: "Ground AI models in citable law",
             note: "Assistants and agents that answer from encoded rules — every answer cites back to the text.",
-            ids: ["finbot"] },
+            ids: ["chatbot"] },
           { key: "products", title: "Power products on rules you don't rebuild",
             note: "Embed validated, shared engines instead of re-encoding the law inside your own product.",
             ids: ["builder"] },
@@ -290,11 +294,11 @@
 
         // Deep links + back button: ?d=<id> opens that demo; back closes it.
         window.addEventListener("popstate", function (e) {
-          var id = new URL(location.href).searchParams.get("d");
+          var id = canonical(new URL(location.href).searchParams.get("d"));
           if (id && demo(id)) openDemo(id, "pop");
           else closeDemo("pop");
         });
-        var want = new URL(location.href).searchParams.get("d");
+        var want = canonical(new URL(location.href).searchParams.get("d"));
         if (want && demo(want)) openDemo(want, "replace");
       })();
     </script>
