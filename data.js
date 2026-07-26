@@ -74,13 +74,13 @@
       desc: "An agentic legal diff — coverage outcomes as guidance changes.",
       mode: "App", geo: "US", badge: "agentic", audience: "gov" },
     // — Government —
-    { id: "workflow", kicker: "Workflow checker", title: "Check the caseworker path",
+    { id: "workflow", kicker: "Workflow checker", title: "Check a workflow",
       desc: "Colorado SNAP processing rules (10 CCR 2506-1) mapped to RuleSpec.",
       mode: "App", geo: "US·CO", badge: "caseworker", audience: "gov" },
-    { id: "snap", kicker: "CO SNAP cliffs", title: "Explore the cliffs",
+    { id: "snap", kicker: "Benefits cliff explorer", title: "Explore benefits cliffs",
       desc: "Reform Colorado SNAP parameters and watch cliffs and marginal rates shift live.",
       mode: "App", geo: "US·CO", badge: "validated · 0×", audience: "gov" },
-    { id: "microsim", kicker: "Microsim", title: "Score at scale",
+    { id: "microsim", kicker: "Microsim", title: "Simulate household impacts",
       desc: "Federal and state reforms against the Enhanced CPS — population impacts.",
       mode: "Population", geo: "US", badge: "validated · 0×", audience: "gov" }
   ];
