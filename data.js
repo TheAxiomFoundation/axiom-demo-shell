@@ -16,8 +16,7 @@
     law: "https://app.axiom-foundation.org/",
     graph: "https://axiom.org/graph-viewer",
     oracles: "https://axiom.org/oracles",
-    bills: "https://axiom.org/bills",
-    belgium: "https://axiom-demo-shell.vercel.app/belgium/"
+    bills: "https://axiom.org/bills"
   };
 
   // Chapters 01 / 02 — unchanged from production, included so each option
@@ -83,10 +82,7 @@
       mode: "App", geo: "US·CO", badge: "validated · 0×", audience: "gov" },
     { id: "microsim", kicker: "Microsim", title: "Simulate household impacts",
       desc: "Federal and state reforms against the Enhanced CPS — population impacts.",
-      mode: "Population", geo: "US", badge: "validated · 0×", audience: "gov" },
-    { id: "belgium", kicker: "PolicyEngine Belgium", title: "Reform Belgian income tax",
-      desc: "CIR 92 levers over Microcosm-BE, cross-checked against EUROMOD — plus penal fines and statutory interest, encoded.",
-      mode: "Population", geo: "BE", badge: "cross-engine", audience: "gov" }
+      mode: "Population", geo: "US", badge: "validated · 0×", audience: "gov" }
   ];
 
   // Shared iframe-scaling rule. styles.css scopes the transform to
