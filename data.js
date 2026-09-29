@@ -67,9 +67,9 @@
       desc: "The concept registry, adapters, and engines behind every encoding.",
       mode: "Map", geo: "—", badge: "ecosystem", audience: "builders" },
     // — AI labs —
-    { id: "chatbot", kicker: "Chatbot", title: "Get accurate answers",
-      desc: "A grounded assistant backed by encoded rules and citations.",
-      mode: "App", geo: "US·UK", badge: "grounded", featured: true, audience: "ai" },
+    { id: "chatbot", kicker: "Chatbot", title: "Ask about benefits and taxes",
+      desc: "An OpenAI model with tool access to the Axiom rules engine, for US benefit and tax estimates.",
+      mode: "App", geo: "US", badge: "rules engine", featured: true, audience: "ai" },
     { id: "guidance", kicker: "Guidance impact", title: "Reconcile primary sources",
       desc: "An agentic legal diff — coverage outcomes as guidance changes.",
       mode: "App", geo: "US", badge: "agentic", audience: "gov" },

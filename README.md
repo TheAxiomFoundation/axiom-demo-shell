@@ -5,19 +5,16 @@ Axiom demo experience.
 
 ## Current Implementation
 
-Two surfaces, linked by fixed tabs in the top-right corner:
+One surface: the gallery (`index.html`). The Journey page was removed in
+`cddc469`.
 
-- **Gallery** (`index.html`, the default) — every demo live on one screen.
-- **Journey** (`journey.html`) — the guided story page: hero, chapters 01/02
-  (Infrastructure, Validation), and the demo carousel.
+The gallery shows every Axiom demo on one screen as a scaled live preview,
+grouped into four rows by use case (`USECASES` in `index.html`):
 
-The gallery: a live demo gallery on one screen. Every Axiom demo renders as a
-scaled live preview, grouped into four rows by the job it proves:
-
-- **Build government systems on the law** — Workflow checker, Form Builder, Bills
-- **Ground AI models in citable law** — FinBot, Guidance impact
-- **Power products on rules you don't rebuild** — Small company checker, Oracles
-- **Simulate policy on real rules** — CO SNAP cliffs, Microsim
+- **Build government systems on the law** — Workflow checker, Guidance impact
+- **Ground AI models in citable law** — Chatbot
+- **Power products on rules you don't rebuild** — Form Builder
+- **Simulate policy on real rules** — Benefits cliff explorer (Colorado SNAP), Microsim
 
 Clicking a tile expands the demo into a large in-page pop-up with the live,
 fully interactive app (deep-linkable via `?d=<id>`, browser-back closes,
@@ -47,7 +44,7 @@ mirrors it. The old `*.vercel.app` URLs remain live and redirect to the
 | id           | Demo                  | Canonical URL                       |
 | ------------ | --------------------- | ----------------------------------- |
 | (shell)      | Demo gallery          | https://axiom.org/demos             |
-| finbot       | Chatbot               | https://axiom.org/chatbot           |
+| chatbot      | Chatbot               | https://axiom.org/chatbot           |
 | regdemo      | Small company checker | https://axiom.org/reg-demo          |
 | builder      | Form Builder          | https://axiom.org/builder           |
 | workflow     | Workflow checker      | https://axiom.org/workflow          |
@@ -59,6 +56,9 @@ mirrors it. The old `*.vercel.app` URLs remain live and redirect to the
 | graph        | Graph viewer          | https://axiom.org/graph-viewer      |
 | oracles      | Oracles               | https://axiom.org/oracles           |
 | bills        | Bills                 | https://axiom.org/bills             |
+
+The chatbot's old id, `finbot`, still resolves: `index.html` maps `?d=finbot`
+to `chatbot` (`LEGACY_IDS`).
 
 ## Story
 
@@ -86,11 +86,13 @@ source layer.
 
 ### Ask A Household Question
 
-The FinBot demo proves grounded reasoning.
-
-It shows how a conversational assistant can answer household-level questions
-without drifting away from auditable rules, source citations, and explicit
-uncertainty.
+The chatbot demo shows one way to ground a model in encoded rules. An OpenAI
+model answers household benefit and tax questions with tool access to the Axiom
+rules engine. Its system prompt tells it to take every amount from the engine
+rather than from memory, and a reply links the legal source for outputs that
+carry one. Its answers are estimates. It covers US programs from one pinned
+rulespec-us release (see `artifacts.lock.json` in finbot-snap-demo), and the
+rule authors flag many of those programs' headline outputs as incomplete.
 
 ### Build A Tool
 
@@ -150,7 +152,7 @@ The first useful version can be lightweight:
 - A guided three-step demo flow.
 - Deep links or embedded views for:
   - Axiom App
-  - FinBot SNAP demo
+  - Chatbot demo (US benefits and taxes)
   - Dashboard Builder
 - Shared framing copy around source, reasoning, and application layers.
 
