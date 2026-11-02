@@ -99,13 +99,17 @@ test("no JavaScript: every card shows a poster and links to its demo", async () 
 });
 
 // Differential: the hand-written no-JS markup and the JS-rendered poster
-// gallery describe the same cards, in the same order, with the same links.
+// gallery describe the same cards, in the same order, with the same links,
+// link targets, visible text and posters.
 async function cards(page) {
   return page.locator("#canvas .tile").evaluateAll((els) => els.map((a) => ({
     id: a.dataset.demo, href: a.getAttribute("href"), label: a.getAttribute("aria-label"),
+    target: a.getAttribute("target"), rel: a.getAttribute("rel"),
     kicker: a.querySelector(".tile-kicker").textContent,
+    title: a.querySelector(".tile-title").textContent,
     poster: a.querySelector(".tile-poster").getAttribute("style"),
-    row: a.closest(".row").querySelector(".row-title").textContent
+    row: a.closest(".row").querySelector(".row-title").textContent,
+    note: a.closest(".row").querySelector(".row-note").textContent
   })));
 }
 test("no-JS fallback matches the JS-rendered gallery", async () => {
