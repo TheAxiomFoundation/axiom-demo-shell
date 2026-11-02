@@ -71,10 +71,9 @@ test("every gallery demo has a poster path", () => {
   }
 });
 
-// Poster images are screenshots of the live demos and are not in the
-// repository yet. Until they are, the cards show a text placeholder. This is
-// a todo (reported, not failing) so the run names the files still needed.
-const missing = GALLERY_IDS.map((id) => PROTO.POSTERS[id]).filter((p) => !fs.existsSync(path.join(ROOT, p)));
-test("poster files exist", { todo: missing.length ? "missing " + missing.join(", ") : false }, () => {
-  assert.deepEqual(missing, []);
+// Every gallery card's poster file must be in the repository: a missing
+// file fails the run and the message names it.
+test("poster files exist", () => {
+  const missing = GALLERY_IDS.map((id) => PROTO.POSTERS[id]).filter((p) => !fs.existsSync(path.join(ROOT, p)));
+  assert.deepEqual(missing, [], "missing poster files: " + missing.join(", "));
 });
