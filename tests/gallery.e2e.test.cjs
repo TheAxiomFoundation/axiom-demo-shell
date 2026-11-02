@@ -77,7 +77,7 @@ test("reduced motion: posters instead of live previews, links intact", async () 
     for (const id of GALLERY_IDS) {
       const tile = page.locator(`#canvas .tile[data-demo="${id}"]`);
       assert.equal(await tile.getAttribute("href"), PROTO.DEST[id]);
-      assert.equal(await tile.locator("img.tile-poster").count(), 1);
+      assert.equal(await tile.locator(".tile-poster").count(), 1);
     }
   } finally { await context.close(); }
 });
@@ -93,7 +93,27 @@ test("no JavaScript: every card shows a poster and links to its demo", async () 
       const tile = page.locator(`.tile[data-demo="${id}"]`);
       assert.ok(await tile.isVisible(), id + " tile visible");
       assert.equal(await tile.getAttribute("href"), PROTO.DEST[id]);
-      assert.equal(await tile.locator("img.tile-poster").getAttribute("src"), PROTO.POSTERS[id]);
+      assert.equal(await tile.locator(".tile-poster").getAttribute("style"), "background-image:url(" + PROTO.POSTERS[id] + ")");
     }
   } finally { await context.close(); }
+});
+
+// Differential: the hand-written no-JS markup and the JS-rendered poster
+// gallery describe the same cards, in the same order, with the same links.
+async function cards(page) {
+  return page.locator("#canvas .tile").evaluateAll((els) => els.map((a) => ({
+    id: a.dataset.demo, href: a.getAttribute("href"), label: a.getAttribute("aria-label"),
+    kicker: a.querySelector(".tile-kicker").textContent,
+    poster: a.querySelector(".tile-poster").getAttribute("style"),
+    row: a.closest(".row").querySelector(".row-title").textContent
+  })));
+}
+test("no-JS fallback matches the JS-rendered gallery", async () => {
+  const noJs = await open({ javaScriptEnabled: false });
+  const js = await open({ reducedMotion: "reduce" });
+  try {
+    const a = await cards(noJs.page), b = await cards(js.page);
+    assert.equal(a.length, GALLERY_IDS.length);
+    assert.deepEqual(a, b);
+  } finally { await noJs.context.close(); await js.context.close(); }
 });

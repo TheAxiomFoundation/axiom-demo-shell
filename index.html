@@ -37,6 +37,7 @@
       h1 em { font-style: italic; color: var(--clay-strong); }
 
       .canvas { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+      .canvas > noscript { display: contents; }
 
       /* ── shared tile ── */
       .tile { position: relative; min-height: 0; min-width: 0; display: flex; flex-direction: column;
@@ -50,6 +51,15 @@
         min-height: 0; background: var(--rule-soft); overflow: hidden; }
       .tile-thumb::after { content: ""; position: absolute; inset: 0;
         background: linear-gradient(to bottom, transparent 55%, rgba(26, 25, 21, 0.05)); }
+      /* ── poster facade: a static screenshot instead of a live iframe ── */
+      .tile-ph { position: absolute; inset: 0; display: grid; place-items: center; padding: 12px;
+        font-family: var(--serif); font-size: 1.1rem; color: var(--ink-faint); text-align: center; }
+      .tile-poster { position: absolute; inset: 0; background: no-repeat top left / cover; }
+      .tile-tap { position: absolute; left: 9px; bottom: 9px; z-index: 1; padding: 4px 9px;
+        border: 1px solid var(--rule); border-radius: 999px;
+        background: color-mix(in srgb, var(--paper) 94%, transparent);
+        font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--clay-strong); }
       /* ── tile caption: kicker + title under the live thumb ── */
       .tile-cap { display: flex; flex-direction: column; gap: 2px;
         padding: 8px 44px 10px 12px; border-top: 1px solid var(--rule-soft); }
@@ -139,7 +149,54 @@
   <body>
     <div class="screen">
 
-      <div class="canvas" id="canvas"></div>
+      <div class="canvas" id="canvas">
+        <!-- No-JS fallback: the same rows as USECASES below, with posters and
+             plain links. tests/gallery.e2e.test.cjs checks it matches. -->
+        <noscript><div class="rows">
+        <section class="row" style="--n:2">
+          <div class="row-label"><h2 class="row-title">Build government systems on the law</h2><p class="row-note">Eligibility, casework, and intake running directly on encoded statute and regulation.</p></div>
+          <a class="tile" href="https://axiom.org/workflow" target="_blank" rel="noreferrer" data-demo="workflow" aria-label="Check a workflow">
+            <span class="pvthumb tile-thumb preview-workflow is-poster" aria-hidden="true"><span class="tile-ph">Workflow checker</span><span class="tile-poster" style="background-image:url(posters/workflow.png)"></span></span>
+            <span class="tile-cap"><span class="tile-kicker">Workflow checker</span><span class="tile-title">Check a workflow</span></span>
+            <span class="tile-go" aria-hidden="true">↗</span>
+          </a>
+          <a class="tile" href="https://axiom.org/guidance" target="_blank" rel="noreferrer" data-demo="guidance" aria-label="Reconcile primary sources">
+            <span class="pvthumb tile-thumb preview-guidance is-poster" aria-hidden="true"><span class="tile-ph">Guidance impact</span><span class="tile-poster" style="background-image:url(posters/guidance.png)"></span></span>
+            <span class="tile-cap"><span class="tile-kicker">Guidance impact</span><span class="tile-title">Reconcile primary sources</span></span>
+            <span class="tile-go" aria-hidden="true">↗</span>
+          </a>
+        </section>
+        <section class="row" style="--n:1">
+          <div class="row-label"><h2 class="row-title">Ground AI models in citable law</h2><p class="row-note">Assistants and agents that can call encoded rules for their numbers and link the legal source where one is recorded.</p></div>
+          <a class="tile" href="https://axiom.org/chatbot" target="_blank" rel="noreferrer" data-demo="chatbot" aria-label="Ask about benefits and taxes">
+            <span class="pvthumb tile-thumb preview-chatbot is-poster" aria-hidden="true"><span class="tile-ph">Chatbot</span><span class="tile-poster" style="background-image:url(posters/chatbot.png)"></span></span>
+            <span class="tile-cap"><span class="tile-kicker">Chatbot</span><span class="tile-title">Ask about benefits and taxes</span></span>
+            <span class="tile-go" aria-hidden="true">↗</span>
+          </a>
+        </section>
+        <section class="row" style="--n:1">
+          <div class="row-label"><h2 class="row-title">Power products on rules you don't rebuild</h2><p class="row-note">Embed shared engines instead of re-encoding the law inside your own product.</p></div>
+          <a class="tile" href="https://axiom.org/builder" target="_blank" rel="noreferrer" data-demo="builder" aria-label="Build a form">
+            <span class="pvthumb tile-thumb preview-builder is-poster" aria-hidden="true"><span class="tile-ph">Form Builder</span><span class="tile-poster" style="background-image:url(posters/builder.png)"></span></span>
+            <span class="tile-cap"><span class="tile-kicker">Form Builder</span><span class="tile-title">Build a form</span></span>
+            <span class="tile-go" aria-hidden="true">↗</span>
+          </a>
+        </section>
+        <section class="row" style="--n:2">
+          <div class="row-label"><h2 class="row-title">Simulate policy on real rules</h2><p class="row-note">Change a parameter or a bill and score the impact — single household to full population.</p></div>
+          <a class="tile" href="https://axiom.org/snap" target="_blank" rel="noreferrer" data-demo="snap" aria-label="Explore benefits cliffs">
+            <span class="pvthumb tile-thumb preview-snap is-poster" aria-hidden="true"><span class="tile-ph">Benefits cliff explorer</span><span class="tile-poster" style="background-image:url(posters/snap.png)"></span></span>
+            <span class="tile-cap"><span class="tile-kicker">Benefits cliff explorer</span><span class="tile-title">Explore benefits cliffs</span></span>
+            <span class="tile-go" aria-hidden="true">↗</span>
+          </a>
+          <a class="tile" href="https://axiom.org/microsim" target="_blank" rel="noreferrer" data-demo="microsim" aria-label="Simulate household impacts">
+            <span class="pvthumb tile-thumb preview-microsim is-poster" aria-hidden="true"><span class="tile-ph">Microsim</span><span class="tile-poster" style="background-image:url(posters/microsim.png)"></span></span>
+            <span class="tile-cap"><span class="tile-kicker">Microsim</span><span class="tile-title">Simulate household impacts</span></span>
+            <span class="tile-go" aria-hidden="true">↗</span>
+          </a>
+        </section>
+        </div></noscript>
+      </div>
 
     </div>
 
@@ -185,9 +242,15 @@
             note: "Change a parameter or a bill and score the impact — single household to full population.",
             ids: ["snap", "microsim"] }
         ];
+        // "live": scaled live iframes in every card (desktop with a mouse).
+        // "poster": static posters, and the demo loads only when its card is
+        // opened (touch devices and reduced motion). See PROTO.previewMode.
+        var MODE = PROTO.detectPreviewMode(window);
+        document.documentElement.setAttribute("data-preview", MODE);
+
         function tile(d) {
           return '<a class="tile" href="' + PROTO.DEST[d.id] + '" target="_blank" rel="noreferrer" data-demo="' + d.id + '" aria-label="' + d.title + '">' +
-            PROTO.preview(d.id, "tile-thumb") +
+            PROTO.preview(d.id, "tile-thumb", MODE) +
             '<span class="tile-cap"><span class="tile-kicker">' + d.kicker + '</span>' +
             '<span class="tile-title">' + d.title + '</span></span>' +
             '<span class="tile-go" aria-hidden="true">↗</span>' +
@@ -220,9 +283,20 @@
         // cropped 62px; it now has a slim demo topbar — no crops.)
         var CROP = {};
 
-        // Panes are created once and kept, so a demo keeps its state across
-        // close/reopen and switching back and forth is instant.
+        // On desktop, panes are created once and kept, so a demo keeps its
+        // state across close/reopen and switching back and forth is instant.
+        // In poster mode at most one pane exists: stepping to another demo
+        // drops the previous frame, and closing drops the last one, so a
+        // phone never holds more than one live demo.
+        var KEEP_PANES = MODE === "live";
         var panes = {};
+        function dropPanes(except) {
+          Object.keys(panes).forEach(function (k) {
+            if (k === except) return;
+            panes[k].remove();
+            delete panes[k];
+          });
+        }
         var cur = null;
         var lastFocus = null;
 
@@ -233,6 +307,7 @@
         function openDemo(id, mode) {
           var d = demo(id);
           if (!d) return;
+          if (!KEEP_PANES) dropPanes(id);
           if (!panes[id]) {
             var p = document.createElement("div");
             p.className = "modal-pane";
@@ -263,6 +338,7 @@
           if (!cur) return;
           track("demo_close", cur);
           overlay.classList.remove("on");
+          if (!KEEP_PANES) dropPanes(null);
           document.body.style.overflow = "";
           document.title = "Axiom — the demo gallery";
           cur = null;

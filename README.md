@@ -20,6 +20,14 @@ Clicking a tile expands the demo into a large in-page pop-up with the live,
 fully interactive app (deep-linkable via `?d=<id>`, browser-back closes,
 arrow keys navigate). ⌘-click opens the standalone app in a new tab.
 
+On touch devices (no hover or no fine pointer) and with reduced motion on,
+each card shows a static poster instead of a live iframe, and the demo loads
+only when the visitor opens the card. On these devices the pop-up keeps one
+live demo at a time. Without JavaScript, a `<noscript>` copy of the gallery
+shows the posters as plain links. Posters are 720×405 screenshots at
+`posters/<id>.png` (`POSTERS` in `data.js`). Until a file exists, its card
+shows the demo name instead.
+
 Run it locally with:
 
 ```bash
@@ -27,6 +35,14 @@ npm start
 ```
 
 Then open `http://localhost:4173`.
+
+Tests run in headless Chromium through Playwright, with the demo sites
+stubbed out:
+
+```bash
+npm install
+npm test
+```
 
 If an external product refuses to render in an iframe because of its frame
 policy, the standalone link still works.

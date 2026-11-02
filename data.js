@@ -99,8 +99,52 @@
     document.head.appendChild(s);
   })();
 
-  // Build the scaled live-preview thumb used across every layout.
-  function preview(id, cls) {
+  // Static poster per gallery demo: a 720x405 screenshot, served from this
+  // repository's posters/ folder. Touch devices, reduced-motion visitors and
+  // the no-JS fallback in index.html show these instead of live iframes.
+  var POSTERS = {
+    workflow: "posters/workflow.png",
+    guidance: "posters/guidance.png",
+    chatbot: "posters/chatbot.png",
+    builder: "posters/builder.png",
+    snap: "posters/snap.png",
+    microsim: "posters/microsim.png"
+  };
+
+  // "live" keeps the scaled live iframe in each card. Anything else gets a
+  // poster, and the live demo loads only when the visitor opens the card.
+  // Phones and tablets (no hover, coarse pointer) keep offscreen frames alive
+  // as the visitor scrolls, so six live demos pile up in one tab there.
+  function previewMode(env) {
+    return env.hover && env.finePointer && !env.reducedMotion ? "live" : "poster";
+  }
+
+  function detectPreviewMode(win) {
+    var mq = function (q) { return !!(win.matchMedia && win.matchMedia(q).matches); };
+    return previewMode({
+      hover: mq("(hover: hover)"),
+      finePointer: mq("(pointer: fine)"),
+      reducedMotion: mq("(prefers-reduced-motion: reduce)")
+    });
+  }
+
+  function labelFor(id) {
+    for (var i = 0; i < DEMOS.length; i++) if (DEMOS[i].id === id) return DEMOS[i].kicker;
+    return id;
+  }
+
+  // Build the thumb used across every layout: a scaled live preview in
+  // "live" mode (the default), and in "poster" mode a static poster with no
+  // iframe at all. The poster is a CSS background over a text placeholder,
+  // so a missing file shows the placeholder rather than a broken image.
+  function preview(id, cls, mode) {
+    if (mode === "poster") {
+      return '<span class="pvthumb ' + cls + ' preview-' + id + ' is-poster" aria-hidden="true">' +
+        '<span class="tile-ph">' + labelFor(id) + '</span>' +
+        (POSTERS[id] ? '<span class="tile-poster" style="background-image:url(' + POSTERS[id] + ')"></span>' : '') +
+        '<span class="tile-tap">Open live demo</span>' +
+        '</span>';
+    }
     return '<span class="pvthumb ' + cls + ' preview-' + id + '" aria-hidden="true">' +
       '<iframe title="' + id + ' preview" tabindex="-1" loading="lazy" src="' + DEST[id] + '"></iframe>' +
       '</span>';
@@ -124,7 +168,8 @@
   }
 
   global.PROTO = {
-    DEST: DEST, CHAPTERS: CHAPTERS, DEMOS: DEMOS, AUDIENCES: AUDIENCES,
-    preview: preview, renderChapters: renderChapters
+    DEST: DEST, CHAPTERS: CHAPTERS, DEMOS: DEMOS, AUDIENCES: AUDIENCES, POSTERS: POSTERS,
+    preview: preview, previewMode: previewMode, detectPreviewMode: detectPreviewMode,
+    renderChapters: renderChapters
   };
 })(window);
